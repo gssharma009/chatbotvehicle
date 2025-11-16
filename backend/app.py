@@ -34,7 +34,7 @@ async def ask_question(data: Q):
             temperature=0.7,
         )
 
-        answer = chat_completion.choices[0].message["content"]
+        answer = chat_completion.choices[0].message.content
 
         return {"answer": answer}
 
