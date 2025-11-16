@@ -24,6 +24,54 @@ body {
     background: #fafafa;
 }
 
+.chat-container {
+    max-width: 600px;
+    margin: auto;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.message {
+    margin: 8px 0;
+    padding: 10px 14px;
+    border-radius: 20px;
+    display: inline-block;
+    max-width: 80%;
+    position: relative;
+}
+
+.message.user {
+    background: #0084ff;
+    color: white;
+    margin-left: auto;
+    text-align: right;
+}
+
+.message.bot {
+    background: #e3ffe3;
+    color: #000;
+    margin-right: auto;
+    text-align: left;
+}
+
+.message .timestamp {
+    font-size: 10px;
+    color: #555;
+    margin-top: 4px;
+}
+
+.message .tts-btn {
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 8px;
+    color: #555;
+}
+
+
 .message {
     max-width: 70%;
     padding: 10px 15px;

@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const API_URL = "https://chatbotvehicle-backend.onrender.com/ask";
-    const chatWindow = document.getElementById("chat-window");
+    const chatContainer = document.getElementById("chat-container");
 
-    function addMessage(content, sender) {
+    function addMessage(content, sender, tts=false) {
         const msgDiv = document.createElement("div");
         msgDiv.className = "message " + sender;
         msgDiv.innerHTML = content;
@@ -13,8 +13,19 @@ document.addEventListener("DOMContentLoaded", () => {
         timeSpan.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         msgDiv.appendChild(timeSpan);
 
-        chatWindow.appendChild(msgDiv);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+        // Optional TTS button for bot messages
+        if (sender === "bot") {
+            const ttsBtn = document.createElement("span");
+            ttsBtn.className = "tts-btn";
+            ttsBtn.textContent = "🔊 Speak";
+            ttsBtn.onclick = () => speakText(content);
+            msgDiv.appendChild(ttsBtn);
+        }
+
+        chatContainer.appendChild(msgDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        if (sender === "bot" && tts) speakText(content);
     }
 
     function showLoader() {
@@ -22,8 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
         loader.className = "message bot";
         loader.id = "loader";
         loader.innerHTML = `<span class="loader"><span></span><span></span><span></span></span>`;
-        chatWindow.appendChild(loader);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+        chatContainer.appendChild(loader);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
     function removeLoader() {
@@ -31,12 +42,19 @@ document.addEventListener("DOMContentLoaded", () => {
         if (loader) loader.remove();
     }
 
+    function speakText(text) {
+        const lang = document.getElementById("lang").value;
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = lang;
+        speechSynthesis.speak(utter);
+    }
+
     async function askBot() {
         const qElem = document.getElementById("question");
-        const q = qElem.value.trim();
-        if (!q) return alert("Please enter a question!");
+        const question = qElem.value.trim();
+        if (!question) return alert("Please enter a question!");
 
-        addMessage(q, "user");
+        addMessage(question, "user");
         qElem.value = "";
 
         showLoader();
@@ -45,25 +63,21 @@ document.addEventListener("DOMContentLoaded", () => {
             const res = await fetch(API_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ question: q })
+                body: JSON.stringify({ question })
             });
 
+            removeLoader();
+
             if (!res.ok) {
-                removeLoader();
                 addMessage(`❌ API Error: ${res.status}`, "bot");
                 return;
             }
 
             const data = await res.json();
-            removeLoader();
-
             const answer = data.answer || "No response from backend";
-            addMessage(answer, "bot");
 
-            const langSelect = document.getElementById("lang").value;
-            const utter = new SpeechSynthesisUtterance(answer);
-            utter.lang = langSelect;
-            speechSynthesis.speak(utter);
+            const ttsEnabled = document.getElementById("tts-checkbox").checked;
+            addMessage(answer, "bot", ttsEnabled);
 
         } catch (err) {
             removeLoader();
@@ -100,4 +114,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.askBot = askBot;
     window.startListening = startListening;
+    window.speakText = speakText;
 });
