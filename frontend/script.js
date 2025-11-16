@@ -1,4 +1,4 @@
-const API_URL = "https://voicechatbot-backend.onrender.com/ask";
+const API_URL = "https://chatbotvehicle-backend.onrender.com/ask";
 
 // --------------------
 // Send Text Query
