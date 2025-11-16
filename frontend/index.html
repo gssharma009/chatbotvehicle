@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice + Text Chatbot</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        h2 {
+            text-align: center;
+        }
+        .row {
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 8px 16px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        select, input {
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #bbb;
+        }
+        #responseBox {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 80px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Chatbot (Voice + Text)</h2>
+
+    <!-- Language Dropdown -->
+    <div class="row">
+        <label><b>Select Language</b></label>
+        <select id="language">
+            <option value="english">English</option>
+            <option value="hindi">Hindi</option>
+        </select>
+    </div>
+
+    <!-- Text Input -->
+    <div class="row">
+        <label><b>Type Your Question</b></label>
+        <input type="text" id="textInput" placeholder="Type something...">
+    </div>
+
+    <!-- Ask Button -->
+    <div class="row">
+        <button onclick="sendText()">Ask</button>
+    </div>
+
+    <hr>
+
+    <!-- Voice Input -->
+    <div class="row">
+        <button onclick="startVoice()">🎤 Speak</button>
+    </div>
+
+    <!-- Response Box -->
+    <h3>Response:</h3>
+    <div id="responseBox">...</div>
+</div>
+
+<script>
+    const API_URL = "http://localhost:8000/ask";  // Change when hosting online
+
+    // -------------------------
+    // SEND TEXT MESSAGE
+    // -------------------------
+    function sendText() {
+        const msg = document.getElementById("textInput").value.trim();
+        const lang = document.getElementById("language").value;
+
+        if (!msg) {
+            alert("Please type something.");
+            return;
+        }
+
+        askBackend(msg + " (Language: " + lang + ")");
+    }
+
+    // -------------------------
+    // VOICE INPUT
+    // -------------------------
+    function startVoice() {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        const lang = document.getElementById("language").value;
+
+        recognition.lang = (lang === "hindi") ? "hi-IN" : "en-US";
+        recognition.start();
+
+        recognition.onresult = function(event) {
+            const text = event.results[0][0].transcript;
+            askBackend(text + " (Language: " + lang + ")");
+        };
+
+        recognition.onerror = function() {
+            alert("Voice recognition error.");
+        };
+    }
+
+    // -------------------------
+    // SEND TO BACKEND
+    // -------------------------
+    async function askBackend(msg) {
+        document.getElementById("responseBox").innerText = "Thinking...";
+
+        try {
+            const res = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ question: msg })
+            });
+
+            const data = await res.json();
+            document.getElementById("responseBox").innerText = data.answer;
+
+        } catch (err) {
+            document.getElementById("responseBox").innerText = "Error: " + err;
+        }
+    }
+</script>
+
+</body>
+</html>
