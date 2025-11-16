@@ -5,6 +5,8 @@ const API_URL = "https://chatbotvehicle-backend.onrender.com/ask";
 // --------------------
 async function askBot() {
     const q = document.getElementById("question").value.trim();
+    const language = document.getElementById("replyLang").value;
+
     if (!q) return alert("Please enter a question!");
 
     const responseDiv = document.getElementById("response");
@@ -14,7 +16,10 @@ async function askBot() {
         const res = await fetch(API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ question: q })
+            body: JSON.stringify({
+                question: q,
+                language: language
+            })
         });
 
         const data = await res.json();
@@ -34,7 +39,7 @@ function startListening() {
         return;
     }
 
-    const lang = document.getElementById("lang").value;
+    const lang = document.getElementById("speechLang").value;
     const recognition = new SpeechRecognition();
     recognition.lang = lang;
     recognition.interimResults = false;
