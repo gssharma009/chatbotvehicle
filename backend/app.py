@@ -1,14 +1,13 @@
+# app.py
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from model import ask_llm
-
-class Q(BaseModel):
-    question: str
+from groq import Groq
+import os
 
 app = FastAPI()
 
-# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,10 +16,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+
+class Q(BaseModel):
+    question: str
+
 @app.post("/ask")
-def ask_bot(data: Q):
+async def ask_question(data: Q):
     try:
-        answer = ask_llm(data.question)
+        prompt = f"Answer in Hinglish.\nUser: {data.question}"
+
+        chat_completion = client.chat.completions.create(
+            model="llama3-8b",
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+        )
+
+        answer = chat_completion.choices[0].message["content"]
+
         return {"answer": answer}
+
     except Exception as e:
         return {"error": str(e)}
