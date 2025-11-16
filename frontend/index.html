@@ -1,74 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Voice + Text Chatbot (Bilingual)</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bilingual Chatbot (Voice + Text)</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        textarea, select, button {
-            width: 100%;
-            margin-top: 10px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        #response {
-            background: #e3ffe3;
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 8px;
-            font-size: 18px;
-        }
-        .mic-btn {
-            margin-top: 10px;
-            padding: 12px;
-            background: #0088ff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-    </style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h2>🎤 Voice + Typed Chatbot</h2>
+    <h2>🎤 Voice + Text Chatbot</h2>
 
-    <label>Select Reply Language:</label>
-    <select id="replyLang">
-        <option value="hindi">Hindi</option>
-        <option value="english" selected>English</option>
-    </select>
-
-    <label>Select Speech Recognition Language:</label>
-    <select id="speechLang">
+    <label>Select Language for Speaking:</label>
+    <select id="lang">
         <option value="hi-IN">Hindi</option>
         <option value="en-US" selected>English</option>
     </select>
 
+    <div id="chat-window">
+        <!-- Messages will appear here -->
+    </div>
+
     <textarea id="question" placeholder="Type your question here..."></textarea>
-
     <button onclick="askBot()">Ask</button>
-
-    <button class="mic-btn" onclick="startListening()">🎤 Speak</button>
-
-    <h3>Response:</h3>
-    <div id="response">No response yet.</div>
-</div>
-
-<script src="script.js"></script>
-</body>
-</html>
+    <button class="mic-btn" onclick="startListening()">🎤 Speak</bu
