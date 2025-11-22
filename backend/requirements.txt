@@ -1,4 +1,11 @@
-fastapi
-uvicorn
 groq
 pydantic
+fastapi
+uvicorn
+python-dotenv
+sentence-transformers
+faiss-cpu
+pymupdf
+langchain
+langchain-community
+openai
