@@ -1,92 +1,72 @@
-# model.py (FREE VERSION - Groq + SentenceTransformers)
-import os
+# model.py  (Render backend)
+
 import pickle
 import numpy as np
 import faiss
 from groq import Groq
-from sentence_transformers import SentenceTransformer
+import os
 
-# Load free local embedding model
-embedder = SentenceTransformer("all-MiniLM-L6-v2")
-
-# Groq free LLM client
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
-# File paths
 FAISS_PATH = "vector_store.faiss"
 META_PATH = "vector_store.pkl"
 
-_index = None
-_metadata = None
+# Cache
+index = None
+documents = None
 
 
-def _load_faiss():
-    """Lazy-load FAISS index & metadata once."""
-    global _index, _metadata
+def load_index():
+    global index, documents
+    if index is None:
+        index = faiss.read_index(FAISS_PATH)
 
-    if _index is None:
-        _index = faiss.read_index(FAISS_PATH)
-
+    if documents is None:
         with open(META_PATH, "rb") as f:
-            _metadata = pickle.load(f)
+            documents = pickle.load(f)
 
 
-def embed_text_local(text: str):
-    """Generate embeddings using local free model."""
-    emb = embedder.encode([text])[0]
-    return emb.astype("float32")
+def search_similar(query_vector, k=3):
+    load_index()
+    scores, idxs = index.search(np.array([query_vector]).astype("float32"), k)
+    return [documents[int(i)] for i in idxs[0]]
 
 
-def search_similar(query: str, top_k=3):
-    """Retrieve similar chunks."""
-    _load_faiss()
-    q = embed_text_local(query)
+# --------------------------
+# YOU DO NOT embed on Render
+# --------------------------
+def embed_text_remote(text):
+    """
+    Groq embedding API — FREE
+    """
+    client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
-    distances, indices = _index.search(np.array([q]), top_k)
-
-    results = []
-    for rank, idx in enumerate(indices[0]):
-        if idx == -1:
-            continue
-        results.append({
-            "rank": rank + 1,
-            "score": float(distances[0][rank]),
-            "text": _metadata[idx]["text"]
-        })
-
-    return results
+    res = client.embeddings.create(
+        model="text-embedding-3-small",
+        input=text
+    )
+    return np.array(res.data[0].embedding).astype("float32")
 
 
 def answer_query(question: str):
-    """Main RAG pipeline: Retrieve + Groq LLM answer."""
-    hits = search_similar(question, 3)
-
-    context = "\n\n".join(h["text"] for h in hits)
+    v = embed_text_remote(question)
+    docs = search_similar(v, 3)
+    context = "\n\n".join(docs)
 
     prompt = f"""
-You are a helpful assistant.
-Use ONLY the following retrieved context to answer.
-If context is insufficient, say: "Not enough information in the documents."
+Use ONLY this context:
 
-CONTEXT:
 {context}
 
-QUESTION:
-{question}
-
-Answer clearly.
+Question: {question}
 """
 
-    completion = client.chat.completions.create(
-        model="mixtral-8x7b-32768",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.2
+    client = Groq(api_key=os.environ["GROQ_API_KEY"])
+    res = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[{"role": "user", "content": prompt}]
     )
 
-    answer = completion.choices[0].message.content
-
-    return {"answer": answer, "sources": hits}
+    return {"answer": res.choices[0].message.content}
 
 
 def health_check():
-    return {"status": "ok", "faiss_loaded": _index is not None}
+    return {"status": "healthy"}
