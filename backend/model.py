@@ -1,55 +1,63 @@
 import os
 import json
-from langchain.vectorstores import FAISS
-from langchain.embeddings import OpenAIEmbeddings
+import numpy as np
+import faiss
+from sentence_transformers import SentenceTransformer
 from groq import Groq
 
-# Load vector store for document retrieval
-embeddings = OpenAIEmbeddings()
-db = FAISS.load_local("faiss_index", embeddings)
+# Load GROQ API Key
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+# Load embedding model (same as used while creating embeddings)
+embedder = SentenceTransformer("all-MiniLM-L6-v2")
+
+# Load FAISS index
+faiss_index = faiss.read_index("vector_store.faiss")
+
+# Load stored chunks (text data)
+with open("chunks.json", "r", encoding="utf-8") as f:
+    chunks = json.load(f)
 
 # Groq LLM client
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+client = Groq(api_key=GROQ_API_KEY)
 
-# Optional: load additional context from JSON
-def load_context():
-    try:
-        with open("context.json", "r", encoding="utf-8") as f:
-            return json.load(f)
-    except:
-        return {}
+
+def retrieve_context(query: str, top_k=3):
+    """Retrieve top-k relevant chunks from FAISS."""
+    q_emb = embedder.encode([query])
+    distances, indices = faiss_index.search(np.array(q_emb), top_k)
+
+    results = []
+    for idx in indices[0]:
+        if 0 <= idx < len(chunks):
+            results.append(chunks[idx]["text"])
+
+    return "\n".join(results)
+
 
 def ask_llm(question: str) -> str:
-    context_data = load_context()
+    """Main RAG pipeline → retrieve → combine → send to Groq."""
+    doc_context = retrieve_context(question)
 
-    # 1️⃣ Retrieve top 3 relevant document chunks
-    docs = db.similarity_search(question, k=3)
-    doc_context = "\n".join([doc.page_content for doc in docs])
-
-    # 2️⃣ Build prompt
     prompt = f"""
-Answer the question based on the following document context first.
-If not answerable, use general knowledge.
+You are a helpful assistant.
+
+First prefer answers based ONLY on the document context below.
+If the document does not contain the answer, then use general knowledge.
 
 Document Context:
 {doc_context}
 
-Additional Context:
-{context_data}
-
 User Question:
 {question}
+
+Answer:
 """
 
-    # 3️⃣ Query Groq LLM
     completion = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[{"role": "user", "content": prompt}],
-        temperature=0.7
+        temperature=0.3,
     )
 
     return completion.choices[0].message.content
-
-if __name__ == "__main__":
-    q = input("Ask a question: ")
-    print(ask_llm(q))

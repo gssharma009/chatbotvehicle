@@ -3,9 +3,8 @@ pydantic
 fastapi
 uvicorn
 python-dotenv
+
 sentence-transformers
 faiss-cpu
+numpy
 pymupdf
-langchain
-langchain-community
-openai

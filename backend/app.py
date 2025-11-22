@@ -1,50 +1,22 @@
+import uvicorn
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from model import ask_llm
-from rag import search_docs
 
 app = FastAPI()
 
-# Allow CORS for frontend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Replace with frontend URL if needed
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-class Q(BaseModel):
+class Query(BaseModel):
     question: str
 
 @app.post("/ask")
-async def ask_question(data: Q):
-    try:
-        query = data.question
+async def ask_question(data: Query):
+    answer = ask_llm(data.question)
+    return {"answer": answer}
 
-        # 🔍 Step 1: Check document relevance
-        context = search_docs(query)
+@app.get("/")
+async def root():
+    return {"status": "OK", "message": "Backend running!"}
 
-        # 🔥 Step 2: Pass context + query to model
-        prompt = f"""
-        Answer using the following document context if relevant.
-        If the context is not helpful, answer normally.
 
-        CONTEXT:
-        {context}
-
-        QUESTION:
-        {query}
-        """
-
-        chat_completion = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=[{"role": "user", "content": prompt}],
-        )
-
-        answer = chat_completion.choices[0].message.content
-        return {"answer": answer}
-
-    except Exception as e:
-        return {"error": str(e)}
+if __name__ == "__main__":
+    uvicorn.run("app:app", host="0.0.0.0", port=10000)
