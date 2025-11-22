@@ -1,8 +1,18 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from model import answer_query
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# allow all origins for testing
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],  # GET, POST, OPTIONS
+    allow_headers=["*"],
+)
 
 class QueryRequest(BaseModel):
     question: str
