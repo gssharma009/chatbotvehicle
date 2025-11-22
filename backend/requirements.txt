@@ -1,6 +1,8 @@
 fastapi
 uvicorn
 pydantic
-groq
+sentence-transformers
+torch
 faiss-cpu
+pdfplumber
 numpy
