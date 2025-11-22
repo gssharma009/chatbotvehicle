@@ -1,9 +1,6 @@
-# app.py
-import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
 from model import answer_query, health_check
 
 app = FastAPI()
@@ -11,7 +8,7 @@ app = FastAPI()
 # --- CORS ---
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # replace with your Netlify domain in production
+    allow_origins=["*"],  # replace "*" with frontend origin in prod
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,20 +21,12 @@ class Query(BaseModel):
 def root():
     return {"status": "ok", "message": "Backend running"}
 
-# Needed for preflight CORS checks from browser
-@app.options("/ask")
-def preflight():
-    return {"status": "ok"}
-
 @app.post("/ask")
 async def ask(req: Query):
     question = req.question.strip()
-
     if not question:
-        return {"answer": "Please send a valid question."}
-
-    result = answer_query(question)
-    return result
+        return {"answer": "Please send a non-empty question."}
+    return answer_query(question)
 
 @app.get("/health")
 def health():
