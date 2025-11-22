@@ -5,59 +5,79 @@ import faiss
 from sentence_transformers import SentenceTransformer
 from groq import Groq
 
-# Load GROQ API Key
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+# ----------------------------------------
+# Lazy-loaded globals
+# ----------------------------------------
+faiss_index = None
+chunks = None
+embedding_model = None
 
-# Load embedding model (same as used while creating embeddings)
-embedder = SentenceTransformer("all-MiniLM-L6-v2")
+# ----------------------------------------
+# Lazy load embedding model
+# ----------------------------------------
+def get_embedding_model():
+    global embedding_model
+    if embedding_model is None:
+        embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+    return embedding_model
 
-# Load FAISS index
-faiss_index = faiss.read_index("vector_store.faiss")
+# ----------------------------------------
+# Lazy load FAISS index and chunks
+# ----------------------------------------
+def load_faiss_index():
+    global faiss_index, chunks
+    if faiss_index is None:
+        faiss_index = faiss.read_index("vector_store.faiss")
+        with open("chunks.json", "r", encoding="utf-8") as f:
+            chunks = json.load(f)
+    return faiss_index, chunks
 
-# Load stored chunks (text data)
-with open("chunks.json", "r", encoding="utf-8") as f:
-    chunks = json.load(f)
+# ----------------------------------------
+# Groq client setup
+# ----------------------------------------
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
-# Groq LLM client
-client = Groq(api_key=GROQ_API_KEY)
-
-
-def retrieve_context(query: str, top_k=3):
-    """Retrieve top-k relevant chunks from FAISS."""
-    q_emb = embedder.encode([query])
-    distances, indices = faiss_index.search(np.array(q_emb), top_k)
-
-    results = []
-    for idx in indices[0]:
-        if 0 <= idx < len(chunks):
-            results.append(chunks[idx]["text"])
-
-    return "\n".join(results)
-
-
+# ----------------------------------------
+# Main LLM query function
+# ----------------------------------------
 def ask_llm(question: str) -> str:
-    """Main RAG pipeline → retrieve → combine → send to Groq."""
-    doc_context = retrieve_context(question)
 
+    # Load FAISS + chunks
+    index, chunks_data = load_faiss_index()
+
+    # Create embeddings for user question
+    model = get_embedding_model()
+    question_embedding = model.encode([question])
+    question_embedding = np.array(question_embedding).astype('float32')
+
+    # Search top 3 similar chunks
+    top_k = 3
+    distances, results = index.search(question_embedding, top_k)
+
+    retrieved_chunks = []
+    for idx in results[0]:
+        if str(idx) in chunks_data:
+            retrieved_chunks.append(chunks_data[str(idx)])
+
+    doc_context = "\n".join(retrieved_chunks)
+
+    # Build prompt
     prompt = f"""
-You are a helpful assistant.
-
-First prefer answers based ONLY on the document context below.
-If the document does not contain the answer, then use general knowledge.
+Answer the user's question based on the following document context.
+If not answerable from documents, use general knowledge.
 
 Document Context:
 {doc_context}
 
 User Question:
 {question}
-
-Answer:
 """
 
+    # Query Groq
     completion = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[{"role": "user", "content": prompt}],
-        temperature=0.3,
+        temperature=0.2
     )
 
     return completion.choices[0].message.content
