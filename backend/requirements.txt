@@ -3,4 +3,3 @@ uvicorn
 sentence-transformers
 faiss-cpu
 numpy
-pickle5
