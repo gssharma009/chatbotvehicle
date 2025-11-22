@@ -1,56 +1,46 @@
-# app.py
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from groq import Groq
-import os
+from model import ask_llm
+from rag import search_docs
 
 app = FastAPI()
 
+# Allow CORS for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # Replace with frontend URL if needed
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
-
 class Q(BaseModel):
     question: str
-    language: str = "english"   # default
 
 @app.post("/ask")
 async def ask_question(data: Q):
     try:
-        # Language enforcement prompt
-        lang = data.language.lower().strip()
+        query = data.question
 
-        if lang == "english":
-            system_prompt = (
-                "You MUST answer strictly in pure English. "
-                "Do NOT use Hindi or Hinglish."
-            )
-        elif lang == "hindi":
-            system_prompt = (
-                "आप केवल शुद्ध हिंदी में ही जवाब दें। "
-                "इंग्लिश या हिंग्लिश का बिल्कुल प्रयोग न करें।"
-            )
-        else:
-            system_prompt = (
-                "You MUST respond strictly in English."
-            )
+        # 🔍 Step 1: Check document relevance
+        context = search_docs(query)
 
-        # Call Groq
+        # 🔥 Step 2: Pass context + query to model
+        prompt = f"""
+        Answer using the following document context if relevant.
+        If the context is not helpful, answer normally.
+
+        CONTEXT:
+        {context}
+
+        QUESTION:
+        {query}
+        """
+
         chat_completion = client.chat.completions.create(
             model="llama-3.1-8b-instant",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": data.question}
-            ],
-            temperature=0.3
+            messages=[{"role": "user", "content": prompt}],
         )
 
         answer = chat_completion.choices[0].message.content
