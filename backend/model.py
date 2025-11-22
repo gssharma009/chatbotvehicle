@@ -1,58 +1,92 @@
+# model.py (FREE VERSION - Groq + SentenceTransformers)
 import os
-import json
+import pickle
 import numpy as np
 import faiss
-from sentence_transformers import SentenceTransformer
 from groq import Groq
+from sentence_transformers import SentenceTransformer
 
-embed_model = None
-index = None
-chunks = None
+# Load free local embedding model
+embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
-def load_everything():
-    global embed_model, index, chunks
+# Groq free LLM client
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-    if embed_model is None:
-        embed_model = SentenceTransformer("sentence-transformers/paraphrase-MiniLM-L3-v2")
+# File paths
+FAISS_PATH = "vector_store.faiss"
+META_PATH = "vector_store.pkl"
 
-    if index is None:
-        index = faiss.read_index("vector_store.faiss")
+_index = None
+_metadata = None
 
-    if chunks is None:
-        with open("chunks.json", "r", encoding="utf-8") as f:
-            chunks = json.load(f)
 
-def embed_text(t: str):
-    load_everything()
-    v = embed_model.encode([t])[0]
-    return np.array(v).astype("float32")
+def _load_faiss():
+    """Lazy-load FAISS index & metadata once."""
+    global _index, _metadata
 
-def search_similar(query: str, k=3):
-    load_everything()
-    qv = embed_text(query)
-    scores, idxs = index.search(np.array([qv]), k)
-    return [chunks[int(i)] for i in idxs[0]]
+    if _index is None:
+        _index = faiss.read_index(FAISS_PATH)
 
-# Groq LLM Client
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+        with open(META_PATH, "rb") as f:
+            _metadata = pickle.load(f)
 
-def ask_llm(question: str):
-    docs = search_similar(question, 3)
-    doc_text = "\n".join(docs)
+
+def embed_text_local(text: str):
+    """Generate embeddings using local free model."""
+    emb = embedder.encode([text])[0]
+    return emb.astype("float32")
+
+
+def search_similar(query: str, top_k=3):
+    """Retrieve similar chunks."""
+    _load_faiss()
+    q = embed_text_local(query)
+
+    distances, indices = _index.search(np.array([q]), top_k)
+
+    results = []
+    for rank, idx in enumerate(indices[0]):
+        if idx == -1:
+            continue
+        results.append({
+            "rank": rank + 1,
+            "score": float(distances[0][rank]),
+            "text": _metadata[idx]["text"]
+        })
+
+    return results
+
+
+def answer_query(question: str):
+    """Main RAG pipeline: Retrieve + Groq LLM answer."""
+    hits = search_similar(question, 3)
+
+    context = "\n\n".join(h["text"] for h in hits)
 
     prompt = f"""
-Use the following document context to answer:
+You are a helpful assistant.
+Use ONLY the following retrieved context to answer.
+If context is insufficient, say: "Not enough information in the documents."
 
-{doc_text}
+CONTEXT:
+{context}
 
-Question: {question}
+QUESTION:
+{question}
 
-If the answer is not in the context, answer generally.
+Answer clearly.
 """
 
-    res = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=[{"role": "user", "content": prompt}]
+    completion = client.chat.completions.create(
+        model="mixtral-8x7b-32768",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2
     )
 
-    return res.choices[0].message.content
+    answer = completion.choices[0].message.content
+
+    return {"answer": answer, "sources": hits}
+
+
+def health_check():
+    return {"status": "ok", "faiss_loaded": _index is not None}
