@@ -1,7 +1,7 @@
-fastapi
-uvicorn
 groq
 faiss-cpu
-sentence-transformers
-pymupdf
 numpy
+sentence-transformers
+python-dotenv
+fastapi
+uvicorn
