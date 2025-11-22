@@ -5,79 +5,48 @@ import faiss
 from sentence_transformers import SentenceTransformer
 from groq import Groq
 
-# ----------------------------------------
-# Lazy-loaded globals
-# ----------------------------------------
-faiss_index = None
-chunks = None
-embedding_model = None
+# Load model
+embed_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
-# ----------------------------------------
-# Lazy load embedding model
-# ----------------------------------------
-def get_embedding_model():
-    global embedding_model
-    if embedding_model is None:
-        embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
-    return embedding_model
+# Load FAISS index
+index = faiss.read_index("vector_store.faiss")
 
-# ----------------------------------------
-# Lazy load FAISS index and chunks
-# ----------------------------------------
-def load_faiss_index():
-    global faiss_index, chunks
-    if faiss_index is None:
-        faiss_index = faiss.read_index("vector_store.faiss")
-        with open("chunks.json", "r", encoding="utf-8") as f:
-            chunks = json.load(f)
-    return faiss_index, chunks
+# Load text chunks
+with open("chunks.json", "r", encoding="utf-8") as f:
+    chunks = json.load(f)
 
-# ----------------------------------------
-# Groq client setup
-# ----------------------------------------
+# Groq client
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
-# ----------------------------------------
-# Main LLM query function
-# ----------------------------------------
+def embed_text(text: str):
+    vector = embed_model.encode([text])[0]
+    return np.array(vector).astype("float32")
+
+def search_similar(query: str, k: int = 3):
+    query_emb = embed_text(query)
+    scores, idxs = index.search(np.array([query_emb]), k)
+    return [chunks[i] for i in idxs[0]]
+
 def ask_llm(question: str) -> str:
+    docs = search_similar(question, k=3)
+    context = "\n".join(docs)
 
-    # Load FAISS + chunks
-    index, chunks_data = load_faiss_index()
-
-    # Create embeddings for user question
-    model = get_embedding_model()
-    question_embedding = model.encode([question])
-    question_embedding = np.array(question_embedding).astype('float32')
-
-    # Search top 3 similar chunks
-    top_k = 3
-    distances, results = index.search(question_embedding, top_k)
-
-    retrieved_chunks = []
-    for idx in results[0]:
-        if str(idx) in chunks_data:
-            retrieved_chunks.append(chunks_data[str(idx)])
-
-    doc_context = "\n".join(retrieved_chunks)
-
-    # Build prompt
     prompt = f"""
-Answer the user's question based on the following document context.
-If not answerable from documents, use general knowledge.
+Use the document context below to answer the question.
 
 Document Context:
-{doc_context}
+{context}
 
-User Question:
+Question:
 {question}
+
+If the answer is not found in the document, reply with the closest possible answer.
 """
 
-    # Query Groq
-    completion = client.chat.completions.create(
+    resp = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[{"role": "user", "content": prompt}],
-        temperature=0.2
+        temperature=0.7
     )
 
-    return completion.choices[0].message.content
+    return resp.choices[0].message.content

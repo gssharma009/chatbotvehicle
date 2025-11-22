@@ -1,62 +1,50 @@
 import os
 import json
 import faiss
-import fitz  # PyMuPDF
+import numpy as np
 from sentence_transformers import SentenceTransformer
+import fitz  # PyMuPDF
 
-DOC_DIR = "docs"
-VECTOR_DB = "vector_store.faiss"
-CHUNKS_JSON = "chunks.json"
+DOCS_FOLDER = "docs/"
+CHUNK_SIZE = 500
 
-# Load a FREE local embedding model
-model = SentenceTransformer("all-MiniLM-L6-v2")
+embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
 def pdf_to_text(path):
-    """Extract text from a single PDF file"""
     doc = fitz.open(path)
     text = ""
     for page in doc:
         text += page.get_text()
     return text
 
-def chunk_text(text, chunk_size=500):
-    """Split text into small chunks"""
+def chunk_text(text, size=500):
     words = text.split()
-    chunks = []
-    for i in range(0, len(words), chunk_size):
-        chunk = " ".join(words[i:i+chunk_size])
-        chunks.append(chunk)
-    return chunks
+    return [" ".join(words[i:i+size]) for i in range(0, len(words), size)]
 
 def build_embeddings():
-    all_chunks = []
-    embeddings = []
+    chunks = []
+    vectors = []
 
-    for filename in os.listdir(DOC_DIR):
-        if filename.endswith(".pdf"):
-            path = os.path.join(DOC_DIR, filename)
-            print("Processing:", filename)
+    for file in os.listdir(DOCS_FOLDER):
+        if file.endswith(".pdf"):
+            print("Processing:", file)
+            text = pdf_to_text(os.path.join(DOCS_FOLDER, file))
+            parts = chunk_text(text, CHUNK_SIZE)
 
-            text = pdf_to_text(path)
-            chunks = chunk_text(text)
+            chunks.extend(parts)
+            vectors.extend(embedder.encode(parts))
 
-            for chunk in chunks:
-                all_chunks.append(chunk)
-                emb = model.encode(chunk)
-                embeddings.append(emb)
+    vectors = np.array(vectors).astype("float32")
 
-    # Save chunks
-    with open(CHUNKS_JSON, "w", encoding="utf-8") as f:
-        json.dump(all_chunks, f, ensure_ascii=False, indent=2)
+    index = faiss.IndexFlatL2(vectors.shape[1])
+    index.add(vectors)
 
-    # Build FAISS index
-    dim = len(embeddings[0])
-    index = faiss.IndexFlatL2(dim)
-    index.add(np.array(embeddings).astype("float32"))
-    faiss.write_index(index, VECTOR_DB)
+    faiss.write_index(index, "vector_store.faiss")
 
-    print("✅ Embeddings & FAISS index created successfully!")
+    with open("chunks.json", "w", encoding="utf-8") as f:
+        json.dump(chunks, f, indent=2)
+
+    print("Embedding build complete!")
 
 if __name__ == "__main__":
-    import numpy as np
     build_embeddings()

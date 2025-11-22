@@ -1,17 +1,32 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 from model import ask_llm
 
 app = FastAPI()
 
-class Query(BaseModel):
-    question: str
-
-@app.post("/ask")
-def ask_endpoint(data: Query):
-    answer = ask_llm(data.question)
-    return {"answer": answer}
+# CORS CONFIG
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],        # allow all
+    allow_credentials=True,
+    allow_methods=["*"],        # ⬅ OPTIONS allowed
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def home():
-    return {"status": "Backend running OK!"}
+    return {"status": "ok", "message": "Backend is running"}
+
+@app.options("/ask")
+def preflight():
+    return {"status": "ok"}
+
+@app.post("/ask")
+async def ask(data: dict):
+    question = data.get("question", "")
+    answer = ask_llm(question)
+    return {"answer": answer}
+
+@app.get("/hi")
+def hi():
+    return {"message": "hello from backend!"}
