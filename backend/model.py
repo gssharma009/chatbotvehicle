@@ -13,7 +13,7 @@ def load_everything():
     global embed_model, index, chunks
 
     if embed_model is None:
-        embed_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+        embed_model = SentenceTransformer("sentence-transformers/paraphrase-MiniLM-L3-v2")
 
     if index is None:
         index = faiss.read_index("vector_store.faiss")
