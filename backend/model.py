@@ -34,15 +34,13 @@ def search_similar(query_vector, k=3):
 # YOU DO NOT embed on Render
 # --------------------------
 def embed_text_remote(text):
-    """
-    Groq embedding API — FREE
-    """
     client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
     res = client.embeddings.create(
-        model="text-embedding-3-small",
+        model="groq-embedding-3-small",
         input=text
     )
+
     return np.array(res.data[0].embedding).astype("float32")
 
 
