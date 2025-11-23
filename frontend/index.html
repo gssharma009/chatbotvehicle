@@ -3,127 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bilingual Voice + Text Chatbot</title>
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    padding: 20px;
-}
-.container {
-    max-width: 600px;
-    margin: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-h2 { text-align: center; }
-
-#chat-container {
-    max-height: 400px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 10px;
-    background: #fafafa;
-}
-
-.message {
-    padding: 10px 14px;
-    margin: 5px 0;
-    border-radius: 20px;
-    display: inline-block;
-    max-width: 70%;
-    position: relative;
-    word-wrap: break-word;
-}
-
-.user {
-    background: #0084ff;
-    color: white;
-    float: right;
-    clear: both;
-    text-align: right;
-}
-
-.bot {
-    background: #e3e3e3;
-    color: black;
-    float: left;
-    clear: both;
-    text-align: left;
-}
-
-.timestamp {
-    font-size: 10px;
-    color: #666;
-    margin-top: 2px;
-    text-align: right;
-}
-
-.tts-btn {
-    font-size: 12px;
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-textarea, select, button {
-    width: 100%;
-    margin-top: 10px;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-button {
-    cursor: pointer;
-}
-
-.mic-btn {
-    background: #0088ff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-}
-
-.loader span {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    margin: 0 2px;
-    background: #888;
-    border-radius: 50%;
-    animation: bounce 0.6s infinite alternate;
-}
-.loader span:nth-child(2) { animation-delay: 0.2s; }
-.loader span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes bounce { to { transform: translateY(-8px); opacity: 0.5; } }
-</style>
+<title>हिंदी + English Voice Chatbot</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-<h2>🎤 Voice + Text Chatbot</h2>
+    <h2>Voice + Text Chatbot (Hindi & English)</h2>
 
-<label>Select Language:</label>
-<select id="lang">
-    <option value="hi-IN">Hindi</option>
-    <option value="en-US" selected>English</option>
-</select>
+    <div class="controls">
+        <select id="lang">
+            <option value="hi-IN">हिंदी</option>
+            <option value="en-US" selected>English</option>
+        </select>
 
-<label>
-    <input type="checkbox" id="tts-checkbox"> Speak bot responses
-</label>
+        <label class="tts-label">
+            <input type="checkbox" id="tts-checkbox" checked> Auto Speak Bot Reply
+        </label>
+    </div>
 
-<div id="chat-container"></div>
+    <div id="chat-container"></div>
 
-<textarea id="question" placeholder="Type your question here..."></textarea>
-<button onclick="askBot()">Ask</button>
-<button class="mic-btn" onclick="startListening()">🎤 Speak</button>
+    <div class="input-area">
+        <textarea id="question" rows="2" placeholder="यहाँ अपना सवाल लिखें या बोलें..."></textarea>
+        <div class="buttons">
+            <button onclick="askBot()" class="send-btn">Send</button>
+            <button onclick="startListening()" class="mic-btn" id="mic-btn">Speak</button>
+        </div>
+    </div>
+</div>
 
 <script src="script.js"></script>
-</div>
 </body>
 </html>
