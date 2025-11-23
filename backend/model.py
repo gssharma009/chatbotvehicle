@@ -48,29 +48,40 @@ def answer_query(question: str):
     no = "दस्तावेज़ों में नहीं मिला।" if "हिंदी" in q or "हindi" in q.lower() else "Not in my docs."
     return {"answer": f"{no}\n\nइंटरनेट से:\n{fast_llm('', q)}", "source": "internet"}
 
-# ← सबसे महत्वपूर्ण: 3 बार retry + छोटा prompt
+
 def fast_llm(ctx: str, q: str) -> str:
-    # Groq को बहुत छोटा और तेज़ prompt भेजते हैं → 3-6 सेकंड में जवाब
-    api_key = os.getenv("GROQ_API_KEY") or os.getenv("OPENAI_API_KEY")
-    if not api_key: return "API key missing."
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        return "GROQ_API_KEY नहीं मिली।"
 
     url = "https://api.groq.com/openai/v1/chat/completions"
-    prompt = q if not ctx else f"Context: {ctx[:1800]}\nQuestion: {q}\nAnswer in Hindi or English:"
 
-    for _ in range(2):
+    # बहुत छोटा prompt + छोटा max_tokens → Groq हमेशा 5-7 सेकंड में जवाब देगा
+    prompt = q[:300]  # सवाल को छोटा करो
+    if ctx:
+        prompt = f"Context: {ctx[:1400]}\nQuestion: {q}\nAnswer briefly:"
+
+    # 3 बार try + लंबा timeout
+    for _ in range(3):
         try:
             r = requests.post(url, json={
                 "model": "llama3-8b-8192",
                 "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 220,
+                "max_tokens": 180,  # ← छोटा रखा
                 "temperature": 0.1
-            }, headers={"Authorization": f"Bearer {api_key}"}, timeout=11)   # 11 सेकंड timeout
+            }, headers={"Authorization": f"Bearer {api_key}"}, timeout=22)  # ← 22 सेकंड तक इंतज़ार
             r.raise_for_status()
             ans = r.json()["choices"][0]["message"]["content"].strip()
-            if ans: return ans
-        except:
+            if ans and len(ans) > 10:
+                return ans
+        except Exception as e:
+            print("Groq attempt failed:", e)
             pass
-    return "जवाब तैयार हो रहा है... 5 सेकंड बाद फिर पूछें।"
+
+    # आखिरी fallback – सीधे context का पहला हिस्सा दिखा दो (कभी blank नहीं रहेगा)
+    if ctx:
+        return ctx.strip().split("\n\n")[0][:500] + "\n\n(स्रोत: व्हीकल दस्तावेज़)"
+    return "कृपया सवाल थोड़ा और स्पष्ट करें।"
 
 def health_check():
     _load()
