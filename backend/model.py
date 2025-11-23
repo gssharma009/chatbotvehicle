@@ -42,7 +42,7 @@ def _lazy_init():
         print(f"[INIT] Ready! Chunks: {len(chunks)}")
 
 
-def answer_query(question: str, top_k: int = 15, threshold: float = 0.38):  # ← ये दो बदलाव सबसे ज़रूरी हैं
+def answer_query(question: str, top_k: int = 20, threshold: float = 0.30):  # ← ये दो बदलाव सबसे ज़रूरी हैं
     _lazy_init()
     if not all([model, index, chunks]):
         return {"answer": "Bot is loading… 20-30 seconds बाद फिर पूछें।", "source": "loading"}
