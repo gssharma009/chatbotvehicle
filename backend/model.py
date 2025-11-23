@@ -52,16 +52,18 @@ def answer_query(question: str):
 def fast_llm(ctx: str, q: str) -> str:
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
-        return "Error: No API key"
+        return "API key missing."
 
-    # Mixtral + Llama3-70B दोनों try करो (जो पहले जवाब दे
-    models = ["mixtral-8x7b-32768", "llama3-70b-8192"]   # 70B वाला और भी तेज़/सटीक है
+    # सबसे अच्छे 2 फ्री models – जो भी पहले जवाब दे
+    models = ["mixtral-8x7b-32768", "llama3-70b-8192"]
 
-    clean_ctx = " ".join(ctx.replace("\n", " ").split())[:2600]
+    # Context को साफ करो
+    clean_ctx = " ".join(ctx.replace("\n", " ").split())[:2800]
 
-    prompt = f"""You are an expert vehicle assistant.
-Answer in the same language as the question.
-Use bullet points. Keep it very short and clean.
+    prompt = f"""You are a professional vehicle assistant.
+Answer in the same language as the question (Hindi or English).
+Use bullet points if possible. Be concise and clear.
+Never repeat the full context.
 
 Context: {clean_ctx}
 
@@ -71,12 +73,17 @@ Answer:"""
 
     for model_name in models:
         try:
-            r = requests.post("https://api.groq.com/openai/v1/chat/completions", json={
-                "model": model_name,
-                "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 220,
-                "temperature": 0.1
-            }, headers={"Authorization": f"Bearer {api_key}"}, timeout=15)
+            r = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                json={
+                    "model": model_name,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 220,
+                    "temperature": 0.15
+                },
+                headers={"Authorization": f"Bearer {api_key}"},
+                timeout=16
+            )
             r.raise_for_status()
             ans = r.json()["choices"][0]["message"]["content"].strip()
             if ans and len(ans) > 20:
@@ -84,15 +91,17 @@ Answer:"""
         except:
             continue
 
-    # आखिरी fallback – खुद से clean summary बना दो (कभी raw context नहीं दिखेगा)
-    lines = [line.strip() for line in ctx.split("\n") if line.strip() and "CAUTION" not in line]
-    summary = "हाई-वोल्टेज सिस्टम की सुरक्षा:\n"
-    summary += "• नारंगी HV केबल्स को कभी न छुएं अगर वो खराब या खुले हों।\n"
-    if any("water" in l.lower() for l in lines):
-        summary += "• पानी में भी सुरक्षित है (300 mm तक डूबने पर भी शॉक नहीं लगता)।\n"
-    if any("seat" in l.lower() for l in lines):
-        summary += "• सीट एडजस्ट करते समय सावधानी बरतें।"
-    return summary.strip()
+    # FINAL FALLBACK – 100% clean, zero hardcode, always useful
+    # सिर्फ context से पहली 3-4 important sentences निकालकर bullet बनाओ
+    sentences = [s.strip() for s in clean_ctx.split(". ") if s.strip() and len(s) > 20]
+    if len(sentences) >= 3:
+        summary = "मुख्य जानकारी:\n" + "\n".join(f"• {s}." for s in sentences[:4])
+    elif sentences:
+        summary = sentences[0]
+    else:
+        summary = "दस्तावेज़ से जानकारी मिली, लेकिन संक्षेप में बताने में दिक्कत हुई।"
+
+    return summary
 
 def health_check():
     _load()
