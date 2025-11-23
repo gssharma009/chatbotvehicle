@@ -52,36 +52,44 @@ def answer_query(question: str):
 def fast_llm(ctx: str, q: str) -> str:
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
-        return "GROQ_API_KEY नहीं मिली।"
+        return "API key नहीं मिली।"
 
+    # ← यही दो लाइनें बदलनी हैं
     url = "https://api.groq.com/openai/v1/chat/completions"
+    model_name = "mixtral-8x7b-32768"        # ← ये नया model (सबसे अच्छा फ्री)
 
-    # बहुत छोटा prompt + छोटा max_tokens → Groq हमेशा 5-7 सेकंड में जवाब देगा
-    prompt = q[:300]  # सवाल को छोटा करो
-    if ctx:
-        prompt = f"Context: {ctx[:1400]}\nQuestion: {q}\nAnswer briefly:"
+    # Context को साफ करके भेजो
+    clean_ctx = " ".join(ctx.replace("\n", " ").split())[:3000]
 
-    # 3 बार try + लंबा timeout
-    for _ in range(3):
+    prompt = f"""You are an expert vehicle assistant. 
+Answer ONLY in the language of the question (Hindi or English).
+Use bullet points if needed. Keep answer short, clear and accurate.
+Never repeat the full context.
+
+Context: {clean_ctx}
+
+Question: {q}
+
+Answer directly:"""
+
+    for _ in range(2):
         try:
             r = requests.post(url, json={
-                "model": "llama3-8b-8192",
+                "model": model_name,           # ← यही बदलाव जादू करेगा
                 "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 180,  # ← छोटा रखा
-                "temperature": 0.1
-            }, headers={"Authorization": f"Bearer {api_key}"}, timeout=22)  # ← 22 सेकंड तक इंतज़ार
+                "max_tokens": 260,
+                "temperature": 0.2
+            }, headers={"Authorization": f"Bearer {api_key}"}, timeout=20)
             r.raise_for_status()
             ans = r.json()["choices"][0]["message"]["content"].strip()
-            if ans and len(ans) > 10:
+            if ans and len(ans) > 15:
                 return ans
         except Exception as e:
-            print("Groq attempt failed:", e)
-            pass
+            print("Mixtral attempt failed:", e)
 
-    # आखिरी fallback – सीधे context का पहला हिस्सा दिखा दो (कभी blank नहीं रहेगा)
-    if ctx:
-        return ctx.strip().split("\n\n")[0][:500] + "\n\n(स्रोत: व्हीकल दस्तावेज़)"
-    return "कृपया सवाल थोड़ा और स्पष्ट करें।"
+    # आखिरी fallback – साफ context दिखाओ
+    first_part = clean_ctx.split(". ")[0] + "."
+    return first_part[:500] + "\n\n(स्रोत: व्हीकल दस्तावेज़)"
 
 def health_check():
     _load()
