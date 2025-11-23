@@ -50,29 +50,27 @@ def answer_query(question: str):
 
 # ← सबसे महत्वपूर्ण: 3 बार retry + छोटा prompt
 def fast_llm(ctx: str, q: str) -> str:
-    api_key = os.getenv("OPENAI_API_KEY") or os.getenv("GROQ_API_KEY")
-    if not api_key: return "API key नहीं है।"
+    # Groq को बहुत छोटा और तेज़ prompt भेजते हैं → 3-6 सेकंड में जवाब
+    api_key = os.getenv("GROQ_API_KEY") or os.getenv("OPENAI_API_KEY")
+    if not api_key: return "API key missing."
 
-    url = "https://api.openai.com/v1/chat/completions"
-    model_name = "gpt-4o-mini" if os.getenv("OPENAI_API_KEY") else "llama3-8b-8192"
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    prompt = q if not ctx else f"Context: {ctx[:1800]}\nQuestion: {q}\nAnswer in Hindi or English:"
 
-    lang = "Hindi" if any("\u0900"<=c<="\u097F" for c in q) else "English"
-    prompt = f"Answer in {lang} only. Context: {ctx}\nQuestion: {q}\nAnswer directly:"
-
-    for _ in range(3):                     # ← 3 बार try करेगा
+    for _ in range(2):
         try:
             r = requests.post(url, json={
-                "model": model_name,
+                "model": "llama3-8b-8192",
                 "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 280,
+                "max_tokens": 220,
                 "temperature": 0.1
-            }, headers={"Authorization": f"Bearer {api_key}"}, timeout=15)
+            }, headers={"Authorization": f"Bearer {api_key}"}, timeout=11)   # 11 सेकंड timeout
             r.raise_for_status()
             ans = r.json()["choices"][0]["message"]["content"].strip()
             if ans: return ans
         except:
             pass
-    return "सॉरी, अभी नेटवर्क इश्यू है। 10 सेकंड बाद फिर पूछें।"
+    return "जवाब तैयार हो रहा है... 5 सेकंड बाद फिर पूछें।"
 
 def health_check():
     _load()
