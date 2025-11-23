@@ -81,19 +81,11 @@ async function askBot() {
 
         const data = await res.json();
 
-        // This handles your current backend format: { "results": { "answer": "..." } }
-        let answer = "";
-        if (data.results && data.results.answer) {
-            answer = data.results.answer;
-        } else if (data.answer) {
-            answer = data.answer;
-        } else {
-            answer = "No answer received.";
-        }
+        // ← THIS IS THE ONLY LINE THAT MATTERS NOW
+        const answer = data?.results?.answer || data?.answer || "No response from backend";
 
         addMessage(answer, "bot");
 
-        // Auto-speak if checkbox is on
         if (ttsCheckbox.checked) {
             speak(answer);
         }
