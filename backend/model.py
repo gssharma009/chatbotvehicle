@@ -1,4 +1,4 @@
-# model.py - FINAL VERSION (Render free tier safe + all features you wanted)
+# model.py - FINAL PRODUCTION VERSION (OpenAI gpt-4o-mini first → instant replies)
 import faiss
 import pickle
 import numpy as np
@@ -24,17 +24,13 @@ def _lazy_init():
     if model is not None:
         return
     with _init_lock:
-        if model is not None:  # double-check
+        if model is not None:
             return
-
-        print("[INIT] Loading low-memory model...")
+        print("[INIT] Loading model (low-memory mode)...")
         model = SentenceTransformer(
             MODEL_PATH,
             device="cpu",
-            model_kwargs={
-                "torch_dtype": torch.float16,   # float16 is stable & low RAM
-                "low_cpu_mem_usage": True
-            }
+            model_kwargs={"torch_dtype": torch.float16, "low_cpu_mem_usage": True}
         )
         gc.collect()
 
@@ -43,29 +39,27 @@ def _lazy_init():
         if os.path.exists(CHUNKS_PATH):
             with open(CHUNKS_PATH, "rb") as f:
                 chunks = pickle.load(f)
-
-        print(f"[INIT] Ready! Chunks loaded: {len(chunks) if chunks else 0}")
+        print(f"[INIT] Ready! Chunks: {len(chunks) if chunks else 0}")
 
 
 def answer_query(question: str, top_k: int = 6, threshold: float = 0.50):
     _lazy_init()
     if not all([model, index, chunks]):
-        return {"answer": "Bot is waking up… try again in 20-30 seconds.", "source": "loading"}
+        return {"answer": "Bot is starting… try again in 20-30 seconds.", "source": "loading"}
 
-    q_clean = question.strip()
-    q_lower = q_clean.lower()
+    q = question.strip()
+    q_lower = q.lower()
 
-    # 1. Greetings (instant reply)
-    greetings = ["hi", "hello", "hey", "namaste", "नमस्ते", "हाय", "हैलो", "good morning", "सुप्रभात", "hola"]
-    if any(g in q_lower for g in greetings):
+    # Instant greetings
+    if any(g in q_lower for g in ["hi", "hello", "hey", "namaste", "नमस्ते", "हाय", "हैलो", "morning", "सुप्रभात"]):
         return {
-            "answer": "नमस्ते! Hello!\nमैं आपका व्हीकल असिस्टेंट हूँ। कार, बाइक, इलेक्ट्रिक व्हीकल, मेंटेनेंस — हिंदी या English में कुछ भी पूछ सकते हैं!\n\nक्या मदद चाहिए?",
+            "answer": "नमस्ते! Hello!\nमैं आपका व्हीकल असिस्टेंट हूँ। कार, बाइक, EV, मेंटेनेंस — हिंदी या English में कुछ भी पूछो!\n\nक्या मदद चाहिए आज?",
             "source": "greeting"
         }
 
-    # 2. RAG search
+    # RAG Search
     with torch.no_grad():
-        q_emb = model.encode([q_clean], normalize_embeddings=True, batch_size=1, show_progress_bar=False)[0]
+        q_emb = model.encode([q], normalize_embeddings=True, batch_size=1)[0]
 
     D, I = index.search(np.array([q_emb]).astype("float32"), top_k)
 
@@ -74,33 +68,38 @@ def answer_query(question: str, top_k: int = 6, threshold: float = 0.50):
         if idx != -1 and dist > threshold:
             context_chunks.append(chunks[idx])
 
-    # 3. Found in docs → answer from your PDFs
+    # Found in your docs
     if context_chunks:
-        context = " ".join(context_chunks)[:3800]  # safe limit
+        context = " ".join(context_chunks)[:3800]
         sources = [c[:140] + "..." for c in context_chunks[:2]]
-        answer = generate_with_llm(context, q_clean)
+        answer = generate_with_llm(context, q)
         return {"answer": answer, "sources": sources, "source": "docs"}
 
-    # 4. Not found in docs → honest + internet fallback
-    is_hindi = any("\u0900" <= c <= "\u097F" for c in q_clean)
+    # Not found → honest + internet answer
+    is_hindi = any("\u0900" <= c <= "\u097F" for c in q)
     no_doc = "दस्तावेज़ों में इसका जवाब नहीं मिला।" if is_hindi else "Not found in my vehicle documents."
-    general = generate_general_answer(q_clean)
-    fallback = f"{no_doc}\n\nइंटरनेट से सामान्य जानकारी:\n{general}" if is_hindi else f"{no_doc}\n\nGeneral info from the internet:\n{general}"
-
+    general = generate_general_answer(q)
+    fallback = f"{no_doc}\n\nइंटरनेट से जानकारी:\n{general}" if is_hindi else f"{no_doc}\n\nGeneral info:\n{general}"
     return {"answer": fallback, "source": "internet"}
 
 
 def generate_with_llm(context: str, question: str) -> str:
-    api_key = os.getenv("GROQ_API_KEY") or os.getenv("OPENAI_API_KEY")
+    # OpenAI first (super fast), Groq fallback only if no OpenAI key
+    api_key = os.getenv("OPENAI_API_KEY") or os.getenv("GROQ_API_KEY")
     if not api_key:
-        return "API key not set."
+        return "API key missing."
 
-    context = " ".join(context.split()[:700])  # ~500-600 words max
-    url = "https://api.groq.com/openai/v1/chat/completions" if os.getenv("GROQ_API_KEY") else "https://api.openai.com/v1/chat/completions"
-    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+    if os.getenv("OPENAI_API_KEY"):
+        url = "https://api.openai.com/v1/chat/completions"
+        model_name = "gpt-4o-mini"           # 2-4 seconds max, never times out
+    else:
+        url = "https://api.groq.com/openai/v1/chat/completions"
+        model_name = "llama3-8b-8192"
 
+    context = " ".join(context.split()[:700])
     lang = "Hindi" if any("\u0900" <= c <= "\u097F" for c in question) else "English"
-    prompt = f"""You are an expert vehicle assistant. Answer in {lang} only using the context below. Keep it short (2-4 sentences).
+
+    prompt = f"""You are an expert vehicle assistant. Answer in {lang} using only the context. Keep it short and clear.
 
 Context: {context}
 
@@ -109,48 +108,49 @@ Question: {question}
 Answer:"""
 
     payload = {
-        "model": "llama3-8b-8192" if os.getenv("GROQ_API_KEY") else "gpt-4o-mini",
+        "model": model_name,
         "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 280,
+        "max_tokens": 300,
         "temperature": 0.3
     }
 
-    for _ in range(2):
-        try:
-            r = requests.post(url, json=payload, headers=headers, timeout=18)
-            r.raise_for_status()
-            ans = r.json()["choices"][0]["message"]["content"].strip()
-            if ans and len(ans) > 10:
-                return ans
-        except Exception as e:
-            print("LLM error:", e)
-    return "सॉरी, अभी जवाब देने में दिक्कत हो रही है। थोड़ी देर बाद फिर पूछें।\n(Temporary issue – try again soon)"
+    try:
+        r = requests.post(url, json=payload, headers={"Authorization": f"Bearer {api_key}"}, timeout=20)
+        r.raise_for_status()
+        ans = r.json()["choices"][0]["message"]["content"].strip()
+        return ans if ans else "No answer generated."
+    except:
+        return "Temporary issue — please try again in a moment."
 
 
 def generate_general_answer(question: str) -> str:
-    api_key = os.getenv("GROQ_API_KEY") or os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("OPENAI_API_KEY") or os.getenv("GROQ_API_KEY")
     if not api_key:
-        return "General search unavailable."
+        return "Search unavailable."
 
-    url = "https://api.groq.com/openai/v1/chat/completions" if os.getenv("GROQ_API_KEY") else "https://api.openai.com/v1/chat/completions"
-    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+    if os.getenv("OPENAI_API_KEY"):
+        url = "https://api.openai.com/v1/chat/completions"
+        model_name = "gpt-4o-mini"
+    else:
+        url = "https://api.groq.com/openai/v1/chat/completions"
+        model_name = "llama3-8b-8192"
 
     lang = "Hindi" if any("\u0900" <= c <= "\u097F" for c in question) else "English"
-    prompt = f"Brief helpful answer in {lang} (max 3 sentences):\nQuestion: {question}\nAnswer:"
+    prompt = f"Brief helpful answer in {lang} (2-3 sentences max):\nQuestion: {question}\nAnswer:"
 
     payload = {
-        "model": "llama3-8b-8192" if os.getenv("GROQ_API_KEY") else "gpt-4o-mini",
+        "model": model_name,
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 220,
         "temperature": 0.4
     }
 
     try:
-        r = requests.post(url, json=payload, headers=headers, timeout=14)
+        r = requests.post(url, json=payload, headers={"Authorization": f"Bearer {api_key}"}, timeout=16)
         r.raise_for_status()
         return r.json()["choices"][0]["message"]["content"].strip()
     except:
-        return "इंटरनेट जवाब अभी नहीं मिल पाया। व्हीकल से जुड़ा सवाल पूछें!"
+        return "इंटरनेट से जवाब नहीं मिल पाया।"
 
 
 def health_check():
