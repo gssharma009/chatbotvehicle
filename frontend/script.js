@@ -1,5 +1,5 @@
-// script.js - 100% working with your Render backend
-const API_URL = "https://chatbotvehicle-backend.onrender.com/ask";  // ← Change only if your URL is different
+// script.js - FINAL VERSION (Works with your Render backend)
+const API_URL = "https://chatbotvehicle-backend.onrender.com/ask";  // ← Your live URL
 
 const chatContainer = document.getElementById("chat-container");
 const questionInput = document.getElementById("question");
@@ -20,6 +20,7 @@ function addMessage(text, sender) {
     time.textContent = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
     div.appendChild(time);
 
+    // Speak button for bot messages
     if (sender === "bot") {
         const speaker = document.createElement("span");
         speaker.className = "tts-btn";
@@ -50,7 +51,7 @@ function speak(text) {
     if ('speechSynthesis' in window) {
         speechSynthesis.cancel();
         const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = langSelect.value;
+        utter.lang = langSelect.value;  // hi-IN or en-US
         utter.rate = 0.9;
         speechSynthesis.speak(utter);
     }
@@ -72,24 +73,42 @@ async function askBot() {
         });
 
         removeLoader();
-        if (!res.ok) throw new Error("Server error");
+
+        if (!res.ok) {
+            addMessage("Server error. Try again.", "bot");
+            return;
+        }
 
         const data = await res.json();
-        const answer = data.answer || "No response";
+
+        // This handles your current backend format: { "results": { "answer": "..." } }
+        let answer = "";
+        if (data.results && data.results.answer) {
+            answer = data.results.answer;
+        } else if (data.answer) {
+            answer = data.answer;
+        } else {
+            answer = "No answer received.";
+        }
 
         addMessage(answer, "bot");
-        if (ttsCheckbox.checked) speak(answer);
+
+        // Auto-speak if checkbox is on
+        if (ttsCheckbox.checked) {
+            speak(answer);
+        }
 
     } catch (err) {
         removeLoader();
-        addMessage("Network error. Please try again.", "bot");
+        console.error(err);
+        addMessage("Network error. Check connection.", "bot");
     }
 }
 
-// Voice Input
+// Voice Input (Chrome/Edge)
 function startListening() {
     if (!('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
-        alert("Voice not supported in this browser. Use Chrome/Edge.");
+        alert("Voice not supported. Use Chrome/Edge.");
         return;
     }
 
@@ -114,7 +133,7 @@ function startListening() {
     };
 }
 
-// Enter key to send
+// Send on Enter (Shift+Enter for new line)
 questionInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
