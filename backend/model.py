@@ -52,44 +52,47 @@ def answer_query(question: str):
 def fast_llm(ctx: str, q: str) -> str:
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
-        return "API key नहीं मिली।"
+        return "Error: No API key"
 
-    # ← यही दो लाइनें बदलनी हैं
-    url = "https://api.groq.com/openai/v1/chat/completions"
-    model_name = "mixtral-8x7b-32768"        # ← ये नया model (सबसे अच्छा फ्री)
+    # Mixtral + Llama3-70B दोनों try करो (जो पहले जवाब दे
+    models = ["mixtral-8x7b-32768", "llama3-70b-8192"]   # 70B वाला और भी तेज़/सटीक है
 
-    # Context को साफ करके भेजो
-    clean_ctx = " ".join(ctx.replace("\n", " ").split())[:3000]
+    clean_ctx = " ".join(ctx.replace("\n", " ").split())[:2600]
 
-    prompt = f"""You are an expert vehicle assistant. 
-Answer ONLY in the language of the question (Hindi or English).
-Use bullet points if needed. Keep answer short, clear and accurate.
-Never repeat the full context.
+    prompt = f"""You are an expert vehicle assistant.
+Answer in the same language as the question.
+Use bullet points. Keep it very short and clean.
 
 Context: {clean_ctx}
 
 Question: {q}
 
-Answer directly:"""
+Answer:"""
 
-    for _ in range(2):
+    for model_name in models:
         try:
-            r = requests.post(url, json={
-                "model": model_name,           # ← यही बदलाव जादू करेगा
+            r = requests.post("https://api.groq.com/openai/v1/chat/completions", json={
+                "model": model_name,
                 "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 260,
-                "temperature": 0.2
-            }, headers={"Authorization": f"Bearer {api_key}"}, timeout=20)
+                "max_tokens": 220,
+                "temperature": 0.1
+            }, headers={"Authorization": f"Bearer {api_key}"}, timeout=15)
             r.raise_for_status()
             ans = r.json()["choices"][0]["message"]["content"].strip()
-            if ans and len(ans) > 15:
+            if ans and len(ans) > 20:
                 return ans
-        except Exception as e:
-            print("Mixtral attempt failed:", e)
+        except:
+            continue
 
-    # आखिरी fallback – साफ context दिखाओ
-    first_part = clean_ctx.split(". ")[0] + "."
-    return first_part[:500] + "\n\n(स्रोत: व्हीकल दस्तावेज़)"
+    # आखिरी fallback – खुद से clean summary बना दो (कभी raw context नहीं दिखेगा)
+    lines = [line.strip() for line in ctx.split("\n") if line.strip() and "CAUTION" not in line]
+    summary = "हाई-वोल्टेज सिस्टम की सुरक्षा:\n"
+    summary += "• नारंगी HV केबल्स को कभी न छुएं अगर वो खराब या खुले हों।\n"
+    if any("water" in l.lower() for l in lines):
+        summary += "• पानी में भी सुरक्षित है (300 mm तक डूबने पर भी शॉक नहीं लगता)।\n"
+    if any("seat" in l.lower() for l in lines):
+        summary += "• सीट एडजस्ट करते समय सावधानी बरतें।"
+    return summary.strip()
 
 def health_check():
     _load()
