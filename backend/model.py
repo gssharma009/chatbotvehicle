@@ -89,27 +89,56 @@ def answer_query(question: str, top_k: int = 6, threshold: float = 0.52):
         "source": "internet_fallback"
     }
 
-
 def generate_with_llm(context: str, question: str) -> str:
     api_key = os.getenv("GROQ_API_KEY") or os.getenv("OPENAI_API_KEY")
     if not api_key:
         return "API key missing."
 
-    import requests
+    # ←←← CRITICAL FIXES HERE ←←←
+    context = context.replace("  ", " ").strip()
+    context = " ".join(context.split()[:900])[:3800]   # Hard cap ~900 words
+
     url = "https://api.groq.com/openai/v1/chat/completions" if os.getenv("GROQ_API_KEY") else "https://api.openai.com/v1/chat/completions"
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
 
     is_hindi = any('\u0900' <= c <= '\u097F' for c in question)
-    lang_instruct = "Answer in Hindi if question in Hindi, else English."
-    prompt = f"{lang_instruct}\nContext: {context[:1200]}\nQuestion: {question}\nAnswer:"
+    lang_instruction = "Answer in Hindi only if the question is in Hindi, otherwise English." if is_hindi else "Answer in clear English."
 
-    data = {"model": "llama3-8b-8192" if os.getenv("GROQ_API_KEY") else "gpt-4o-mini", "messages": [{"role": "user", "content": prompt}], "max_tokens": 250, "temperature": 0.2}
-    try:
-        r = requests.post(url, json=data, headers=headers, timeout=12)
-        r.raise_for_status()
-        return r.json()["choices"][0]["message"]["content"].strip()
-    except:
-        return "Issue generating reply. Try again."
+    # Better prompt + shorter context
+    prompt = f"""You are an expert vehicle assistant.
+{lang_instruction}
+Use only the context below to answer the question concisely (2-4 sentences max).
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:"""
+
+    data = {
+        "model": "llama3-8b-8192" if os.getenv("GROQ_API_KEY") else "gpt-4o-mini",
+        "messages": [{"role": "user", "content": prompt}],
+        "max_tokens": 300,
+        "temperature": 0.3,
+        "top_p": 0.9
+    }
+
+    for attempt in range(3):  # Retry up to 3 times
+        try:
+            r = requests.post(url, json=data, headers=headers, timeout=20)  # ← increased from 12 → 20
+            r.raise_for_status()
+            response = r.json()["choices"][0]["message"]["content"].strip()
+            if response and len(response) > 10:
+                return response
+            else:
+                continue  # empty → retry
+        except Exception as e:
+            print(f"LLM attempt {attempt+1} failed:", e)
+            if attempt == 2:
+                return "सॉरी, अभी जवाब जनरेट करने में दिक्कत आ रही है। थोड़ी देर बाद फिर पूछें।\n(English: Temporary generation issue – try again in a minute.)"
+    return "Temporary LLM issue – please try again."
+
 
 def generate_general_answer(question: str) -> str:
     """Uses the same LLM but without any document context – pure general knowledge"""
