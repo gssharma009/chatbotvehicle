@@ -1,16 +1,17 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from model import answer_query
+from model import answer_query, health_check
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
+import os
 
 app = FastAPI()
 
-# allow all origins for testing
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # or your frontend URL
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # GET, POST, OPTIONS
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -24,6 +25,15 @@ def ask(request: QueryRequest):
     results = answer_query(request.question)
     return {"results": results}
 
+@app.get("/health")
+def health():
+    return health_check()
+
 @app.get("/")
 def root():
-    return {"message": "FastAPI + MiniLM-L3 + FAISS (Render-friendly)"}
+    return {"message": "Bilingual RAG Chatbot - Ready!"}
+
+# For Render: Bind to $PORT
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

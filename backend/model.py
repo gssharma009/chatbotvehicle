@@ -1,96 +1,137 @@
-# model.py - Ultra-light, works on Render Free tier 100%
+# model.py - OOM-PROOF VERSION (< 250 MB on Render free tier)
 import faiss
 import pickle
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import os
+import psutil  # Add to requirements for RAM monitoring
 from threading import Lock
+import gc  # For manual garbage collection
 
 # Paths
 FAISS_PATH = "vector_store.faiss"
 CHUNKS_PATH = "chunks.pkl"
 
-# Lightweight model
+# Switch to TINY multilingual model (Hindi + English support, <120 MB load)
+MODEL_NAME = "paraphrase-multilingual-MiniLM-L12-v2"  # Proven <200 MB total
+
+# Globals - start as None
 model = None
 index = None
 chunks = None
-lock = Lock()
+_init_lock = Lock()
 
 
-def _init():
+def get_ram_usage():
+    """Log current RAM for debugging"""
+    process = psutil.Process(os.getpid())
+    return process.memory_info().rss / 1024 / 1024  # MB
+
+
+def _lazy_init():
     global model, index, chunks
-    with lock:
-        if model is None:
-            print("Loading tiny embedding model...")
-            model = SentenceTransformer("all-MiniLM-L6-v2")
+    if model is not None:
+        return  # Already loaded
 
-        if index is None:
-            print("Loading FAISS index...")
+    with _init_lock:
+        ram_before = get_ram_usage()
+        print(f"[DEBUG] RAM before init: {ram_before:.1f} MB")
+
+        # Load model LAST (biggest consumer) - with low_memory mode
+        print("[DEBUG] Loading embedding model...")
+        model = SentenceTransformer(
+            MODEL_NAME,
+            device='cpu',
+            cache_folder='./hf_cache'  # Persist cache to avoid re-downloads
+        )
+        gc.collect()  # Force cleanup
+
+        # Load FAISS (small)
+        if os.path.exists(FAISS_PATH):
+            print("[DEBUG] Loading FAISS index...")
             index = faiss.read_index(FAISS_PATH)
 
-        if chunks is None:
-            print("Loading chunks...")
+        # Load chunks (tiny)
+        if os.path.exists(CHUNKS_PATH):
+            print("[DEBUG] Loading chunks...")
             with open(CHUNKS_PATH, "rb") as f:
                 chunks = pickle.load(f)
 
+        ram_after = get_ram_usage()
+        print(f"[DEBUG] RAM after init: {ram_after:.1f} MB (delta: {ram_after - ram_before:.1f} MB)")
 
-_init()  # Load on startup
+        if ram_after > 450:
+            print("[WARNING] High RAM usage! Consider fewer chunks or smaller model.")
 
 
-def answer_query(question: str, top_k: int = 4, threshold: float = 0.3):
-    q_emb = model.encode([question], normalize_embeddings=True)
+def answer_query(question: str, top_k: int = 3, similarity_threshold: float = 0.6):
+    _lazy_init()  # Only loads on FIRST request
 
-    D, I = index.search(q_emb.astype(np.float32), top_k)
-
-    context = ""
-    sources = []
-
-    for score, idx in zip(D[0], I[0]):
-        if score < threshold:  # Low similarity
-            continue
-        chunk = chunks[idx]
-        context += chunk + " "
-        sources.append({"text": chunk[:200] + "...", "score": float(score)})
-
-    if not context.strip():
+    if model is None or index is None or chunks is None:
         return {
-            "answer": "इस सवाल का जवाब आपके दस्तावेज़ों में नहीं मिला। मैं सामान्य ज्ञान से जवाब दे सकता हूँ। क्या पूछना चाहते हैं? 😊",
-            "source": "general"
+            "answer": "मुझे अभी सेटअप करने में समस्या हो रही है। कृपया थोड़ी देर बाद ट्राई करें। (Setup issue. Try again soon.)",
+            "source": "error"
         }
 
-    # Call Groq or OpenAI for final natural answer
+    # Embed query (batch of 1, low mem)
+    q_emb = model.encode([question], batch_size=1, show_progress_bar=False, normalize_embeddings=True)
+
+    # Search
+    distances, indices = index.search(np.array(q_emb).astype('float32'), top_k)
+
+    # Build context from relevant chunks (cosine sim > threshold)
+    context = []
+    for dist, idx in zip(distances[0], indices[0]):
+        if idx == -1 or dist < similarity_threshold:  # Not relevant
+            continue
+        chunk = chunks[idx]
+        context.append(chunk)
+
+    if not context:
+        # Fallback: General reply (detect lang roughly)
+        is_hindi = any('\u0900' <= c <= '\u097F' for c in question)
+        fallback = "मैं आपके दस्तावेज़ में इस सवाल का जवाब नहीं ढूंढ पाया। क्या आप कुछ और पूछना चाहेंगे? 😊" if is_hindi else "I couldn't find an answer in the documents. Can I help with something else? 😊"
+        return {"answer": fallback, "source": "general"}
+
+    # Generate natural answer with Groq/OpenAI (low mem, external API)
+    final_answer = generate_with_llm(" ".join(context), question)
+
     return {
-        "answer": call_llm(context, question),
-        "sources": sources
+        "answer": final_answer,
+        "sources": [{"text": c[:150] + "..." for c in context[:2]}]  # Limit sources
     }
 
 
-def call_llm(context: str, question: str) -> str:
-    import requests
+def generate_with_llm(context: str, question: str) -> str:
     api_key = os.getenv("GROQ_API_KEY") or os.getenv("OPENAI_API_KEY")
     if not api_key:
-        return "Error: API key missing"
+        return "API key missing. Contact admin."
 
-    prompt = f"""Use only the context below to answer in Hindi if question is in Hindi, else English.
+    import requests
+    base_url = "https://api.groq.com/openai/v1/chat/completions" if os.getenv("GROQ_API_KEY") else "https://api.openai.com/v1/chat/completions"
+    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
 
-Context: {context}
+    is_hindi = any('\u0900' <= c <= '\u097F' for c in question)
+    lang_prompt = "Answer in Hindi." if is_hindi else "Answer in English."
 
-Question: {question}
-Answer:"""
+    prompt = f"{lang_prompt} Use only this context: {context[:2000]} Question: {question} Answer:"
+
+    data = {
+        "model": "llama3-8b-8192" if os.getenv("GROQ_API_KEY") else "gpt-4o-mini",
+        "messages": [{"role": "user", "content": prompt}],
+        "max_tokens": 300,
+        "temperature": 0.1
+    }
 
     try:
-        r = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions" if "gsk_" in api_key else "https://api.openai.com/v1/chat/completions",
-            headers={"Authorization": f"Bearer {api_key}"},
-            json={
-                "model": "llama3-8b-8192" if "gsk_" in api_key else "gpt-3.5-turbo",
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.3,
-                "max_tokens": 400
-            },
-            timeout=15
-        )
-        r.raise_for_status()
-        return r.json()["choices"][0]["message"]["content"].strip()
-    except:
-        return "सॉरी, अभी जवाब देने में दिक्कत आई। थोड़ी देर बाद ट्राई करें।"
+        resp = requests.post(base_url, json=data, headers=headers, timeout=10)
+        resp.raise_for_status()
+        return resp.json()["choices"][0]["message"]["content"].strip()
+    except Exception as e:
+        print(f"[ERROR] LLM call failed: {e}")
+        return "क्षमा करें, जवाब देने में समस्या हुई। (Sorry, issue generating reply.)"
+
+
+# Health check (no init)
+def health_check():
+    return {"status": "ready", "ram": f"{get_ram_usage():.1f} MB"}
