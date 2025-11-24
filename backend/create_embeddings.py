@@ -1,26 +1,25 @@
-# recreate_embeddings.py
+# quick_embeddings.py – RUN THIS (300MB RAM only)
 from sentence_transformers import SentenceTransformer
-import faiss, pickle, pdfplumber, re
+import faiss, pickle, pdfplumber
 from pathlib import Path
 
-model = SentenceTransformer("sentence-transformers/paraphrase-multilingual-mpnet-base-v2")
+model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
-all_chunks = []
+chunks = []
 for pdf in Path("docs").glob("*.pdf"):
     with pdfplumber.open(pdf) as p:
         text = "\n".join(page.extract_text() or "" for page in p.pages)
-    # Split by paragraphs, not fixed size
-    paragraphs = [p.strip() for p in text.split("\n\n") if len(p) > 100]
-    all_chunks.extend(paragraphs[:80])
+    paras = [p.strip() for p in text.split("\n\n") if len(p.strip()) > 120]
+    chunks.extend(paras[:60])
 
-print(f"Generated {len(all_chunks)} high-quality chunks")
-emb = model.encode(all_chunks, normalize_embeddings=True, batch_size=16, show_progress_bar=True)
+print(f"Generated {len(chunks)} lightweight chunks")
+emb = model.encode(chunks, normalize_embeddings=True, batch_size=64, show_progress_bar=False)
 
 index = faiss.IndexFlatIP(emb.shape[1])
 index.add(emb.astype('float32'))
 
 faiss.write_index(index, "vector_store.faiss")
 with open("chunks.pkl", "wb") as f:
-    pickle.dump(all_chunks, f)
+    pickle.dump(chunks, f)
 
-print("PERFECT EMBEDDINGS READY – deploy now!")
+print("LIGHTWEIGHT EMBEDDINGS READY – deploy now!")
