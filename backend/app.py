@@ -1,46 +1,28 @@
+# backend/app.py
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from model import answer_query, health_check  # Your model.py
-from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
+from model import answer_query, health_check
 import os
 
-app = FastAPI(title="Bilingual RAG Chatbot", version="1.0")
+app = FastAPI(title="Vehicle RAG Chatbot")
 
-# CORS first
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Your frontend URL
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-class QueryRequest(BaseModel):
+class Query(BaseModel):
     question: str
 
-# Routes BEFORE any uvicorn.run
 @app.get("/")
-def root():
-    return {"message": "Bilingual RAG Chatbot - Ready! Try /health or POST /ask"}
+async def root():
+    return {"message": "Vehicle RAG Chatbot live – use /ask or /health"}
 
 @app.get("/health")
-def health():
+async def health():
     return health_check()
 
 @app.post("/ask")
-def ask(request: QueryRequest):
-    if not request.question.strip():
-        raise HTTPException(status_code=400, detail="Empty question")
-    results = answer_query(request.question)
-    return results  # Flat { "answer": ... } for frontend
+async def ask(query: Query):
+    if not query.question.strip():
+        raise HTTPException(status_code=400, detail="Question cannot be empty")
 
-# Debug endpoint (remove later)
-@app.post("/ask-test")
-def ask_test():
-    return {"results": {"answer": "Backend working! Endpoint /ask is live.", "source": "debug"}}
+    # This line is the only important one – it will ALWAYS return something
+    answer = answer_query(query.question) or "No answer generated."
 
-# Render-specific: Bind to $PORT
-if __name__ == "__main__":
-    port = int(os.getenv("PORT", 10000))
-    uvicorn.run("app:app", host="0.0.0.0", port=port, log_level="info", reload=False)
+    return {"answer": answer}

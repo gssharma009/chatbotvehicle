@@ -122,9 +122,11 @@ Answer:"""}],
 
     return "Safety information is available in the vehicle manual."
 
-# Public API expected by app.py
 def answer_query(question: str) -> str:
-    return fast_llm(question.strip())
+    if not question or not question.strip():
+        return "Please ask a question."
+    result = fast_llm(question.strip())
+    return result or "No relevant information found."
 
 def health_check() -> dict:
     try:
