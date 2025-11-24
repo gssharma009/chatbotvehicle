@@ -1,8 +1,7 @@
-# backend/model.py – FINAL WORKING – PERFECT ANSWERS
+# backend/model.py – FINAL WORKING VERSION
 import os
 import faiss
 import pickle
-import re
 import requests
 from sentence_transformers import SentenceTransformer
 
@@ -16,22 +15,12 @@ def _load():
     global model, index, chunks
     if model is not None:
         return
-    print("[INIT] Loading 22MB model...")
+    print("[INIT] Loading model...")
     model = SentenceTransformer(MODEL_NAME, device="cpu")
     index = faiss.read_index("vector_store.faiss")
     with open("chunks.pkl", "rb") as f:
         chunks = pickle.load(f)
-    print(f"[INIT] Ready – {len(chunks)} chunks")
-
-def aggressive_clean(text: str) -> str:
-    # Ultra-aggressive OCR cleanup
-    text = re.sub(r'\boff?\b', 'off', text, flags=re.I)
-    text = re.sub(r'\bu\b', '', text, flags=re.I)
-    text = re.sub(r'lci heV cir tce l E|ruoy wo nK|Page\s*\d+|FOREWORD|JSW MG|Thank you|manal|yor|yo|se\b', '', text, flags=re.I)
-    text = re.sub(r'[•◦▪uU]\s*', '', text)
-    text = re.sub(r'[^a-zA-Z0-9\s\.\,\;\:\(\)\-\?]', ' ', text)
-    text = re.sub(r'\s+', ' ', text).strip()
-    return text
+    print(f"[INIT] Ready – {len(chunks)} clean chunks")
 
 def answer_query(question: str) -> str:
     if not question or not question.strip():
@@ -39,32 +28,37 @@ def answer_query(question: str) -> str:
 
     try:
         _load()
+        q_emb = model.encode([question], normalize_embeddings=True, convert_to_numpy=True)
+        _, I = index.search(q_emb.astype('float32'), 10)
 
-        q_emb = model.encode([question.lower()], normalize_embeddings=True, convert_to_numpy=True)
-        _, I = index.search(q_emb.astype('float32'), 20)
+        lines = []
+        seen = set()
+        for i_count = 0
+        for idx in I[0]:
+            if i_count >= 6:
+                break
+            if idx < len(chunks):
+                text = chunks[idx]
+                if any(word in text.lower() for word in question.lower().split()):
+                    for sentence in text.split('. '):
+                        s = sentence.strip()
+                        if len(s) > 30 and s not in seen:
+                            seen.add(s)
+                            lines.append(s.capitalize())
+                            i_count += 1
 
-        cleaned_chunks = []
-        for i in I[0]:
-            if i >= len(chunks):
-                continue
-            raw = chunks[i]
-            clean = aggressive_clean(raw)
-            if len(clean) > 100 and question.lower().split()[0] in clean.lower():
-                cleaned_chunks.append(clean)
+        if lines:
+            return "\n".join("• " + l for l in lines)
 
-        context = " ".join(cleaned_chunks[:6])
-
-        # Groq first
+        # Groq as last resort
         key = os.getenv("GROQ_API_KEY")
-        if key and context:
+        if key:
             try:
                 r = requests.post("https://api.groq.com/openai/v1/chat/completions", json={
                     "model": "llama3-8b-8192",
-                    "messages": [{"role": "user", "content":
-                        f"Context: {context}\n\nQuestion: {question}\nAnswer in short, accurate bullet points. Fix any OCR errors."}],
-                    "max_tokens": 180,
-                    "temperature": 0.0
-                }, headers={"Authorization": f"Bearer {key}"}, timeout=10)
+                    "messages": [{"role": "user", "content": question}],
+                    "max_tokens": 150
+                }, headers={"Authorization": f"Bearer {key}"}, timeout=8)
                 if r.status_code == 200:
                     ans = r.json()["choices"][0]["message"]["content"].strip()
                     if len(ans) > 20:
@@ -72,35 +66,14 @@ def answer_query(question: str) -> str:
             except:
                 pass
 
-        # Final dynamic fallback – returns actual matching lines
-        lines = []
-        seen = set()
-        q_words = set(question.lower().split())
-        for chunk in chunks:
-            clean = aggressive_clean(chunk)
-            if any(word in clean.lower() for word in q_words):
-                for line in clean.split('. '):
-                    line = line.strip()
-                    if len(line) > 40 and line not in seen:
-                        seen.add(line)
-                        lines.append(line.capitalize())
-                    if len(lines) >= 6:
-                        break
-                if len(lines) >= 6:
-                    break
-
-        if lines:
-            return "\n".join("• " + l for l in lines)
-
-        return "• No relevant information found."
+        return "• No matching information found."
 
     except Exception as e:
-        print(f"Error: {e}")
-        return "• Service temporarily unavailable."
+        return f"• Error: {e}"
 
 def health_check():
     try:
         _load()
         return {"status": "ok", "chunks": len(chunks)}
     except:
-        return {"status": "loading"}
+        return {"status": "error"}
