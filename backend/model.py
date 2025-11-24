@@ -1,18 +1,18 @@
-# model.py – SUPER-STABLE FINAL (5 सेकंड में जवाब)
+# model.py
 import re
 
 import faiss, pickle, numpy as np, os, gc, requests
 from sentence_transformers import SentenceTransformer
 from threading import Lock
 
-MODEL_PATH = "./models/all-MiniLM-L6-v2"      # आपका पुराना folder
+MODEL_PATH = "./models/all-MiniLM-L6-v2"
 FAISS_PATH = "vector_store.faiss"
 CHUNKS_PATH = "chunks.pkl"
 
 model = None; index = None; chunks = None
 _lock = Lock()
-MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-
+# model.py के top में
+MODEL_NAME = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
 def _load():
     global model, index, chunks
     if model is not None:
@@ -41,20 +41,20 @@ def answer_query(question: str):
     if any(x in q.lower() for x in ["hi","hello","hey","नमस्ते","नमस्ते"]):
         return {"answer": "नमस्ते! मैं आपका व्हीकल असिस्टेंट हूँ। EV/कार के बारे में हिंदी या English में कुछ भी पूछो!", "source": "greeting"}
 
-    # 2. Search – 100% मिलेगा
+    # 2. Search
     emb = model.encode([q], normalize_embeddings=True)[0]
     D, I = index.search(np.array([emb]).astype("float32"), 30)
     context = []
     for d, i in zip(D[0], I[0]):
-        if i != -1 and d > 0.22:          # ← 0.22 तक loose किया = हर सवाल मिलेगा
+        if i != -1 and d > 0.22:
             context.append(chunks[i])
 
-    # 3. Docs में मिला → सीधे context भेजो (LLM को force करो जवाब दे)
+    # 3. Docs
     if context:
         full_context = " ".join(context)[:3900]
         return {"answer": fast_llm(full_context, q), "source": "docs"}
 
-    # 4. नहीं मिला → internet
+    # 4. internet
     no = "दस्तावेज़ों में नहीं मिला।" if "हिंदी" in q or "हindi" in q.lower() else "Not in my docs."
     return {"answer": f"{no}\n\nइंटरनेट से:\n{fast_llm('', q)}", "source": "internet"}
 
@@ -63,7 +63,7 @@ def fast_llm(ctx: str, q: str) -> str:
     if not api_key:
         return "Error: API key not found."
 
-    # Step 1: OCR GARBAGE को पूरी तरह साफ करो
+    # Step 1: OCR GARBAGE
     clean_lines = []
     for raw in ctx.split("\n"):
         line = raw.strip()
@@ -114,8 +114,7 @@ Answer:"""}],
         except:
             continue
 
-    # Step 3: 100% DYNAMIC FALLBACK — कोई भी hardcode नहीं
-    # सिर्फ PDF से ही lines चुनो जो safety-related लगती हैं
+    # Step 3:
     relevant = []
     keywords = ["avoid", "do not", "safe", "water", "shock", "cable", "touch", "orange", "modify", "disassemble", "warning", "risk", "damage", "do not touch"]
     for line in clean_lines:
@@ -124,15 +123,14 @@ Answer:"""}],
             if len(relevant) >= 6:
                 break
 
-    # अगर कुछ मिला तो bullet में दिखाओ
+
     if relevant:
         return "\n".join("• " + line for line in relevant)
 
-    # अगर बिल्कुल कुछ नहीं मिला → सिर्फ पहली 4 साफ lines दिखाओ (PDF से ही)
     if clean_lines:
         return "\n".join("• " + line for line in clean_lines[:5])
 
-    # Ultimate fallback (कोई PDF content ही नहीं था)
+    # Ultimate fallback
     return "No relevant information found in document."
 
 def health_check():
