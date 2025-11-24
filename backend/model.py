@@ -23,7 +23,7 @@ def _load():
         print("Model loaded successfully")
 
         index = faiss.read_index("vector_store.faiss")
-        with open("chunks40.pkl", "rb") as f:  # आपका actual chunks file name
+        with open("chunks.pkl", "rb") as f:  # आपका actual chunks file name
             chunks = pickle.load(f)
 
         print(f"[INIT] Ready! {len(chunks)} chunks loaded")
