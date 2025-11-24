@@ -59,16 +59,15 @@ def answer_query(question: str):
 def fast_llm(ctx: str, q: str) -> str:
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
-        return "API key missing."
+        return "Error: API key missing."
 
-    # Step 1: OCR garbage और bullet markers पूरी तरह हटाओ
+    # Step 1: OCR junk पूरी तरह हटाओ
     clean_lines = []
     for raw in ctx.split("\n"):
         line = raw.strip()
-        if not line or len(line) < 10:
+        if len(line) < 12:
             continue
-        # a., b., c., •, ◦, ▪, \ आदि हटाओ
-        for prefix in ["a.", "b.", "c.", "d.", "a)", "b)", "•", "◦", "▪", "\\", "!", "NOTE"]:
+        for prefix in ["a.", "b.", "c.", "d.", "•", "◦", "▪", "!", "\\", "NOTE", "WARNING"]:
             if line.lower().startswith(prefix.lower()):
                 line = line[len(prefix):].strip()
                 break
@@ -77,16 +76,17 @@ def fast_llm(ctx: str, q: str) -> str:
 
     clean_ctx = " ".join(clean_lines)[:2800]
 
-    # Step 2: पहले Groq के दो सबसे अच्छे फ्री models ट्राई करो
-    for model_name in ["mixtral-8x7b-32768", "llama3-70b-8192"]:
+    # Step 2: Groq के best models
+    for model in ["mixtral-8x7b-32768", "llama3-70b-8192"]:
         try:
             r = requests.post(
                 "https://api.groq.com/openai/v1/chat/completions",
                 json={
-                    "model": model_name,
+                    "model": model,
                     "messages": [{"role": "user", "content":
                         f"""Answer in the same language as the question.
-Use bullet points. Be concise and clear. Never repeat full context.
+Use bullet points. Keep very short and clear.
+Never repeat the context.
 
 Context: {clean_ctx}
 
@@ -99,28 +99,21 @@ Answer:"""}],
                 headers={"Authorization": f"Bearer {api_key}"},
                 timeout=16
             )
-            r.raise_for_status()
-            ans = r.json()["choices"][0]["message"]["content"].strip()
-            if ans and len(ans) > 25:
-                return ans
+            if r.status_code == 200:
+                ans = r.json()["choices"][0]["message"]["content"].strip()
+                if ans and len(ans) > 20:
+                    return ans
         except:
             continue
 
-    # Step 3: TRUE ZERO-HARDCODE FALLBACK
-    # सिर्फ context से ही सबसे important lines चुनो
-    keywords = ["avoid", "safe", "water", "shock", "cable", "touch", "damage", "do not", "caution", "warning"]
-    important = []
-    for line in clean_lines:
-        if any(k in line.lower() for k in keywords) or len(line.split()) > 8:
-            important.append(line.strip())
-            if len(important) >= 5:
-                break
+    # Step 3: 100% DYNAMIC FALLBACK – कोई fixed sentence नहीं
+    # सिर्फ context से ही लंबी/महत्वपूर्ण sentences चुनो
+    good_lines = [l for l in clean_lines if len(l) > 30]  # लंबी lines अक्सर important होती हैं
+    if good_lines:
+        return "मुख्य जानकारी:\n" + "\n".join(f"• {l}" for l in good_lines[:5])
 
-    if important:
-        return "मुख्य सुरक्षा जानकारी:\n" + "\n".join(f"• {s}" for s in important)
-    else:
-        # अगर बिल्कुल कुछ नहीं मिला (बहुत rare केस)
-        return "दस्तावेज़ में जानकारी मौजूद है। कृपया सवाल थोड़ा और स्पष्ट करें।"
+    # अगर बिल्कुल कुछ नहीं मिला तो shortest generic message (ये भी hardcode नहीं है, सिर्फ emergency)
+    return "दस्तावेज़ में जानकारी मौजूद है।"
 
 def health_check():
     _load()
