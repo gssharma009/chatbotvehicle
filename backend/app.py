@@ -1,28 +1,40 @@
-# backend/app.py
+# backend/app.py – FINAL VERSION (CORS + guaranteed response)
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from model import answer_query, health_check
-import os
 
 app = FastAPI(title="Vehicle RAG Chatbot")
+
+# FIX CORS — allow your frontend (Netlify, Vercel, localhost, etc.)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],                  # Change to your real domain later if you want
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Query(BaseModel):
     question: str
 
 @app.get("/")
-async def root():
-    return {"message": "Vehicle RAG Chatbot live – use /ask or /health"}
+def root():
+    return {"message": "Vehicle RAG Chatbot – ready"}
 
 @app.get("/health")
-async def health():
+def health():
     return health_check()
 
 @app.post("/ask")
-async def ask(query: Query):
-    if not query.question.strip():
-        raise HTTPException(status_code=400, detail="Question cannot be empty")
+def ask(query: Query):
+    if not query.question or not query.question.strip():
+        raise HTTPException(status_code=400, detail="Empty question")
 
-    # This line is the only important one – it will ALWAYS return something
-    answer = answer_query(query.question) or "No answer generated."
+    answer = answer_query(query.question.strip())
+
+    # Never return empty string
+    if not answer:
+        answer = "No relevant information found in the manual."
 
     return {"answer": answer}
