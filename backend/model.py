@@ -11,8 +11,8 @@ CHUNKS_PATH = "chunks.pkl"
 
 model = None; index = None; chunks = None
 _lock = Lock()
-# model.py के top में
-MODEL_NAME = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
+
+MODEL_NAME = "sentence-transformers/multi-qa-mpnet-base-cos-v1"
 def _load():
     global model, index, chunks
     if model is not None:
