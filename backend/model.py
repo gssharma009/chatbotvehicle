@@ -7,7 +7,7 @@ import requests
 from sentence_transformers import SentenceTransformer
 from threading import Lock
 
-# Best lightweight model for OCR + multilingual (90 MB – no OOM)
+# Lightweight, high-quality model – 90 MB, perfect for Railway + OCR + multilingual
 MODEL_NAME = "sentence-transformers/multi-qa-mpnet-base-cos-v1"
 
 model = None
@@ -27,20 +27,14 @@ def _load():
         print("[INIT] Loading embedding model...")
         model = SentenceTransformer(MODEL_NAME, device="cpu")
 
-        index_path = "vector_store.faiss"
-        chunks_path = "chunks.pkl"
-
-        if not os.path.exists(index_path) or not os.path.exists(chunks_path):
-            raise FileNotFoundError("vector_store.faiss or chunks.pkl missing")
-
-        index = faiss.read_index(index_path)
-        with open(chunks_path, "rb") as f:
+        index = faiss.read_index("vector_store.faiss")
+        with open("chunks.pkl", "rb") as f:
             chunks = pickle.load(f)
 
-        print(f"[INIT] Loaded {len(chunks)} chunks – ready")
+        print(f"[INIT] Ready – {len(chunks)} chunks loaded")
 
 def clean_text(text: str) -> str:
-    """Aggressive OCR garbage removal"""
+    """Remove common OCR artifacts and noise"""
     if not text:
         return ""
     text = re.sub(r'\be\s+lci\s+heV\b', '', text, flags=re.I)
@@ -56,12 +50,11 @@ def clean_text(text: str) -> str:
 def retrieve_context(question: str, top_k: int = 6) -> str:
     _load()
     q_emb = model.encode([question], normalize_embeddings=True)
-    distances, indices = index.search(q_emb, top_k * 2)
+    _, indices = index.search(q_emb, top_k * 2)
 
     selected = []
-    for idx in indices[0]:
-        raw = chunks[idx]
-        cleaned = clean_text(raw)
+    for i in indices[0]:
+        cleaned = clean_text(chunks[i])
         if len(cleaned) > 80:
             selected.append(cleaned)
         if len(selected) >= top_k:
@@ -102,14 +95,21 @@ Answer:"""}],
             except:
                 continue
 
-    # Final clean fallback – 100% dynamic, no hardcoded sentences
-    lines = [clean_text(c) for c in chunks[:15] if len(clean_text(c)) > 50]
-    relevant = [l for l in lines if any(w in l.lower() for w in ["avoid","safe","water","shock","cable","touch","do not","warning","orange","modify","risk"])]
+    # Final clean dynamic fallback (zero hardcoded sentences)
+    relevant = [
+        clean_text(c) for c in chunks[:20]
+        if any(word in clean_text(c).lower() for word in
+               ["avoid","safe","water","shock","cable","touch","do not","warning","orange","modify","risk","damage"])
+    ]
     if relevant:
-        return "\n".join("• " + line for line in relevant[:7])
-    return "Information available in the vehicle manual."
+        return "\n".join("• " + line for line in relevant[:7] if len(line) > 40)
 
-# Health check
+    return "Information is available in the vehicle manual."
+
+# Required exports for app.py
+def answer_query(question: str) -> str:
+    return fast_llm(question)
+
 def health_check() -> dict:
     try:
         _load()
