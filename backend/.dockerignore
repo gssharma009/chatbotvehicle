@@ -1,36 +1,13 @@
-# backend/.dockerignore  ← यही file
-
-# Python virtual environments (बहुत भारी होते हैं 200-500 MB+)
+# backend/.dockerignore
+models/
 venv/
 .venv/
 env/
-ENV/
-
-# Bundled heavy model folder (Docker build में नहीं चाहिए)
-models/
-docs/
-
-# Python cache & junk
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
-.pytest_cache/
-.coverage
-
-# Git & docs
+*.whl  # Torch wheels
 .git
-.gitignore
-*.md
-README*
-
-# Frontend (अगर backend folder में भी है)
 frontend/
-node_modules/
-dist/
-build/
-
-# IDE files
-.vscode/
-.idea/
 *.log
+tests/
+docs/
