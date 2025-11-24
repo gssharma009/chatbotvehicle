@@ -1,4 +1,4 @@
-u Do not use blower or infotainment system in engine
+you Do not use blower or infotainment system in engine
 Ensure door, hood and tail gate are properly locked.
 Shift to P before switching o ignition.
 Please do not use Accelerator Brake pedal
@@ -30,7 +30,6 @@ this manual, and carefully follow the instructions to prevent injury or damage. 
 de nitions of these symbols are as follows:
 Items that must be observed
 to facilitate maintenance, etc.
-Items that must be observed
 Indicates risks of accidents or
 information may lead to injuries
 or property loss.
@@ -123,10 +122,8 @@ vehicle position data, alarm data,
 voltage data of rechargeable
 temperature data of rechargeable
 ELECTRIC VEHICLE
-K n o w y o you r E l e c t r i c V e h i c l e
-ELECTRIC VEHICLE
 energy storage device, and user-
-de ned data. If we nd any
+de ned data. If we and any
 abnormal running data of your
 vehicle on the background server
 terminal equipment, our service
@@ -140,7 +137,6 @@ equipment such as the grounding
 and resistance reduction module,
 which may cause potential safety
 hazards of electric shock during
-K n o w y o you r E l e c t r i c V e h i c l e
 Safety of HV system
 a. HV component safety: Avoid
 touching exposed or damaged
@@ -186,7 +182,6 @@ After you receive the vehicle,
 make sure to fully charge the HV
 battery to 100 before it drops
 below 30 to keep it in good
-K n o w y o you r E l e c t r i c V e h i c l e
 c. Avoid modi cations:
 Do not take disassemble or
 modify any electrical parts in the
@@ -231,7 +226,6 @@ based re extinguisher to put out
 the re and keep a safe distance
 from the re source.
 Battery information
-a. Battery
 replacement
 If you need to replace the HV
 battery, handle it carefully to avoid
@@ -254,8 +248,6 @@ recommended to fully charge the
 battery at least once every two
 weeks when using the vehicle
 regularly for maintenance.
-MAIN COMPONENTS OF ELECTRIC VEHICLE
-K n o w y o you r E l e c t r i c V e h i c l e
 Do not alter the charging port or
 equipment. Doing so could lead to
 charging problems or even cause
@@ -305,8 +297,6 @@ Restraint System
 - Child Restraint System
 - Driver Airbag
 - Passenger Airbag
-MAIN COMPONENTS OF ELECTRIC VEHICLE
-K n o w y o you r E l e c t r i c V e h i c l e
 - Anti-lock Braking
 - Electronic Brake Force
 Distribution
@@ -333,8 +323,6 @@ Brake (EPB)
 - Centre Positioning Light
 - Vehicle to Load
 - Vehicle to Vehicle
-MAIN COMPONENTS OF ELECTRIC VEHICLE
-Safety Systems
 Important safety precautions
 Seats protective devices
 l Front seat
@@ -412,7 +400,7 @@ for the safety of the driver and
 passengers, as much as seat belts
 and air bags when in an accident.
 e. Avoid driver distraction
-Driver distraction is a signi cant
+Driver distraction is a signi can't
 and potentially fatal hazard,
 particularly for inexperienced
 drivers. Always prioritize safety
@@ -454,12 +442,8 @@ minimize these risks, regularly
 check your tire pressures and
 conditions,
 maintenance
-guidelines.
-S a f e t y S y s t e m s
-IMPORTANT SAFETY PRECAUTIONS
 a. Front seat position
 SEATS AND PROTECTIVE DEVICES
-S a f e t y S y s t e m s
 When you sit on the seat, make your
 hip as close to the backrest as
 possible. Adjust the distance between
@@ -504,8 +488,6 @@ on the oor or seat. Operating
 the seat could cause gas to
 escape from the lighter and
 start a re.
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 Be careful when retrieving
 small objects trapped under
 the seats or between the seat
@@ -527,7 +509,6 @@ Be careful not to let your hands
 or ngers get caught in the seat
 mechanisms while the seat is
 Never leave children alone in
-the vehicle.
 The power seats can be moved
 even when the vehicle is turned
 To avoid damaging the seats:
@@ -540,8 +521,6 @@ vehicle is turned o to prevent
 unnecessary battery drain.
 Do not try to operate two or more
 seats simultaneously as this
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 b. Seat position adjustment
 Electric adjustment type
 As shown in the gure, the electric
@@ -577,9 +556,6 @@ runs out. Please check for
 con rmation. Never turn the
 switch forcibly to avoid any
 c. Seat backrest adjustment
-Electric adjustment type
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 As shown in the gure, turn the
 adjustment switch forward and
 backward, and the backrest will be
@@ -591,9 +567,6 @@ when the switch is turned, the
 backrest may be already at its
 limit position, or the vehicle
 battery runs out. Please check for
-con rmation. Never turn the
-switch forcibly to avoid any
-Manual adjustment type
 Pull up the handle near the seat
 inclination
 position; then, release the handle.
@@ -610,8 +583,6 @@ the seat backrest, shake the
 backrest to check whether it is
 locked even though no passenger
 occupies the seat.
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 Reclining the seatback: Sitting in
 a reclined position while the
 dangerous. Even if you re wearing
@@ -640,13 +611,11 @@ passenger s hips could slide under
 the lap belt or the passenger s
 neck could hit the shoulder belt.
 d. Seat height adjustment
-Electric adjustment type
 As shown in the gure, rotate the
 height adjustment switch on the
 outer side of the seat cushion, and
 then release the switch after the seat
 is adjusted to proper height.
-Manual adjustment type
 Turn the handle on the outer side of
 the seat upward and downward until
 the seat is adjusted to the desired
@@ -674,8 +643,6 @@ fold down suddenly and hurt
 someone when you pull the lever.
 Do not allow your hands or ngers
 mechanisms whilst adjusting the
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 To keep the vehicle safe:
 Before you fold the seatback, put the
 seat belt buckle in the holder
@@ -683,7 +650,6 @@ between the seatback and cushion.
 Also, guide the seat belt strap into its
 place to protect it from getting
 a. Backrest adjustment and folding
-To adjust the seat forward or
 1. Lift and hold the seat adjustment
 2. Slide the seat to where you want it.
 3. Let go of the lever and check that
@@ -700,8 +666,6 @@ passenger sitting on a seat with
 backrest folded may be thrown out
 from the vehicle. This may result in
 serious personal injury or even
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 Ensure that each seat is locked
 before driving.
 Do not operate the seat release
@@ -767,8 +731,6 @@ headrest forcibly to avoid injuring the
 nger on the release switch.
 The front and rear seats of the vehicle
 have headrests that can be adjusted.
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 In case of accidents, seat belts can
 provide good protection and that they
 must be used during driving is
@@ -808,8 +770,6 @@ accident, passengers who do not
 wear or do not wear seat belts
 correctly may su er serious
 injuries or deaths.
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 1. The seat belt shall not be
 buckled against a hard or
 fragile object in your pocket.
@@ -862,8 +822,6 @@ getting in the seat belt buckle
 (such as sun ower seed shell
 and button); otherwise the
 seat belt buckle will fail.
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 1. Pull out the seat belt from the
 retractor and guide it around the
 shoulder belt shall span the whole
@@ -892,8 +850,6 @@ close wearing the seat belt. Do not
 place any object (such as handbag
 and mobile phone) between the seat
 belt and your body.
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 If you need to release the seat belt,
 press the red button on the buckle,
 and the tongue will automatically
@@ -920,13 +876,9 @@ to injury in case of a collision. For a
 pregnant woman or any person,
 correct wearing is the key to exerting
 the best protection e ect of the seat
-S a f e t y S y s t e m s
-SEATS AND PROTECTIVE DEVICES
 The crotch belt shall be placed
 as low as possible to go across
 the hip, so as to avoid force on
-S a f e t y S y s t e m s
-Child restraint system (CRS)
 The vehicle is not equipped with a
 child seat. If you need one, a child
 seat that is applicable to ISOFIX
@@ -944,7 +896,6 @@ your arms while riding in the
 vehicle. Never allow a child to
 stand or kneel on a seat or in the
 luggage compartment when the
-vehicle is running.
 An un xed child seat may be
 thrown out of the vehicle in case of
 a collision or emergency stop,
@@ -979,8 +930,6 @@ gure or the connection to your
 personal injuries will be caused to
 the child and other passengers in
 the vehicle in case of a collision.
-CHILD RESTRAINT SYSTEM
-S a f e t y S y s t e m s
 Types of child restraint system
 According to GB27887-2011, the
 child restraint system can be
@@ -1019,11 +968,7 @@ L - applicable to special child restraint systems included in the list. Such res
 special, restricted or semi-general vehicles.
 B - applicable to built-in child restraint system approved for this mass group.
 X - The seat is not suitable for child restraint systems under this mass group.
-S a f e t y S y s t e m s
-CHILD RESTRAINT SYSTEM
-Seat (or Other Positions)
 middle seat
-center seat
 Note 1: For child restraint systems not marked according to ISO size class (A G), vehicle manufacturers shall
 specify the vehicle-speci c ISOFIX child restraint system recommended for each seat.
 Note 2: Meanings of letters in the table are as follows:
@@ -1033,8 +978,6 @@ or semi-general vehicles.
 X - The ISOFIX position is not applicable to ISOFIX child restraint systems under this mass group and or size class.
 Information on suitability of di erent ISOFIX positions for ISOFIX child
 restraint system
-S a f e t y S y s t e m s
-CHILD RESTRAINT SYSTEM
 Child seat xing device
 There is a set of xing device on each
 of the right and left sides of the
@@ -1058,8 +1001,6 @@ the child seat with the vehicle s
 xed device.
 Operate according to the child
 seat instructions.
-S a f e t y S y s t e m s
-CHILD RESTRAINT SYSTEM
 5. Connect the upper strap of the
 child seat to the corresponding
 xing point of the vehicle. Refer to
@@ -1072,7 +1013,6 @@ seat backrest.
 6. Push and pull the child seat in all
 directions to make sure it is safely
 7. Make sure that the child seat
-temperature is not very high before
 putting a child in the seat.
 In case of a serious collision
 accident, the child seat xing device
@@ -1080,8 +1020,6 @@ may be damaged. Some parts may
 require repair and replacement.
 Please check the child seat xing
 device after a collision.
-S a f e t y S y s t e m s
-CHILD RESTRAINT SYSTEM
 Supplementary Restraint
 System (SRS Airbags)
 1. Driver frontal airbag.
@@ -1121,7 +1059,6 @@ in every collision. In some
 accidents, the seat belts are the
 only restraint protecting you.
 SRS - AIRBAGS
-S a f e t y S y s t e m s
 Airbag layout
 Airbag safety tips
 Always wear seat belts and use
@@ -1164,8 +1101,6 @@ Supplemental Restraint System
 (SRS) and lap shoulder belts at
 both the driver and passenger
 seating positions.
-S a f e t y S y s t e m s
-SRS - AIRBAGS
 As shown in the Figure B above, the
 front passenger frontal airbag is
 located in the passenger s side
@@ -1224,11 +1159,8 @@ may not in ate in slight side
 collisions and lateral-frontal or
 diagonal collisions. As per the
 design, the seat lateral-impact
-airbag and the side curtain airbag
 will in ate on the collision side of the
 vehicle. Airbags are not triggered in
-S a f e t y S y s t e m s
-SRS - AIRBAGS
 every collision. For a particular
 accident, it shall not simply judge
 whether the airbag should be
@@ -1245,7 +1177,6 @@ about the airbag working condition
 of your vehicle in a collision
 accident, please contact the JSW
 MG authorised service center in time
-professional
 How is the airbag in ated? During
 in ation, the sensing system sends
 an electronic signal that triggers the
@@ -1279,8 +1210,6 @@ or doors to get fresh air. If breathing
 problems occur after the airbag is
 in ated, you should seek medical
 attention as soon as possible.
-S a f e t y S y s t e m s
-SRS - AIRBAGS
 What will you see after the airbag
 in ates? When the airbag is in ated,
 it will de ate so quickly that some
@@ -1315,14 +1244,12 @@ pretensioner and other parts.
 Work related to the SRS can only
 be done by JSW MG authorised
 Service Center technicians with
-corresponding
 quali cation.
 maintenance may cause that
 function normally. Please drive
 to the JSW MG authorised
 Service Center for repair and
 maintenance.
-maintenance
 replacement of airbag system:
 The airbag system must be
 technicians.
@@ -1332,8 +1259,6 @@ normally. Please go to the JSW
 MG authorised Service Center
 for repair and maintenance of
 the airbag system.
-S a f e t y S y s t e m s
-SRS - AIRBAGS
 Hitting the shoulder, edge of
 pavement or hard surface
 if the airbag cover is damaged,
@@ -1360,9 +1285,6 @@ underside of the vehicle su ers a
 severe impact. Refer to the following
 Fall into or drive into a deep pit
 Wheel hard landing or vehicle fall
-S a f e t y S y s t e m s
-SRS - AIRBAGS
-The Frontal airbag may not be
 in ated in the following collisions
 The frontal airbag is generally not
 in ated in the event of a side
@@ -1376,8 +1298,6 @@ from vehicle longitudinal direction
 Overturn, falling from high place,
 Hit deformable objects, such as
 sandpile, guard bar, column and
-S a f e t y S y s t e m s
-SRS - AIRBAGS
 Hit into front vehicle bottom,
 especially truck bottom
 Side Airbag Side Curtain Airbag (If
@@ -1391,8 +1311,6 @@ non-occupant compartment is hit.
 Vehicle body side (not passenger
 compartment) collision
 O -vertical side collision
-S a f e t y S y s t e m s
-SRS - AIRBAGS
 The side airbags side curtain
 airbag do not normally in ate in
 the event of a frontal collision,
@@ -1400,10 +1318,7 @@ rear-end collision, rollover or low-
 speed side impact.
 Frontal collision
 Rear-end collision
-Overturn, falling from high place,
 Side collision to truck during
-S a f e t y S y s t e m s
-SRS - AIRBAGS
 Airbag warning
 On the instrument panel, there is an
 airbag indicator which displays the
@@ -1417,12 +1332,10 @@ must be inspected and repaired as
 soon as possible. Refer to the
 Section Instruments and controls
 for detailed information.
-S a f e t y S y s t e m s
 Backward child restraint device
 must not be used on seats
 protected by a frontal airbag (in
 the activated state)
-SRS - AIRBAGS
 EBD watches and manages how
 hard the brakes press on the back
 wheels to make driving safer when
@@ -1465,7 +1378,6 @@ that the brake uid level in the uid
 reservoir is too low or an EBD system
 fault has occurred.
 BRAKE SYSTEM
-S a f e t y S y s t e m s
 In this case, please operate in the
 following steps:
 1. Carefully drive the vehicle o the
@@ -1485,8 +1397,6 @@ fault can lead to a collision,
 causing personal injuries and
 damage to the vehicle or other
 properties as a result.
-S a f e t y S y s t e m s
-BRAKE SYSTEM
 circumstances,
 recommended
 vehicle at a safe speed to the
@@ -1552,8 +1462,6 @@ disabled (the lamp will be
 normally on so long as the ESC
 function is disabled; the lamp will
 go out if the function is enabled).
-S a f e t y S y s t e m s
-BRAKE SYSTEM
 If the user disables the ESC,
 some ESC functions will be
 disabled, and the ESC OFF lamp
@@ -1594,8 +1502,6 @@ on the dashboard will be on. To turn
 ESC back on, you can do it from the
 same screen where you turned it o ,
 and the light will turn o .
-S a f e t y S y s t e m s
-BRAKE SYSTEM
 Normally, it s not recommended to
 turn o ESC. It should only be turned
 o temporarily if your vehicle is stuck
@@ -1609,11 +1515,6 @@ control (ESC) is always on when you
 start the car. If you need to turn it o ,
 you can do this in the vehicle
 settings under Menu - Vehicle
-Stability Control on the dashboard.
-When ESC is o , the ESC OFF light
-on the dashboard will be on. To turn
-ESC back on, you can do it from the
-same screen where you turned it o ,
 and the light will turn o . It s usually
 best not to turn o the ESC system.
 Only turn it o temporarily if your
@@ -1635,8 +1536,6 @@ pressed. Depress the brake pedal
 when shifting from R to D. Ensure
 that the vehicle speed is below 6
 km h for a successful gear shift .
-S a f e t y S y s t e m s
-BRAKE SYSTEM
 Normally, it is not recommended
 to disable the ESC system.
 a. Application
@@ -1665,7 +1564,6 @@ When you open the driver side door
 in the motionless state, the vehicle
 will automatically apply parking
 brake, and you do not have to pull up
-the EPB switch.
 vehicle cleaning, you may need to
 clamping function so as to make it
 possible to move the vehicle after
@@ -1674,10 +1572,7 @@ Deactivation method: Depress the
 brake pedal and hold the EPB switch
 pressed. The EPB light when go on
 deactivation.
-S a f e t y S y s t e m s
-BRAKE SYSTEM
 Illustration be
-Electronic parking brake (EPB)
 orking ndicator
 The Electronic parking brake (EPB)
 working indicator illuminates as the
@@ -1708,9 +1603,6 @@ The automatic parking function is set
 to the default open state and can be
 turned on o in the car Menu -
 Vehicle settings - Driving - Auto
-S a f e t y S y s t e m s
-BRAKE SYSTEM
-Automatic vehicle hold (AVH)
 working indicator
 After the vehicle is powered on, the
 AVH working indicator illuminates for
@@ -1721,8 +1613,6 @@ automatic vehicle hold function
 works and the vehicle is being parked.
 It goes out as the vehicle gets out of
 the parking state.
-S a f e t y S y s t e m s
-BRAKE SYSTEM
 AVH conditions AVH shall be
 activated rstly):
 1. The vehicle is stationary and in the
@@ -1735,13 +1625,11 @@ automatically, if you need to start the
 accelerator pedal. When the vehicle
 reaches the starting condition, the
 parking brake will be released
-automatically.
 Electric power steering
 The EPS system provides steering
 assistance for the vehicle. This
 steering uid, which brings great
 convenience for the daily vehicle
-maintenance.
 When the power supply is turned on,
 illuminates
 momentarily. The EPS warning lamp
@@ -1783,8 +1671,6 @@ the automatic vehicle hold (AVH) fault
 warning lamp shows the above
 abnormalities, please contact the
 JSW MG authorised service center in
-S a f e t y S y s t e m s
-BRAKE SYSTEM
 EPS fault warning lamp
 When the vehicle is powered on, the
 instantaneously. It indicates that the
@@ -1802,7 +1688,6 @@ following circumstances, please
 authorised service center.
 This lamp does not illuminate
 when the vehicle is powered on.
-After lighting up, it does not go
 out. keep illuminated during
 Illuminated ABS warning lamp can
 indicate that the electronic power
@@ -1819,8 +1704,6 @@ vehicle speed. As a result, the
 steering wheel can beturned easily
 at low speed and be turned
 relatively steadily at high speed.
-S a f e t y S y s t e m s
-BRAKE SYSTEM
 Emergency brake
 In case of an emergency requiring
 rapid deceleration when the braking
@@ -1836,8 +1719,6 @@ non-emergency
 situations. This function is for
 emergency only and will wear the
 brake disc and brake caliper.
-S a f e t y S y s t e m s
-BRAKE SYSTEM
 Shifting to P (Park) while the
 vehicle is in motion may cause
 you to lose control of the vehicle.
@@ -1884,7 +1765,6 @@ w Lane departure warning
 w Safety distance alarm
 w Forward collision system
 w AFL: Adaptive front-lighting
-Starting your EV
 S t a r t i n g y o you r E V
 BEFORE DRIVING YOUR EV
 Trial run of new vehicle
@@ -1909,7 +1789,6 @@ hybrid circuits are active, allowing
 you to engage the gear for driving and
 the A C system can provide cooling
 while in HV state.
-S t a r t i n g y o you r E V
 Basic operations
 Before you start your EV
 Make sure that the area around
@@ -1934,7 +1813,6 @@ information, refer to Warning
 lamps and audible reminders in
 the Dashboard and Features
 section of this manual.
-BEFORE DRIVING YOUR EV
 Procedure to start EV
 1. With the smart key sit in the
 driver s seat (if equipped), vehicle
@@ -1964,7 +1842,6 @@ Start the vehicle again.
 slowly release the brake pedal.
 See if the vehicle slowly moves
 accelerator pedal.
-S t a r t i n g y o you r E V
 If the EPB is disengaged
 required mode (D R), release
 the brake pedal slowly to
@@ -1973,7 +1850,6 @@ creep activated condition.
 Further Accelerator pedal
 input to be given for achieving
 required speed.
-BEFORE DRIVING YOUR EV
 When the Ready indicator is
 illuminated and the gear shifter is
 not in the Neutral (N) position, the
@@ -2025,11 +1901,8 @@ and feeds surplus energy back to
 the HV battery.
 2. Limit the use of resources such
 as heating, and air conditioning.
-conditioner heater
 duration, it will use too much
 electricity from HV battery.
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 Turn OFF the heater and air
 conditioner if you do not need
 system to heat the cabin when
@@ -2042,7 +1915,6 @@ when the temperature is above
 pedal to maintain speed and
 drive economically.
 5. Gradually press and release the
-accelerator
 accelerating or decelerating.
 unnecessary
 electrical components while
@@ -2076,7 +1948,6 @@ constant accelerator positions
 as much as possible.
 14. Accelerate slowly and smoothly.
 Gently press and release the
-accelerator
 acceleration and deceleration.
 15. Vehicle
 substantially
@@ -2086,8 +1957,6 @@ example, 0 C).
 slow down and do not apply the
 brakes when tra ic and road
 conditions allow.
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 Charging speci cation
 Please refer to the contents of the
 quick guide chapter for charging
@@ -2124,8 +1993,6 @@ the external power supply power
 and the charging machine s rated
 power, the charging power is
 consistent with the smaller one.
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 Con guration
 360km endurance
 20 -100 charging time
@@ -2136,13 +2003,11 @@ store to install the original charging pile)
 12-13h (recommended) (under normal ambient
 temperature)
 Original 7KW charging pile (contact 4S
-store to install the original charging pile)
 12 13h (under normal ambient temperature)
 DC quick charging
 1.5 2.0h (under normal ambient temperature,
 for charging equipment above 42KW)
 30 -80 charging time
-DC quick charging
 Approximately 35 minutes (under normal
 ambient temperature, for charging equipment
 above 42KW)
@@ -2168,8 +2033,6 @@ capacities, SOC, ambient temperature, battery temperature and external charging 
 7. The above charging data is based on the optimal charging state. The actual charging time is subject to the actual
 charging time of the vehicle.
 8. To ensure charging e iciency, it is recommended to keep the A C o during quick charging
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 Charging schematic diagram
 Be sure to ask a professional
 electrician to install the charging
@@ -2216,13 +2079,10 @@ unplug the charging gun from the
 charging port while ensuring
 safety. If necessary, please use
 insulating gloves and contact the
-JSW MG authorised service
 con rmation as soon as possible.
 8. When touching the charging plug,
 please keep your hands dry, and
 use insulating gloves if necessary.
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 9. The ambient temperature of
 charging is recommended to be
 between 0 C and 35 C, and
@@ -2273,8 +2133,6 @@ the environment above
 45 C for more than 24
 hours, and place the vehicle
 in a cool environment in
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 b. Do not place the vehicle in
 an environment of -25 C for
 more than 7 days, and place
@@ -2322,20 +2180,16 @@ negative terminal of 12V battery.
 Long-term storage at very low
 SOC is not conducive to the
 service life of the traction battery.
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 chemical products that need
 proper use and maintenance.
 Routine full charge and full
 discharge are critical to the
-maintenance
 performance. In addition, the
 battery capacity is subject to
 natural attenuation due to the
 chemical properties. When you
-nd a decrease in SOC range, it is
+and a decrease in SOC range, it is
 recommended to check it at the
-JSW MG authorised service
 center. If the battery consistency
 is turned out to be within the
 normal range, this decrease is
@@ -2355,8 +2209,6 @@ Charging with AC supply
 1. As shown in the gure, press the
 right side of the charging port cap,
 and it will open automatically.
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 4. Insert the charging gun into the
 charging port.
 5. Pull out the charging plug cap.
@@ -2369,12 +2221,10 @@ icon and charging status icon.
 After charging, press the button to
 pull out the charging plug and cover
 the charging port cap.
-S t a r t i n g y o you r E V
 3. Insert the plug into power socket
 2. Turn the locking hook to the right
 to open the charging socket cap,
 as shown in the gure.
-BEFORE DRIVING YOUR EV
 7. Close the charging port cap
 As shown in the image, turn right to
 close the charging port cover until
@@ -2403,7 +2253,6 @@ battery temperature to avoid
 overheating,
 extension of the charging time. This
 is a normal phenomenon.
-S t a r t i n g y o you r E V
 As shown in the gure, pull the ip
 cover of the charger receptacle to
 the right and press it until a click
@@ -2418,8 +2267,6 @@ the operation instructions of the
 charging equipment or charge under
 the guidance of the sta at the
 equipment shall be subject to the
-physical object).
-BEFORE DRIVING YOUR EV
 charging port and the connector
 port of the charging plug for any
 water or foreign matter. If any,
@@ -2462,8 +2309,6 @@ socket on the AC power plug. The
 indicator light on the AC power plug
 will light up, indicating that power is
 being drawn.
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 The AC power plug cannot be used
 to draw power from one electric
 vehicle to charge another electric
@@ -2473,16 +2318,8 @@ functioning properly and the
 correct operation, it may indicate
 a fault with the power take-o
 extraction immediately.
-charging port and the connector
 port of the charging gun for any
-water or foreign matter. If any,
-Otherwise, it may lead to short
-circuit or electric shock, resulting
-in personal injury and property
-loss. Do not touch the metal
 connectors during charging.
-electricity.
-During charging, do not touch the
 charging gun with wet hands or
 charge the vehicle in a wet place;
 otherwise, you may get an
@@ -2496,9 +2333,6 @@ and do not charge in the open air
 on rainy days. Otherwise, it may
 damage the charging equipment,
 or cause lightning strike and
-electric shock.
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 Instructions to Follow
 Instructions
 It is recommended to charge the
@@ -2536,7 +2370,6 @@ representative
 immediately.
 Emergency and Breakdown
 section in this manual for
-information
 representative in your area.
 Do not place ngers inside the
 coupler on either end of the
@@ -2549,8 +2382,6 @@ Not for use in commercial
 Slow charging only happens in
 park brake engaged condition.
 So always keep the park brake
-S t a r t i n g y o you r E V
-BEFORE DRIVING YOUR EV
 Change of vehicle state (Ignition
 OFF to Ignition ON or vice-versa)
 Post switch o the charger,
@@ -2582,7 +2413,6 @@ the charging box is not in use to
 avoid misuse of charging point.
 Unplug both couplers of your
 Portable Charging Gun before
-S t a r t i n g y o you r E V
 During normal operation, the
 charging gun or couplers may feel
 warm. If either coupler or the
@@ -2595,7 +2425,6 @@ station, plug point or charging port.
 Using the charger with a worn or
 damaged port may result in
 unanticipated consequences.
-BEFORE DRIVING YOUR EV
 electromagnetic waves that can
 seriously impact medical electric
 devices such as an implantable
@@ -2623,9 +2452,7 @@ charging gun. Never connect the
 charging gun to the mains with
 wet or moist hands or when the
 charging gun is wet.
-S t a r t i n g y o you r E V
 Make sure that the device is
-always stored in a safe place. Do
 no expose the device to rain or wet
 conditions. DO NOT use this
 connector cable
@@ -2633,7 +2460,6 @@ During charging the vehicle must
 not be exposed to rain, lightning
 Charging should be done in
 Ignition OFF state
-BEFORE DRIVING YOUR EV
 Important Tips
 Do and don t
 Do not allow the vehicle to be
@@ -2660,7 +2486,6 @@ both the high voltage and low
 voltage systems and prevents
 low voltage battery from
 getting discharged.
-S t a r t i n g y o you r E V
 o If possible, user may choose
 to disconnect the negative
 terminal of the low voltage
@@ -2687,8 +2512,6 @@ skill sets and trained manpower,
 it is always recommended to get
 the car serviced or repaired at
 only JSW MG authorised service
-BEFORE DRIVING YOUR EV
-S t a r t i n g y o you r E V
 Always check the SOC level
 before start of journey ensure
 car is adequately charged. You
@@ -2697,7 +2520,6 @@ mobile app also.
 Remote AC command not to be
 executed through mobile app
 while during the charge initiation
-BEFORE DRIVING YOUR EV
 Before driving long distances, it s
 important to conduct a safety check.
 You can also visit a JSW MG
@@ -2709,7 +2531,6 @@ Con rm headlights and all other
 lights are functioning properly.
 Ensure seat belts fasten securely
 and are undamaged.
-maintenance
 indicators, instrument lights, and
 defroster are working.
 Ensure there s enough space for
@@ -2748,7 +2569,6 @@ starting or stopping the motor.
 Press the brake pedal and the
 unlock button to shift gears.
 DRIVING YOUR EV
-S t a r t i n g y o you r E V
 Only press the P button after
 the vehicle has completely
 Use reverse gear (R) only after
@@ -2773,12 +2593,6 @@ Check wipers, lights, and brakes
 for proper function.
 Assess tire tread depth and
 Avoid abrupt braking and sharp
-turns to prevent skidding.
-When slowing down, shift to a
-lower gear and brake gently.
-visibility.
-S t a r t i n g y o you r E V
-DRIVING YOUR EV
 Driving on snowy roads
 Use snow chains when driving on
 assembly and safety instructions
@@ -2807,8 +2621,6 @@ necessary to prevent dazzling
 oncoming drivers.
 Use indicators and headlights
 properly for turning and lane
-S t a r t i n g y o you r E V
-DRIVING YOUR EV
 If you ve been driving in heavy rain
 for an extended period without
 braking, there might be a delay in
@@ -2851,8 +2663,6 @@ temperature
 comfortable range of 24 C to 26 C
 with Auto mode and Econ activated
 to maximize both comfort and range.
-S t a r t i n g y o you r E V
-DRIVING YOUR EV
 When driving on long, steep
 gradients, it is important to lessen
 the strain on the brakes by
@@ -2860,7 +2670,6 @@ releasing the accelerator pedal.
 This action utilizes regenerative
 braking to its advantage and
 prevents the service brakes from
-overheating,
 e ectiveness.
 Driving on gradients:
 When going downhill, ease o
@@ -2904,9 +2713,6 @@ Blown tires or mechanical failures
 are extremely dangerous. To avoid
 these problems:
 Check tire pressure and condition
-maintenance.
-S t a r t i n g y o you r E V
-DRIVING YOUR EV
 Always wear your seat belt
 Wearing your seat belt is crucial in
 any accident. Air bags are there to
@@ -2970,7 +2776,6 @@ Tail gate opening
 Press the tailgate opening button for
 3 sec to unlock the liftgate.
 OPENING CLOSING
-S t a r t i n g y o you r E V
 The functioning range of the
 remote control may be di erent
 due to environmental reasons.
@@ -2994,7 +2799,6 @@ electromagnetic materials that
 blocks electromagnetic waves to
 the key surface.
 Keyless Entry
-con guration, some models are
 equipped with keyless entry function
 automatically
 unlocks when the key is close to it or
@@ -3012,11 +2816,8 @@ powers o , locks, retracts the door
 handles, and raises the windows.
 The keyless entry switch can be
 turned on o in instrument panel
-settings under Menu - Vehicle
 settings - Door windows - Lock -
 Approach unlock Tailgate open
-S t a r t i n g y o you r E V
-OPENING CLOSING
 when approaching. When the key is
 close to the vehicle, the vehicle
 unlocks automatically; When the key
@@ -3043,20 +2844,15 @@ immobilizer ignition key, which
 contains a programmed electronic
 identi cation code.
 PEPS triggering conditions (all of the
-simultaneously):
 The vehicle speed is lower than
 Both the driver s door lock
 passenger door lock feedback
 indicate a locked status;
-The door handle micro switch is
 A valid key is found within the
 e ective Passive
 Loss of keys
 If one of the keys is lost, contact the
 JSW MG authorised service center
-immediately.
-S t a r t i n g y o you r E V
-OPENING CLOSING
 Do not leave the key in the vehicle.
 Take the key with you when you
 leave the vehicle.
@@ -3090,7 +2886,6 @@ open. Make sure to close all
 windows and doors before leaving
 the vehicle. The anti-theft mode
 must be activated with the remote
-S t a r t i n g y o you r E V
 Do not turn ON ignition switch
 by using key with any type of
 metal wound around its grip or in
@@ -3099,10 +2894,8 @@ detected as abnormal condition
 by immobilizer and prevent
 vehicle from starting.
 Do not leave the key in high
-temperature
 transponder in it will behave
 abnormally when reused.
-OPENING CLOSING
 Warning sound
 In the anti-theft state, if one door or
 the trunk is opened by force without
@@ -3140,17 +2933,9 @@ situations include:
 (including liftgate);
 2. The door lock is under thermal
 Never leave a child or pet
-Otherwise, it may cause injuries or
 death due to high temperature in
-the vehicle.
-S t a r t i n g y o you r E V
 The anti-theft mode must be
 activated with the transmitter.
-Never leave a child or pet
-Otherwise, it may cause injuries or
-death due to high temperature in
-the vehicle.
-OPENING CLOSING
 Automatic locking of door
 When all doors are closed and the
 vehicle speed exceeds 10 km h, all
@@ -3192,9 +2977,6 @@ seconds, the windows will roll down
 and blower starts functioning which
 helps in escape of hot air and let
 fresh air inside the vehicle.
-S t a r t i n g y o you r E V
-OPENING CLOSING
-S t a r t i n g y o you r E V
 transmission
 function of remote control
 The remote control has the signal
@@ -3219,7 +3001,6 @@ environment and other high-
 power radio signals (such as
 base station and launch tower);
 Signal blocking by other barriers.
-OPENING CLOSING
 Replace the battery
 Inside the key remote control, there
 is a lithium battery whose service life
@@ -3240,8 +3021,6 @@ rear cover of the smart key.
 the new battery (CR2032). Make
 sure the battery position is
 4. Reinstall the rear cover of the
-S t a r t i n g y o you r E V
-OPENING CLOSING
 To ensure normal functioning of
 the remote-control key, please
 follow the following rules:
@@ -3275,14 +3054,11 @@ keyhole. The keyhole on the left front
 door handle is hidden under the
 handle and becomes visible when
 the handle is opened. When to
-S t a r t i n g y o you r E V
-OPENING CLOSING
 lock unlock the car door from the
 outside using a key, insert the key
 into the lock hole as shown in the
 image above to unlock lock the car
 Unlocking the door from inside
-the vehicle
 To unlock the door from inside the
 vehicle, pull the interior door handle
 once for unlocking, and pull it again
@@ -3312,10 +3088,7 @@ may operate power windows or
 other control buttons or even drive
 the vehicle. Do not leave the child
 with a key in the vehicle. Such
-S t a r t i n g y o you r E V
 Lock unlock the door inside
-the vehicle
-OPENING CLOSING
 not a child safety door lock. Turn the
 knob with the key according to the
 arrow mark here, and then close the
@@ -3333,7 +3106,6 @@ the child safety lock is to prevent
 passengers (especially children)
 from pulling the door handle and
 accidentally opening the rear door.
-S t a r t i n g y o you r E V
 Rear door opening
 Door opening handle is provided on
 the side of the window. To unlock the
@@ -3352,12 +3124,10 @@ door lock system does not function,
 and you need to lock side doors
 manually one by one.
 Open the front right door and the
-rear two doors, and nd the knob
+rear two doors, and and the knob
 inside the door lock (as shown in the
 gure above). Note that the knob is
-2. Unlocking
 To activate the child safety lock:
-OPENING CLOSING
 When the child safety door lock is
 set at LOCKING, do not attempt to
 pull the internal door handle to
@@ -3365,11 +3135,8 @@ open the door. Otherwise, the
 door handle will be damaged.
 Please open the door with the
 external door handle.
-Do not leave your child or pet alone
 in the vehicle. Otherwise, it may
 result in severe casualties. Children
-may operate power windows or
-other control buttons or even drive
 Central door lock system
 With the central door lock system,
 you can not only use the remote
@@ -3377,7 +3144,6 @@ control to lock and unlock the door,
 but also unlock and lock the door
 with the door lock button on the
 driver s side door.
-S t a r t i n g y o you r E V
 1. Open the rear door that you want
 2. Find the child safety door groove
 knob on the door edge and near
@@ -3389,7 +3155,6 @@ The two rear doors are equipped
 respectively. They work separately
 and must be activated manually
 and respectively.
-When the child safety door lock is
 enabled, it cannot be opened from
 inside the vehicle. The door can only
 be opened by pulling the outer
@@ -3397,7 +3162,6 @@ handle of the door from outside the
 To cancel the child safety door lock,
 insert the key into the slot and rotate
 it in the opposite direction.
-OPENING CLOSING
 key to a certain area (within about
 1.2 m) away from the liftgate, and
 press the liftgate release switch to
@@ -3417,7 +3181,6 @@ hazard warning lamp ashes twice.
 If there is a key in the vehicle, the
 system will give an alarm prompt,
 the horn will sound 3 times, the
-hazard warning lamp will ash 3
 times, and the door will be unlocked
 automatically. Please take away the
 key in the vehicle, and lock the doors
@@ -3425,7 +3188,6 @@ If the doors are unlocked, the liftgate
 can only be locked after closing the
 liftgate and locking the doors. Please
 remember to lock the doors.
-S t a r t i n g y o you r E V
 Tailgate opening with tailgate
 Unlock the vehicle, press the
 liftgate switch and open it.
@@ -3443,7 +3205,6 @@ Passive unlock lock of tailgate
 passive unlock
 When the doors are locked and the
 vehicle is powered o , carry a legal
-OPENING CLOSING
 Liftgate lock maintenance hole
 1. Side trim cover
 If other liftgate opening methods are
@@ -3456,7 +3217,6 @@ liftgate lock.
 straight screwdriver) into the
 groove and turn clockwise to
 unlock the liftgate.
-S t a r t i n g y o you r E V
 Make sure that the human body
 away from the tailgate when
 opening the tailgate. When closing
@@ -3471,7 +3231,6 @@ locked. When leaving the vehicle,
 please make sure that the tailgate
 is closed and locked, and the
 vehicle is locked.
-OPENING CLOSING
 To activate this function, set in
 instrument panel under Door
 Window Door Lock Open
@@ -3479,7 +3238,6 @@ Keyless Entry switch. When the key
 is close to the tailgate, the tailgate
 will automatically.
 Tailgate open
-con guration, some models are
 equipped with this function, as
 shown in the image. This function
 can be operated in instrument panel
@@ -3499,22 +3257,16 @@ Vehicle settings - Door and windows
 setting. You can set the tailgate
 opening degree to choose from 50
 to 100 (50 60 70 80
-90 100 ).
-S t a r t i n g y o you r E V
 Power tailgate switch
-con guration, some models are
 equipped with an electric tailgate
 switch. As shown in the image, press
 the electric tailgate switch, and the
 tailgate will automatically close.
 Proximity-triggered
-con guration, some vehicle models
 automatically opens or closes the
 tailgate when the key is near it. This
 activated electric tailgate switch.
-instrument panel under Menu -
 windows - Lock - approach unlock .
-OPENING CLOSING
 3. Separate the cowl hood prop rod
 from the xing clip. Plug the free
 end of the prop rod in the slot
@@ -3534,7 +3286,6 @@ front edge is about 30 cm
 vertically from the top cross
 member of the water tank to let it
 fall freely.
-S t a r t i n g y o you r E V
 Engine hood
 Open the hood
 1. Pull the hood release handle on
@@ -3545,7 +3296,6 @@ your hand to the lower side of its
 front edge. Pull the hood release
 handle rightward as shown in the
 completely.
-OPENING CLOSING
 Exterior rearview mirror
 Please check the visual eld of all
 rearview mirrors before driving.
@@ -3555,11 +3305,9 @@ Press the edge of the mirror by hand
 to an appropriate view angle.
 You can adjust the position of the
 exterior mirrors in instrument panel
-settings under Menu - Vehicle
 setting - Door and windows - Rear
 side mirror - adjust. Additionally,
 manual adjustment can be done on
-S t a r t i n g y o you r E V
 Check that the engine hood is
 locked before driving the vehicle.
 Do not pull the engine hood release
@@ -3568,11 +3316,8 @@ Do not drive the vehicle when the
 front engine hood is open.
 Charging ap opening
 As shown in the gure, press the
-right side of the charging port cap,
-and it will open automatically.
 4. Always check and con rm that
 the cowl hood is locked in place.
-OPENING CLOSING
 Folding of ORVM
 Option 1 : Automatic-folding while
 You can enable or disable the
@@ -3589,11 +3334,7 @@ remotely locking the vehicle. It will
 be unfolded automatically when
 unlocked by remote control.
 Option 2 : Rearview mirror folding
-You can enable or disable the
 exterior mirror folding feature in
-instrument panel settings under
-Menu - Vehicle setting - Door and
-windows - Rear side mirror - side
 mirror unfold . When this feature is
 enabled, the mirrors fold; when
 disabled, the mirrors unfold.
@@ -3604,7 +3345,6 @@ folded forward or backward from its
 normal mounting position under
 su icient impact force. It can be
 moved and reset manually.
-S t a r t i n g y o you r E V
 the left side of the steering wheel.
 When cruise control adaptive cruise
 control is not engaged, press the
@@ -3622,15 +3362,8 @@ Restore the A C control mode
 without operation within 10s after
 adjustment.
 Right rearview mirror adjustment
-mode: Press and hold the left and
-right keys in the left mode area and
-toggle the scroll wheel to adjust the
 position of the right rearview mirror.
 It supports long press to adjust.
-Restore the A C control mode
-without operation within 10s after
-adjustment.
-OPENING CLOSING
 Inside rearview mirror
 Adjust the rearview mirror to an
 appropriate angle manually. The
@@ -3642,7 +3375,6 @@ the rearview mirror bottom forward
 to activate the anti-dazzling mode.
 Please remember to turn the
 switchback at day time.
-S t a r t i n g y o you r E V
 Precautions for icing of electric
 folding outside rearview mirror
 In frosty weather, if the outside
@@ -3667,7 +3399,6 @@ freeze is not removed, the freeze will
 hinder the movement of the mirror
 while adjusting the mirror, causing
 damage to the mirror.
-OPENING CLOSING
 Automatic anti-dazzle interior
 rearview mirror
 When the START STOP switch is in
@@ -3685,8 +3416,6 @@ Reverse gear is selected.
 anti-dazzling
 reduce the vision clarity behind
 the vehicle. Please drive carefully.
-S t a r t i n g y o you r E V
-OPENING CLOSING
 The interior rearview mirror is
 equipped with a USB port, so that
 your vehicle data recorder can be
@@ -3700,7 +3429,6 @@ the sunvisor and slide the mirror
 cover to open. Vanity light will glow
 on sliding the mirror cover and goes
 o when sliding back.
-S t a r t i n g y o you r E V
 Your vehicle is con gured with sun
 visors which can reduce dazzling
 e ect on the driver and passengers.
@@ -3716,7 +3444,6 @@ The sun visors may be equipped with
 a vanity mirror, a vanity mirror trim
 cover, a bill folder, etc. according to
 the vehicle con guration.
-OPENING CLOSING
 Children may operate the
 power window and may get
 stuck by the window when they
@@ -3730,7 +3457,6 @@ vehicle window, resulting in
 Therefore, no child is allowed to
 operate the window regulator
 switch or lean over the window.
-S t a r t i n g y o you r E V
 Power window
 The glass lift switch is located on the
 front door armrest panel. The left
@@ -3741,8 +3467,6 @@ switch. To lower the window, press
 the switch down. Release the switch
 when the window has reached the
 required position.
-OPENING CLOSING
-S t a r t i n g y o you r E V
 Individual switches
 Individual switch has been provided
 on all doors.
@@ -3782,11 +3506,9 @@ pull upward the switch to the top
 (2nd gear) and release, and the
 window will be raised automatically
 to the fully-close position. To stop
-OPENING CLOSING
 learning, it is recommended to drive
 to the JSW MG authorised service
 center for check and repair.
-protection
 Window motor thermal protection is
 a protection function of preventing
 the window regulator motor from
@@ -3800,12 +3522,9 @@ do not continuously and frequently
 lift the window.
 Window child safety lock
 The window child lock function can
-be enabled disabled in instrument
-panel Menu - Vehicle setting - Door
 and windows - Window - Window
 child lock . In such case, the window
 can only be operated on driver s
-S t a r t i n g y o you r E V
 raising the window, press down the
 button and release (short press is
 ok). One-button Rising of Driver s
@@ -3830,8 +3549,6 @@ and continue to pull upward the
 switch for at least 5s and release it.
 Now the initialization learning is
 completed. If the one-button rising
-OPENING CLOSING
-S t a r t i n g y o you r E V
 Assist armrest
 On the front passenger side and
 above the rear seat are installed the
@@ -3844,7 +3561,6 @@ position at a high speed.
 When the vehicle is in high-
 voltage READY
 operate the electric sunroof on
-instrument panel.
 Power sunroof sunshade
 Sunroof shade
 The panoramic sunshade can be
@@ -3867,9 +3583,6 @@ cases, the sunroof initialization
 learning shall be conducted rst. In
 the state where the sunroof is
 completely closed, set instrument
-OPENING CLOSING
-OPENING CLOSING
-S t a r t i n g y o you r E V
 panel settings under Menu - Vehicle
 setting - Maintenance - Sunshade
 initialization and click on Sunshade
@@ -3879,20 +3592,12 @@ learning process. If the one button
 opening or closing function is still
 unavailable
 initialization
-learning, it is recommended to drive
-to the JSW MG authorised service
-center for check and repair.
-S t a r t i n g y o you r E V
 DRIVING CONTROLS
 Vehicle control
-Do not slide the vehicle with the
 power turned o . In such case, many
 systems (e.g. brake booster) cannot
 work. Driving in this way will pose a
 danger to yourself and others.
-To ensure that the pedal travel is
-unhampered, the oor mat in the
-pedal area shall not be excessively
 thick, and no article shall be placed in
 the pedal area.
 Emergency measures
@@ -3907,7 +3612,6 @@ Do not brake suddenly when one
 tire is punctured. Braking suddenly
 will cause the vehicle to tilt towards
 one side, and thus an accident may
-S t a r t i n g y o you r E V
 One fault exists
 When the vehicle is running if one
 fault exists when the vehicle is
@@ -3935,8 +3639,6 @@ Please avoid parking on the hard
 shoulders as this can hinder snow
 Please keep safe distance from
 unnecessarily will be limited.
-S t a r t i n g y o you r E V
-DRIVING CONTROLS
 Wading is only necessary for
 emergency situations. Do not wade
 Vehicle Event Data Recorder (EDR)
@@ -3989,7 +3691,6 @@ the accident and data about 150
 milliseconds after the accident)
 before and after a speci c event such
 as a vehicle collision. The system can
-e ectively solve the di iculties to
 determine the cause of accidents and
 to identify the responsibility of
 accidents, provide e ective support
@@ -3997,8 +3698,6 @@ for the road tra ic accidents, ensure
 the fairness and justice of accident
 processing, and help create a good
 and orderly road tra ic environment.
-S t a r t i n g y o you r E V
-DRIVING CONTROLS
 Cruise control system
 : Cruise control on o : press the
 steering button.
@@ -4014,7 +3713,6 @@ snowy weather, and on hillside
 roads or densely- crooked roads.
 Avoid using cruise control on rough
 roads or heavily tra icked routes.
-S t a r t i n g y o you r E V
 When the cruise control system is
 activated, the vehicle will maintain
 the set speed. Depress the brake
@@ -4032,7 +3730,6 @@ press the button or shift to Drive
 (D) by moving the shift lever down
 twice. The cruise indicator on the
 indicating that the cruise control
-DRIVING CONTROLS
 system is in standby mode. Pressing
 or will activate the cruise
 control, and the cruise indicator on
@@ -4066,7 +3763,6 @@ pressed, and the vehicle speed is
 within the rated value. The
 maximum speed in ECO mode
 cruise control is 80km h
-S t a r t i n g y o you r E V
 Step 2: How to cancel cruise mode
 If there s an emergency ahead during
 cruise control and you need to slow
@@ -4085,7 +3781,6 @@ cruising at 60 km h, then slowed to
 50 km h after braking, the cruise
 indicator ashes. Press to
 restore the cruise indicator to
-DRIVING CONTROLS
 automatically accelerate back to 60
 km h and resume cruise control.
 Step 4: How to promote cruise
@@ -4101,7 +3796,6 @@ released, the current driving speed
 will be stored in the memory and the
 vehicle will maintain the speed.
 Step 5: How to reduce cruise
-control speed
 Press to decrease the cruise
 speed. Each time the button is
 pressed, the vehicle speed is
@@ -4127,8 +3821,6 @@ stuck to the chassis. High-
 temperature parts on the chassis
 could ignite these materials,
 potentially causing a re accident.
-S t a r t i n g y o you r E V
-DRIVING CONTROLS
 Crawl mode allows the car to move
 slowly in D or R gear without pressing
 the accelerator or brake pedal, and
@@ -4171,13 +3863,11 @@ motion, then move the electronic
 shift lever upward to shift to the
 electronic shift lever downward to
 shift to the Drive (D) mode.
-As shown in the gure, press the
 gearshift button to shift to P position
 (parking). Please apply the EPB when
 parking. Release the EPB before
 driving. The current gear (P, R, N, D) is
 displayed on the instrument cluster
-S t a r t i n g y o you r E V
 R: Reversing
 D: drive gear
 Driving mode adjustment:
@@ -4187,8 +3877,6 @@ The economy mode , economy
 mode, standard mode and sport
 mode can be switched in Settings-
 Vehicle-Driving- Driving Mode of
-instrument panel.
-Do not allow children to operate
 the gearshift knob to avoid
 accidental start of the vehicle.
 When the gear is in R, turning the
@@ -4201,7 +3889,6 @@ R gear, press the brake pedal to
 ensure the vehicle speed is less
 than 3 km h. Otherwise, the gear
 cannot be engaged.
-DRIVING CONTROLS
 Instrument controls
 Control device
 l Wireless charging
@@ -4213,7 +3900,6 @@ l Interior lighting
 l Interior ambient lamp
 Temperature control system
 l Air outlet
-Interior Features
 I n t e r i o r F e a t you r e s
 Instrument Panel
 1. Side air outlet
@@ -4255,7 +3941,6 @@ system control
 35. 12V on-board power supply
 36. Key induction area
 INSTRUMENT CONTROLS
-I n t e r i o r F e a t you r e s
 Emergency power-o switch
 If the vehicle is moving slower than
 2 km h, pressing this switch will
@@ -4299,8 +3984,6 @@ Key: The key or Bluetooth key must
 be inside the vehicle and working.
 Brake pedal door: You must
 press the brake pedal or open the
-INSTRUMENT CONTROLS
-I n t e r i o r F e a t you r e s
 In an emergency
 Turn on the hazard lights, Park the car,
 Wear the re ective vest provided,
@@ -4312,7 +3995,6 @@ After parking: Place the warning
 triangle, then quickly move the
 driver and passengers to the right
 shoulder or emergency lane.
-Contact the JSW MG authorised
 service center for assistance. On
 the expressway, follow regulations
 if you need to call the police.
@@ -4324,14 +4006,11 @@ vehicle and surroundings to make
 sure the emergency is over.
 Press the center of the steering wheel
 to sound the horn.
-Control device
 Tilt telescopic adjustment:
 adjustment:
 steering wheel angle so it points
 toward your chest, not your face.
 Steering wheel adjustment
-INSTRUMENT CONTROLS
-I n t e r i o r F e a t you r e s
 2. Telescopic adjustment: Slide
 the steering wheel in or out to a
 comfortable distance.
@@ -4347,11 +4026,7 @@ Only adjust the steering wheel when
 the vehicle is fully stopped. You can
 adjust its angle with these steps:
 adjustment lever.
-2. Adjust the steering wheel to your
 preferred position.
-3. Push the lever back in to lock the
-steering wheel.
-4. Ensure the steering wheel is
 securely locked.
 CONTROL DEVICE
 The driver must maintain full
@@ -4365,11 +4040,9 @@ washer control lever.
 The front windshield wiper has these
 5 positions:
 OFF: Wipers are turned o .
-automatically
 adjust speed based on rainfall.
 LO: Wipes continuously at low
 Front windshield wiper
-I n t e r i o r F e a t you r e s
 Wiper sensitivity adjustment:
 1. Access settings: Go to the car s
 infotainment system.
@@ -4387,13 +4060,11 @@ sensitive detection for light rain.
 This adjustment only a ects when
 the automatic wipers turn on, not
 their speed. The wiper speed adjusts
-automatically
 without manual input.
 Even if the wiper switch is set to
 AUTO, the driver should still
 manually control the wipers to
 maintain a clear view.
-CONTROL DEVICE
 HI: Wipes continuously at high
 MIST: Push the lever up once to
 wipe the windshield once.
@@ -4404,7 +4075,6 @@ the front wiper will automatically
 turns on or o and the wiping speed
 can be automatically adjusted when
 it is turned on.
-I n t e r i o r F e a t you r e s
 Front windshield washer
 To spray cleaning uid on the front
 windshield:
@@ -4426,13 +4096,11 @@ In cold weather: If the wipers are
 frozen, spray warm water to deice
 them, then wipe o the water
 immediately to prevent refreezing.
-CONTROL DEVICE
 Re lling washer uid
 1. Open the engine hood cover
 2. Open the washer uid reservior
 3. Re ll the washer uid to the
 maximum level
-I n t e r i o r F e a t you r e s
 Avoid dry glass: Do not use the
 wipers on dry glass, as this can
 damage the blade.
@@ -4455,11 +4123,6 @@ Console rear USB interface
 The USB interface is positioned
 behind the console and provides
 charging power for rear passenger.
-The charging power supply can be
-used when the vehicle is in the
-READY HV state.
-CONTROL DEVICE
-I n t e r i o r F e a t you r e s
 On-board power interface
 A 12V 120W power socket is located
 in the front armrest box. It only works
@@ -4471,8 +4134,6 @@ recorder, which is located on the
 back of the interior rearview mirror to
 facilitate the power supply of the
 vehicle traveling data recorder.
-CONTROL DEVICE
-I n t e r i o r F e a t you r e s
 Wireless charging
 The wireless charging function for a
 mobile phone is realized without the
@@ -4492,15 +4153,9 @@ transfer from the Wireless charger
 in the Car (Transmitter). So,
 Charging rate of the phone will vary
 based on type brand of phone
-The wireless charging function
-does not apply to all mobile
-phones, only brands models with
-wireless charging function.
 For using a mobile phone without
 wireless charging function, need to
 use Qi certi ed accessories
-CONTROL DEVICE
-I n t e r i o r F e a t you r e s
 The wireless charging area is located
 in the area shown in the gure. The
 charging function is enabled when
@@ -4510,7 +4165,6 @@ the phone face up horizontally in the
 charging area, which can be used for
 wireless charging.
 Wireless charging of
-mobile phones
 Ensure that phone is kept properly on
 the charging pad. There is possibility
 of inadequate charging if the mobile
@@ -4539,8 +4193,6 @@ sure that the smart key is 20cm or
 more away from the wireless charging
 Only one mobile phone can be
 charged at a time.
-CONTROL DEVICE
-I n t e r i o r F e a t you r e s
 1. On bumpy roads, the wireless
 charging function of the mobile
 phone may intermittently stop
@@ -4558,7 +4210,6 @@ of some mobile phones may have
 an impact on wireless charging. It
 may be necessary to adjust or
 remove the case to achieve
-wireless charging.
 2. If the mobile phone cannot be
 charged correctly, please make
 sure that there is no foreign
@@ -4579,7 +4230,6 @@ manufacturers.
 Eg. Latest iPhone models have
 inbuilt Mag safe technology which
 performance.
-CONTROL DEVICE
 The wireless charging e iciency
 may reduce when there is a heavy
 accessory cover on the smart
@@ -4597,7 +4247,6 @@ wireless charging function is
 placed on the charging pad, It
 does not a ect the vehicle or the
 smart phone in any way.
-I n t e r i o r F e a t you r e s
 1. FCS Indicator
 2. Front Passenger s Seat Belt
 Unfastened Warning Lamp
@@ -4611,13 +4260,10 @@ Unfastened Warning Lamp
 10. READY Indicator
 11. Automatic Vehicle Hold (AVH)
 Working Indicator
-Instrument cluster
 12. Automatic Vehicle Hold (AVH)
 Fault Warning Lamp
 13. Electronic Parking Brake (EPB)
-Working Indicator
 14. Electronic Parking Brake (EPB)
-Fault Warning Lamp
 15. Brake System Fault Warning
 16. Vehicle Fault Warning Lamp
 17. EPS Fault Warning Lamp
@@ -4627,7 +4273,6 @@ Fault Warning Lamp
 20. Electronic Stability Control (ESC)
 State Indicator
 INSTRUMENT CLUSTER
-I n t e r i o r F e a t you r e s
 21. Electronic Stability Control (ESC)
 OFF Indicator
 22. Battery Pack Heating Indicator
@@ -4654,7 +4299,6 @@ Status Indicator
 39. Motor Overheating Warning
 40. Lane Departure Warning
 Corrective Steering Function
-Fault Warning Lamp
 41. ACC Indicator
 42. Driving mode
 43. Display
@@ -4662,8 +4306,6 @@ Fault Warning Lamp
 45. Tire Pressure Monitor System
 47. SOC Indication
 48. Traction battery low SOC
-INSTRUMENT CLUSTER
-I n t e r i o r F e a t you r e s
 Speedometer
 It displays the vehicle speed.
 SOC indicator
@@ -4671,7 +4313,6 @@ The traction battery s State of Charge
 (SOC) is displayed from 0 to 100 .
 Battery percentage between
 20 to 30 : The SOC bar is
-Battery percentage between
 0 to 20 : The SOC bar is red,
 urgently needed.
 Motor speed battery voltage
@@ -4697,8 +4338,6 @@ signi cantly reduced. Avoid
 driving on expressways or
 overpasses and charge the
 battery as soon as possible.
-INSTRUMENT CLUSTER
-I n t e r i o r F e a t you r e s
 The trip and total mileage are
 Switching modes: Short press
 the right side of the steering wheel
@@ -4715,7 +4354,6 @@ The actual endurance mileage is
 related to various factors such as
 current road conditions (such as a
 long steep slope), driving habits (such
-acceleration
 deceleration), temperature (such as
 temperature),
 electrical equipment (such as A C) is
@@ -4725,14 +4363,10 @@ long time may overheat and
 damage the motor.
 It is lawfully forbidden to adjust the
 odometer for illegal purposes.
-The range is estimated for the
-reference of the driver and
 passengers only.
 It indicates the mileage which the
 vehicle can be driven with the
 remaining SOC.
-INSTRUMENT CLUSTER
-I n t e r i o r F e a t you r e s
 Gear display
 It displays the gear status.
 R: reverse gear
@@ -4741,11 +4375,7 @@ Display the current driving mode in
 the lower right corner (Eco mode,
 Eco mode, Standard mode, Sport
 Driving mode
-The economy mode , economy
-mode, standard mode and sport
-mode can be switched in Settings-
 Vehicle-Driving-Driving Mode of
-instrument panel.
 Eco mode: Extreme energy-saving
 mode, where the overall vehicle
 thermal management e iciency is
@@ -4760,7 +4390,6 @@ Standard mode:
 Moderate acceleration in this mode.
 Sports mode: Stronger acceleration
 in this mode.
-INSTRUMENT CLUSTER
 Control indicators
 Ready indicator
 illuminates, the vehicle is ready to
@@ -4783,17 +4412,10 @@ Low Battery: If the indicator stays
 on continuously and the traction
 battery s state of charge (SOC) is
 very low, charge the battery as soon
-as possible.
-I n t e r i o r F e a t you r e s
-INSTRUMENT CLUSTER
-I n t e r i o r F e a t you r e s
 Charging cable connection
-High voltage mode: When the door
-is opened and the vehicle is in high
 voltage mode, the indicator brie y
 lights up and then turns o , showing
 that the charging circuit is normal.
-Charging: The indicator lights up
 No illumination: If the indicator
 does not light up during charging,
 connectors are securely connected.
@@ -4820,8 +4442,6 @@ the vehicle speed is below 8 km h.
 4. Energy recovery is paused when
 ESC is activated. It resumes after
 ESC is deactivated for 1 minute.
-INSTRUMENT CLUSTER
-I n t e r i o r F e a t you r e s
 Turn signal indicator
 hazard warning asher
 The turn signal indicator hazard
@@ -4844,7 +4464,6 @@ is set to standard mode by default.
 2. Adjusting:
 Go to Settings Vehicle Driving
 Energy Recovery Mode in the
-infotainment system.
 Choose from three levels: Weak,
 Standard, and Strong.
 increases gradually from Weak to
@@ -4855,8 +4474,6 @@ replace them immediately. Failure
 to maintain these indicators can
 injuries, and damage to the
 vehicle or other property.
-INSTRUMENT CLUSTER
-I n t e r i o r F e a t you r e s
 Door ajar warning lamp
 The warning lamp illuminates when
 the door is opened or is not
@@ -4880,13 +4497,10 @@ situations, contact the nearest JSW
 MG authorised service center for a
 vehicle inspection:
 1. The lamp does not illuminate
-when the vehicle is powered on.
 2. The lamp lights up but does not
 3. The warning lamp illuminates
 while the READY indicator turns
 o , indicating the vehicle cannot
-INSTRUMENT CLUSTER
-I n t e r i o r F e a t you r e s
 Battery pack heating indicator
 The battery pack heating indicator
 lights up in low temperatures to show
@@ -4907,17 +4521,13 @@ malfunction indicator light (MIL). It
 does not a ect driving and should not
 be on while driving. If it lights up
 during driving, contact the nearest
-JSW MG authorised service center.
 High beam indicator
 The high beam indicator illuminates
 when the headlamp high beam is
 Low beam indicator
 The low beam indicator illuminates
 when the headlamp low beam is
-INSTRUMENT CLUSTER
-I n t e r i o r F e a t you r e s
 ABS fault warning lamp
-When the vehicle is powered on, the
 ABS warning lamp will brie y
 illuminate to show that the system is
 self-checking and that the lamp is
@@ -4940,10 +4550,7 @@ rear fog lamp is turned on. Refer to
 relevant contents in Section Rear
 Fog Lamp of Chapter Lighting .
 Position indicator
-This indicator illuminates when the
 position lamp is turned on.
-INSTRUMENT CLUSTER
-I n t e r i o r F e a t you r e s
 An illuminated ABS warning lamp
 may signal that the braking system
 is not functioning properly. If the
@@ -4951,7 +4558,6 @@ brakes are not in good working
 condition, it can lead to collisions,
 personal injuries, and damage to
 your vehicle or other property.
-INSTRUMENT CLUSTER
 Exterior lighting
 Lighting switch
 You can set the lighting status in
@@ -4961,11 +4567,9 @@ Auto, Low beam, Position lamp and
 To switch on the high beam:
 1. Make sure the headlamp is on low
 2. Push the control lever towards the
-instrument panel.
 3. The high beam indicator will light
 4. Push the lever to turn the high
 beam on or o .
-I n t e r i o r F e a t you r e s
 approaching
 vehicles or a vehicle ahead, switch
 from high beam to low beam. High
@@ -5006,8 +4610,6 @@ signal position).
 the lane change.
 3. Release the lever, and it will
 return to the normal position
-automatically.
-I n t e r i o r F e a t you r e s
 Reversing lamp
 The reversing light will illuminate
 when the vehicle is in the READY state
@@ -5020,7 +4622,6 @@ After the vehicle is started, the
 daytime running lamp will be turned
 on automatically; after the position
 lamp is turned on, the lamp will go out
-automatically.
 Rear fog lamp
 To turn the rear fog light on or o :
 1. Go to Menu - Vehicle settings -
@@ -5030,15 +4631,12 @@ dipped beam will also turn on.
 Headlamp height adjustment
 To adjust the headlamp range based
 on vehicle load:
-1. Go to Menu - Vehicle settings -
 Lights - Headlight setting in the
-infotainment system.
 2. Choose from the following levels
 - 0 : Front seats occupied
 - 1: All seats occupied
 luggage compartment loaded
 - 3: Driver s seat occupied with
-luggage compartment loaded
 Adjusting the headlamp height helps
 achieve optimal lighting and avoid
 dazzling other drivers..
@@ -5048,9 +4646,7 @@ function that provides lighting when
 you leave the vehicle at night after
 turning o the engine.
 To adjust the Follow-Me-Home
-1. Go to Menu - Vehicle settings -
 Light - Follow me home in the
-infotainment system.
 2. Choose the delay time for turning
 o the dipped beam: 15 seconds,
 30 seconds, or 60 seconds. The
@@ -5063,8 +4659,6 @@ twice to trigger the delayed turn-
 If the vehicle is locked remotely,
 the low beam will turn o
 automatically after 30 seconds.
-I n t e r i o r F e a t you r e s
-I n t e r i o r F e a t you r e s
 If the vehicle is not remotely
 locked, the low beam will turn o
 automatically after 10 minutes.
@@ -5088,12 +4682,10 @@ reading lamp at the auxiliary armrests
 on both sides of the rear seat, press
 the switch on the reading lamp to turn
 it on or o .
-Please avoid usage of the inside
 lamps during driving in night and
 darkness. A bright compartment
 can reduce the visibility outside
 and cause collision as a result.
-I n t e r i o r F e a t you r e s
 illumination
 illuminates as the tailgate is opened.
 It goes out after the tailgate is closed.
@@ -5114,7 +4706,6 @@ a. Colour selection
 You can select the desire colour
 from the colour panel.
 Interior ambient lamp
-I n t e r i o r F e a t you r e s
 b. Breathing e ect
 You can set the breathing e ect of
 ambient lights in Menu - Vehicle
@@ -5145,7 +4736,6 @@ adjustable side air outlets to both
 sides of the front passenger area or
 to the side window.
 TEMPERATURE CONTROL SYSTEM
-I n t e r i o r F e a t you r e s
 Divert air to the front windshield.
 Central air outlet
 You can control the air ow direction
@@ -5164,9 +4754,6 @@ In this mode, the air ows in two
 directions. Half of the air passes
 through the oor air outlets, and the
 rest of the air passes through the
-central and side air outlets.
-I n t e r i o r F e a t you r e s
-TEMPERATURE CONTROL SYSTEM
 Most of the air ows out from the
 oor air outlet, a small amount of air
 ows out from the windshield and
@@ -5179,11 +4766,8 @@ defroster air outlet.
 Foot defrosting mode
 In this mode, air ows out from the
 front windshield defroster air outlet,
-the front door window defroster air
 outlet, the oor air outlet and the
 side air outlet.
-TEMPERATURE CONTROL SYSTEM
-I n t e r i o r F e a t you r e s
 1. Scenario Mode
 2. Air Volume Adjustment
 3. Front Defrosting
@@ -5198,8 +4782,6 @@ Air conditioner interface display
 11. Face Foot Blowing mode
 12. Foot Blowing Mode
 13. Foot Windshield Blowing Mode
-TEMPERATURE CONTROL SYSTEM
-I n t e r i o r F e a t you r e s
 Turn on the air conditioning (A C)
 1. The vehicle is in READY state.
 2. Press the air conditioner (A C)
@@ -5234,21 +4816,17 @@ inside air will start to circulate
 internally.
 Press this button again to switch to
 the external circulation mode and the
-TEMPERATURE CONTROL SYSTEM
-I n t e r i o r F e a t you r e s
 The A C system may work only
 after the A C fan is turned on.
 indicator will go out. The system
 memorizes the previously set air
 circulation mode the next time you
-start the vehicle.
 After the internal circulation mode is
 turned on for about 20 min, it will
 automatically switch to the external
 circulation mode for a while to obtain
 fresh air. In this period, you may feel
 that the hot or cool air outside enters
-the vehicle.
 You may feel tired and sleepy after
 long-time driving in the internal
 circulation mode.
@@ -5265,8 +4843,6 @@ be automatically activated, and the
 A C button will illuminate.
 Switch the air circulation mode to
 external circulation.
-TEMPERATURE CONTROL SYSTEM
-I n t e r i o r F e a t you r e s
 Rear windshield defrosting button
 In the AUTO mode, the A C system
 automatically adjusts to keep the
@@ -5285,12 +4861,10 @@ no longer automatically controlled by
 the system and the AUTO indicator
 will turn o . Other related functions
 are still controlled by the system
-automatically.
 When the air conditioner is powered
 o , you can press the automatic
 mode (AUTO) button to turn the A C
 system on and enter the automatic
-Rear windshield defrosting button
 Press the rear windshield defrosting
 button to turn on the rear windshield
 defroster on the instrument panel.
@@ -5300,8 +4874,6 @@ view becomes clear.
 After you press the button, the
 defroster will work for about 15
 minutes and then turn o .
-TEMPERATURE CONTROL SYSTEM
-I n t e r i o r F e a t you r e s
 Lack of proper maintenance may
 cause damage to the defroster or
 scratches on the glass.
@@ -5326,14 +4898,13 @@ Refrigerating device of the A C system
 is used to cool down the inside air and
 remove the moisture and dust
 contained in the air.
-temperature
 comparatively high temperature,
 warm air will be generated inside the
 conditioner
 refrigeration
 function is activated.
 After the refrigeration turned on,
-you can nd water drops in the
+you can and water drops in the
 compartment. It is normal that the
 water drops are formed as water
 vapor condenses on surface of the
@@ -5341,12 +4912,10 @@ conditioning
 As the operation of the air
 conditioner compressor needs to
 consume a part of power. This is
-the reason why you may nd that
+the reason why you may and that
 the power of the vehicle drops
 rapidly when the air conditioning
 cooling function is activated.
-TEMPERATURE CONTROL SYSTEM
-I n t e r i o r F e a t you r e s
 To cool down fast in scorching hot
 days or after the vehicle is exposed to
 the blazing sun for a long time:
@@ -5385,23 +4954,14 @@ maximum warmness.
 4. Adjust the fan speed to the
 Normal heating
 1. Activate the external circulation.
-2. Switch the air distribution mode to
 foot mode ( ) or dual mode ( ).
-3. Adjust the temperature to the
 warm air area.
 4. Adjust the fan speed to the desired
-TEMPERATURE CONTROL SYSTEM
-I n t e r i o r F e a t you r e s
 To control the air to ow out from the
 central air outlet and the side air
 1. Activate the external circulation
-2. Switch the air distribution mode to
-face mode ( ) or dual mode ( ).
 3. Adjust the temperature to the cool
-4. Adjust the fan speed to the desired
 Ventilation
-TEMPERATURE CONTROL SYSTEM
-I n t e r i o r F e a t you r e s
 Storage compartments
 l Instrument panel central storage box
 l Storage box sliding curtain
@@ -5434,9 +4994,7 @@ If equipped, you can manually slide
 the curtain to open the storage box.
 S t o r a g e
 2) Storage box sliding curtain
-Storage compartments
 STORAGE COMPARTMENT
-S t o r a g e
 3) Console storage box
 The console storage box is positioned
 behind the armrest box.
@@ -5452,15 +5010,12 @@ until it engages.
 6) MAP pocket
 The map pocket is located on the
 backside of the front seat backrest.
-STORAGE COMPARTMENT
 7) Cup Holder
 The cup holder is located on the
 console between the front seats.
-8) Door storage groove and Armrest
 2. Storage tank
 The door storage groove and armrest
 are located on the front doors and
-S t o r a g e
 On the rear seat armrests, there are
 also cupholders for some models.
 When the car is moving, you must
@@ -5473,20 +5028,17 @@ sudden stops or crashes, don t
 place a bottle, glass, or similar
 container without a cover in the
 cup holder while driving.
-STORAGE COMPARTMENT
 10) Backrest Hook
 The hook is located at the junction of
 the seat backrest and the headrest.
 You can hang a shopping bag or
 other suitable objects on the hook
 as required.
-11) Luggage
 Store the luggage in luggage
 compartment. You can keep
 suitcase, bags, etc
 Luggage cover is designed only
 compartment.
-S t o r a g e
 9) Rear Side Wall Storage Groove
 and Armrest
 The rear side wall storage and armrest
@@ -5501,7 +5053,6 @@ driver s view out the back. If
 there s an accident or sudden
 braking, it could injure the people
 inside the car.
-STORAGE COMPARTMENT
 12) Emergency equipment kit:
 You need to know where the
 emergency equipment is in your
@@ -5512,7 +5063,6 @@ First Aid Kit:
 The rst aid kit is stored in the glove
 box. It has items for treating minor
 injuries only.
-S t o r a g e
 Loading info:
 Heavy objects in the trunk should
 be placed near the backrest and
@@ -5528,7 +5078,6 @@ than the top of the seat backrest.
 Nothing should be placed on the
 tailgate panel or instrument panel.
 Don t cover any sensors on the
-instrument panel.
 Objects should not block the
 pedals, parking brake gear liver not
 to limit the free driver movement
@@ -5543,7 +5092,6 @@ explode if the vehicle is left in high
 Check the contents of the rst aid
 kit regularly and replace any items
 that have been used or have
-STORAGE COMPARTMENT
 Tool Kit, Tow Hook, Jack And Spare
 Following parts are provided in the
 Bag as a Toolkit and kept in the
@@ -5551,8 +5099,6 @@ Spare wheel.
 Wheel Spanner
 Jack Handle
 Warning triangle
-S t o r a g e
-STORAGE COMPARTMENT
 l Jump starting (Dead Battery)
 l Before jump starting
 l Connecting the jumper cables
@@ -5565,7 +5111,6 @@ l Puncture repair kit
 l Emergency equipment kit
 l First aid kit
 l Tool kit, tow hook, jack and spare wheels
-Emergency Breakdown
 E m e r g e n c y B r e a k d o w n
 Jump Starting (Dead Battery)
 If you cannot unlock the vehicle with
@@ -5643,16 +5188,13 @@ may not be enough to restart the
 If your vehicle does not start after
 several attempts, it needs service.
 Roadside Assistance or the nearest
-JSW MG authorised service center
 and let it be attended by trained
 professionals.
 If you are unsure why your battery
 discharged, we recommend having
 your vehicle inspected by JSW MG
-authorised service center.
 It is advisable to contact the JSW MG
 dedicated charging of the 12V
-battery as soon as possible.
 To safely disconnect the jumper
 cables, follow these steps in reverse
 order of connection:
@@ -5665,8 +5207,6 @@ battery chassis
 ground of the assisting vehicle (3).
 3. Take o the second jumper cable
 battery jumper terminal of the
-assisting vehicle (2).
-E m e r g e n c y B r e a k d o w n
 4. Disconnect the other end of this
 jumper cable from the red, positive
 ( ) jumper terminal of your vehicle
@@ -5717,12 +5257,10 @@ battery could create sparks and
 lead to the battery exploding. A
 spark could cause the battery to
 explode, resulting in personal
-injury or vehicle damage.
 This can cause severe injuries or
 harm to the vehicle.
 Connecting jumper cables to
 components can also damage
-E m e r g e n c y B r e a k d o w n
 Avoid using the battery to power
 periods. This can drain the battery
 To protect your vehicle from
@@ -5758,7 +5296,6 @@ human health. Follow your local
 laws or regulations for proper
 battery disposal.
 TOWING THE VEHICLE
-E m e r g e n c y B r e a k d o w n
 For 2WD vehicles, towing with the
 front wheels on the ground (without
 dollies) and the rear wheels o the
@@ -5797,13 +5334,11 @@ should not touch the ground
 during front towing. If the rear
 wheels are on the ground during
 towing from the front, it can cause
-signi cant damage to the car s
+signi can't damage to the car s
 Avoid lifting the vehicle with the
 tow tting or body and chassis
 parts to prevent potential damage
 to the vehicle.
-E m e r g e n c y B r e a k d o w n
-TOWING THE VEHICLE
 equipment. Use wheel lift or
 atbed equipment.
 Towing with a wheel lifter
@@ -5838,8 +5373,6 @@ xed to the trailer.
 Failure to properly tighten the
 towing hook may result in vehicle
 damage and damage of related
-E m e r g e n c y B r e a k d o w n
-TOWING THE VEHICLE
 Do not exceed 30 km h when
 distances to 40 km.
 For longer distances, contact
@@ -5858,7 +5391,6 @@ Your vehicle can be towed by other
 vehicles, but it should not be used to
 tow other vehicles.
 needs to be pulled out of a
-di icult situation.
 Always tow the vehicle from the
 front only.
 Ensure the tow rope does not
@@ -5886,26 +5418,19 @@ wheels should not touch the
 ground during towing from the
 front. If the rear wheels are on the
 ground during towing, it can cause
-signi cant damage to the car s
 When towing the vehicle with
 ropes, there is a risk of damage.
 minimize potential problems:
 Use the towing hook if other
 unavailable or if the vehicle
-E m e r g e n c y B r e a k d o w n
-TOWING THE VEHICLE
-Electric vehicle
 l Electric vehicle information
 l Characteristics of EV
 l Warning - EV vehicle related
 Main components of electric vehicle
-l Main components
 l HV battery
 w HV battery disposal storage guidelines
-l Common terminologies
 l Safety of HV system HV system: contact with water
 l Warning, cautions - HV battery related
-Vehicle Maintenance
 V e h i c l e M a i n t e n a n c e
 General Information
 Inadequate or incomplete servicing
@@ -5953,7 +5478,6 @@ performance,
 safety. Any problems caused by
 retro tting are not within the
 scope of warranty. The Company
-corresponding
 responsibilities for the safety
 problems caused by retro tting.
 VEHICLE MAINTENANCE
@@ -5991,8 +5515,6 @@ and disposed of.
 Refer to the o icial website or
 consult the JSW MG authorised
 service center for speci c recycling
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 When the vehicle is to be put back
 into service:
 Connect the wire clamp to the
@@ -6018,14 +5540,11 @@ appropriate.
 Windshield Wiper
 Check the state of wiper arms
 and blades.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Check whether the steering
 wheel is too loose (free stroke)
 Parking Brake
 Ensure the stroke of parking
 brake lever is appropriate.
-Instrument Panel
 Check whether all instruments,
 control buttons and warning
 lamps work normally.
@@ -6041,12 +5560,9 @@ Front Compartment
 2. 12V battery
 3. Brake uid reservoir
 4. Windshield
-Front Compartment
 1. Brake uid reservoir
 4. Brake uid reservoir 12V battery
 5. Windshield
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 12 V Battery
 The 12V battery is at the lower right
 of the front compartment.
@@ -6057,7 +5573,6 @@ glasses since battery acid is
 highly corrosive
 Open ames, electric sparks,
 strong light and smoking are
-prohibited
 Explosive mixed gas may be
 Children should be kept away
 from acid and battery
@@ -6088,11 +5603,8 @@ solution of water and baking
 Tighten loose terminals and hold
 down clamp nuts only enough to
 keep the battery rmly in place.
-Tightening
 excessively
 damage the battery terminals.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 To avoid battery discharge, please
 turn o the ignition switch when
 leaving the vehicle.
@@ -6108,7 +5620,6 @@ such as dashboard camera (dash
 cam) mounting during parking. If
 the warning continues even after
 external electrical devices are
-professional
 Accessories-
 accessories
 connected to the battery powered
@@ -6135,7 +5646,6 @@ air vent. If the acid splashes into
 eyes, wash with clean water for a few
 minutes, then go to see a doctor
 immediately. If the acid splashes on
-immediately
 neutralize it with rich soap solution
 and rinse with plenty of water. If you
 mistakenly drink acid, go to see a
@@ -6151,8 +5661,6 @@ A battery generates hydrogen gas
 which is ammable and explosive.
 Keep any ame or spark away from
 the vent holes.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 explosive mixed gas, you must
 ensure that the battery air vent is
 open to successfully discharge the
@@ -6206,8 +5714,6 @@ battery is reconnected.
 The replacement battery must meet
 speci cation
 recommended battery.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Car Parking Period
 If the vehicle is to be parked for an
 extended period of time, the static
@@ -6254,11 +5760,6 @@ equipment manufacturer.
 Before the quick charge, that is,
 before the high current charge, you
 must remove two connecting cables.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
-Please pay attention to the
-instructions
-battery before working on it.
 When charging, the power supply
 switched on only after the
 charging device electrode chuck
@@ -6288,8 +5789,6 @@ battery. Cracking may occur on
 the battery case because of
 freezing. Battery acid may leak
 and damage the vehicle.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Checking the Electrolyte Level
 Check the electrolyte level and
 speci c gravity at speci c PMS
@@ -6303,7 +5802,6 @@ Add distilled water to all the
 cells that require the uid and
 secure the plugs properly.
 Battery Removal
-Turn o the ignition switch and all
 electrical appliance before removing
 the battery.
 To remove the battery, you should
@@ -6315,7 +5813,6 @@ Battery Replacement
 Please go to an MG Authorised
 Repairer to remove and re t the
 battery. Only t MG recommended
-replacement
 functionality.
 Please note that the ignition switch
 and the electrical appliance have
@@ -6328,8 +5825,6 @@ discarded at will, for it is harmful to
 the environment. It must be recycled
 consult JSW MG authorised service
 center for more details.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Coolant (1)
 Coolant (2)
 The vehicle is equipped with a
@@ -6341,9 +5836,6 @@ coolant provides excellent corrosion
 and anti-freeze performance for
 cooling and warm air systems.
 Battery Installation
-Turn o the ignition switch and all
-electrical appliance before removing
-the battery.
 Place the battery in the mounting
 position and secure it with battery
 Secure the positive cable then the
@@ -6354,11 +5846,6 @@ damages injuries, including
 consequential damages injuries,
 resulting due to tment of non
 OEM approved batteries.
-To avoid battery discharge, please
-turn o the ignition switch when
-leaving the vehicle.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 The coolant reservoir is located on
 the side of the front compartment,
 and its position is not easily
@@ -6388,8 +5875,6 @@ Keep it out of reach of children.
 Coolant is irritating to the skin
 and can cause illness or fatal
 danger in case of swallowing.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Brake and Clutch Fluid
 The vehicle is equipped with a brake
 uid reservoir. The brake uid is
@@ -6409,7 +5894,6 @@ A low level in the brake uid reservoir
 can be caused by leakage in the
 brake system or normal wear of the
 brake pads linings. Please contact
-the JSW MG authorised service
 center to check whether the system
 needs to be repaired. If repairs are
 necessary, add uid after repairing
@@ -6436,8 +5920,6 @@ clean the area around the brake
 Contamination of the brake uid
 system will a ect the system
 performance, resulting in costly
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 The brake uid is irritating to the
 skin and eyes.
 Avoid contacting the brake uid
@@ -6452,7 +5934,6 @@ and equipment. To avoid personal
 injury or vehicle damage, it is
 recommended that you have this
 work done at JSW MG authorised
-service center.
 The brake uid spilling over the
 front compartment may cause a
 re. An overfull uid reservoir is
@@ -6477,8 +5958,6 @@ under low temperatures due to
 freezing. An overfull container has
 no enough space for expansion, thus
 resulting in damage.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Please go to the JSW MG
 authorised service center to ll
 the correct washing uid. Do not
@@ -6499,7 +5978,6 @@ manufacturer s instructions.
 If the temperature is likely to fall
 windshield washer solvent with
 good antifreezing performance.
-Windshield Wiper
 Foreign matters on the windshield
 e ectiveness of the wiper. If the
 blade does not work properly, wipe
@@ -6522,8 +6000,6 @@ droppings, dust and leaves from the
 glass surface before starting the
 wiper; otherwise, the service life of
 strips will be reduced.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Wiper Repair
 The windshield wiper maintenance
 switch can be turned on or o in
@@ -6553,8 +6029,6 @@ the brake pedal stroke becomes
 longer, please go to the JSW MG
 inspection. This may indicate faults
 of the brake system.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Fuse replacement:
 1. Open the fuse box cover.
 2. Identify damaged fuses by nding
@@ -6575,8 +6049,6 @@ Front Compartment Fuse Box
 B replacemet
 The front compartment fuse box is
 located in the front compartment.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 It is forbidden to remove a blown
 fuse with a conductive tool. A fuse
 remover must be used. The use of
@@ -6619,8 +6091,6 @@ Keep the bulb out of reach of
 carefully to prevent personal
 injury due to bulb explosion.
 Lamp Bulb Replacement
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Clean the halogen bulb with
 alcohol or mineral spirits and non-
 woven fabrics. Do not touch the
@@ -6631,11 +6101,9 @@ the halogen bulb.
 Professional skills and special
 equipment are required for lamp
 replacement.
-recommended that you have this
 done at the JSW MG authorised
 service center. Otherwise, it may
 cause personal injury or damage
-to the vehicle.
 Lamp Fogging
 When the headlamp is on, a large
 amount of heat will be generated,
@@ -6668,12 +6136,7 @@ It may take 2-3 days for the water
 mist to completely dissipate. If there
 are a lot of water drops or
 accumulated water in the lamp,
-maintenance.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Bulb Speci cation
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Be sure to use wheels and tires of
 speci ed speci cations. The use
 of wheels and or tires of other
@@ -6710,10 +6173,7 @@ and performance. The car is not
 provided with spare tire, jack and
 socket wrench. If you need to
 change the tire, please contact the
-JSW MG authorised service center
 for wheel and tire replacement.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Insu icient
 Check the tire pressure atleast once
 a month. Incorrect tire pressure
@@ -6750,14 +6210,11 @@ those mentioned above, can result in
 loss of vehicle control and personal
 Incase of damage or abnormal wear
 of tires or wheels, please consult the
-JSW MG authorised service center
 for help. The vehicle is equipped with
 radial tires. MG suggests replacing
 with radial tires of the same size,
 pattern, tread wear, temperature and
 rated speed.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 The use of tires with di erent size
 than the original tires may cause
 component to interfere with each
@@ -6787,9 +6244,6 @@ worn or damaged tires may lead to
 the vehicle out of control and
 resulting in personal injury and
 damage of vehicle or other
-properties.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Tire rotation
 The front tires and the rear tires have
 di erent functions and therefore
@@ -6835,9 +6289,6 @@ Therefore, use ne antiskid chains
 as much as possible to ensure
 enough space between the tire and
 other parts in the wheelhouse.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
-Vehicle Maintenance
 The manufacturer s suggestions
 must be observed when you use
 products inside or outside the
@@ -6869,8 +6320,6 @@ Some cleaning agents are toxic,
 corrosive or ammable. Improper
 use is very dangerous and easy to
 cause personal injury or vehicle
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Do not use the following materials
 for cleaning:
 Carbon tetrachloride
@@ -6907,8 +6356,6 @@ Otherwise, it will produce water
 during the rst washing. These
 substances will permanently
 damage the vehicle.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Seat Belt Maintenance
 Keep seat belts clean and dry.
 Prevent seat belts from being
@@ -6956,8 +6403,6 @@ window defroster. Do not paste
 decals on the inner side of the
 rear windshield. Otherwise, it will
 a ect the driver s vision.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Exterior Maintenance and
 Vehicle Cleaning
 Be sure to turn o the power before
@@ -7001,8 +6446,6 @@ automotive or chrome polishing
 agent, steam or alkaline soap
 abrasive and may damage trims
 and wheels.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 regularly. They are usually washed
 with water. When waxing the vehicle,
 please also wax these bright metal
@@ -7044,11 +6487,8 @@ Remove harmful substances on the
 vehicle in time. If residues cannot be
 removed with soap water, a special
 cleaning agent can be used.
-Do not use the abrasive cleaning
 agent or brush to clean the
 aluminum wheels or wheel trim
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 Finish Paint Damage
 Repair the gravel scratches, cracks
 or deep scratches on the nish paint
@@ -7068,8 +6508,6 @@ prevention may accumulate at the
 underbody. Failure to remove these
 substances will accelerate corrosion
 and rusting.
-V e h i c l e M a i n t e n a n c e
-VEHICLE MAINTENANCE
 PERIODIC MAINTENANCE
 OPERATION PROCESSES FOR
 PERIODIC SERVICE SCHEDULE
@@ -7082,48 +6520,32 @@ Inspection only
 Check the interior and exterior
 lighting, horn and system warning
 display functions.
-Inspection only
 Check the surfaces of windscreen
 and rear window, and the working
 condition of wipers and washers.
-Inspection only
 Check the status and function of
-Inspection only
 Check various control functions
-Inspection only
 Check AC lter, replace if
 Check the status and function
-Inspection only
 Check the conditions of front
 compartment cover lock, tailgate
 lock, door locks, hinges, door
 checks, etc., clean up all the dust
 and re ll lubricating grease as
-Inspection only
-Front Compartment
 Check the connection and status
 of 12V battery.
-Inspection only
 Check the high-voltage harness
 for mutual interference, wear or
-Inspection only
 Check the washer uid level
 and add to the standard level as
 Check brake uid level and add to
 the standard level as necessary.
 30 K KM 2 Years
 Check transmission uid levels,
-and add to the standard level as
 80 K KM 8 Years
 Check the status of cooling system
 pipeline and connecting parts.
-Inspection only
 Periodic Maintenance - Service Schedule- Windsor
-OPERATION PROCESSES FOR
-PERIODIC SERVICE SCHEDULE
-Replacement
-Frequency: Km
-Year whichever
 Check the level and concentration
 of coolant, and add to the standard
 level as necessary.
@@ -7132,133 +6554,80 @@ pipeline such as the compressor,
 the cooling pipeline and the
 condenser, and clean relevant
 surfaces as necessary.
-Inspection only
 Check the status of brake vacuum
 booster and hose.
-Inspection only
 Check the drive motor mounting
-Inspection only
 Vehicle Bottom
 Check the appearance of high-
 voltage connector and if it is tted
 properly; check the surface of
 high-voltage connector for damage
 and if it is tted in place.
-Inspection only
 Check reducer oil level and add to
-the standard level as necessary.
 First 5K then
 every 30 K KM
-Check the high-voltage harness
-for mutual interference, wear or
-Inspection only
 Check the appearance of vent valve
 for damage, and check the marking
 for tting to see if it is moved.
-Inspection only
 Check the status of manual service
 switch to ensure reliable mounting
 and clean up the dust on the
-Inspection only
 Check the mounting position of the
 cooling water pipe clip to ensure
 reliable sealing.
-Inspection only
-Periodic Maintenance - Service Schedule- Windsor
-PERIODIC MAINTENANCE
 Symbol Abbreviation: R - Replace I - Inspect- Top up if require-Adjust-Clean-Re ll. Check the coolant level and top up as required, replace
 if it is contaminated discoloured or there is sludge formation.
 Tightening of underbody fasteners, door adjustments and functional checks of all the systems during every service is mandatory - Check
-OPERATION PROCESSES FOR
-PERIODIC SERVICE SCHEDULE
-Replacement
-Frequency: Km
-Year whichever
 Check the marking for tting the
 mounting bolt to see if it is moved
 and ensure the bolts are fastened.
-Inspection only
 Check the appearance of housing
 (including the bracket) for crack or
 deformation.
-Inspection only
-Check the appearance of high-
 voltage battery pack grounding wire
 and replace it as necessary.
-Inspection only
-Vehicle Interior and Exterior
 Check the equilibrium state of the
 high-voltage battery pack and carry
 out equalizing charge as necessary.
-Inspection only
 Check the status and thickness
 of front and rear brake pads and
 brake discs, and replace them as
-Inspection only
 Check brake pipes and hoses for
 condition and security. Ensure that
 hoses are not twisted or kinked.
-Inspection only
 Check the wheel bearings and drive
 shaft sleeve.
-Inspection only
 Check the suspension and steering
 system for leakage or wear.
-Inspection only
 Check the tread depth to see
 if the tyre is worn or damaged
 abnormally. Check the four-wheel
 alignment data and perform
 front and rear wheel rotation as
-appropriate.
-Inspection only
 Check the tyre pressure and make
 adjustment as necessary.
-Inspection only
 Check if the chassis and
 underbody bolts and nuts are
 fastened or xed, and replace them
 as necessary.
-Inspection only
-Periodic Maintenance - Service Schedule- Windsor
-PERIODIC MAINTENANCE
-Symbol Abbreviation: R - Replace I - Inspect- Top up if require-Adjust-Clean-Re ll. Check the coolant level and top up as required, replace
-if it is contaminated discoloured or there is sludge formation.
-Tightening of underbody fasteners, door adjustments and functional checks of all the systems during every service is mandatory - Check
-Periodic Maintenance - Service Schedule- Windsor
-OPERATION PROCESSES FOR
-PERIODIC SERVICE SCHEDULE
-Replacement
-Frequency: Km
-Year whichever
 After Maintenance and Repair
 Use diagnostic software to reset
 maintenance interval indicator.
 Check for fault codes and
 determine operation status of the
 control systems.
-Inspection only
-Check the status and function of
 communication module with the
-Inspection only
 Check software version of
 electronic control units and
 upgrade to latest version if
-Inspection only
 Carry out the road test, and check
 the status and function of power
 system, brake, steering and other
-Inspection only
 Check speci c gravity of the
 Battery electrolyte Level for all
 If the level is below the marker, pl
 top up the distilled water till the
 uper marker.
-Inspection only
-Symbol Abbreviation: R - Replace I - Inspect- Top up if require-Adjust-Clean-Re ll. Check the coolant level and top up as required, replace
-if it is contaminated discoloured or there is sludge formation.
-Tightening of underbody fasteners, door adjustments and functional checks of all the systems during every service is mandatory - Check
-PERIODIC MAINTENANCE
 NEW VEHICLE WARRANTY
 JSW MG Motor New Vehicle
 Terms Conditions
@@ -7266,7 +6635,6 @@ Terms Conditions
 Your JSW MG MOTOR vehicle is
 manufactured to meet the
 regulations and environmental
-requirements
 conditions. In case you relocate
 it to any other country than
 INDIA, it may be very di icult to
@@ -7309,7 +6677,6 @@ the Delivery Date.
 2.2 Geographical coverage:
 2.2.1 This warranty covers any
 geographical
-NEW VEHICLE WARRANTY
 If the vehicle is to be driven and,
 more importantly, registered
 outside the geographical area
@@ -7337,7 +6704,6 @@ date VIN of such vehicle is
 declared as total loss by the
 Field of Application:
 2.5 The Customer is covered for:
-2.5.1 Free
 consumables and labour) of any
 material or assembly defect duly
 found in the vehicle, at their own
@@ -7362,7 +6728,6 @@ acceptable degradation will be
 deemed excessive loss. Where
 possible the excessive loss
 portion will be repaired, if
-NEW VEHICLE WARRANTY
 unrepairable the battery pack
 will be replaced with either a
 manufactured
@@ -7394,26 +6759,15 @@ warranty terms and conditions.
 system including T-Box:
 Infotainment Audio system is
 valid for 3 years from the
-Delivery Date shown in the
-Owner s Manual issued to the
 customer and shall be provided
 by the respective manufacturer
 conditions.
 2.6.4 Battery Pack:
-Battery pack is valid for 8 years
-or 1,50,000 kms (Personal)
-whichever is earlier 3 years or
-1,00,000 kms (Commercial)
-whichever is earlier starting from
-the Delivery Date.
 2.6.5 AC Chargers:
 The warranty coverage for AC
 chargers is valid for 1 year
 starting from the Delivery Date.
 It shall be provided by the
-manufacturer
-warranty terms and conditions.
-NEW VEHICLE WARRANTY
 2.7 The JSW MG MOTOR New
 Vehicle Warranty does not
 cover and JSW MG MOTOR
@@ -7423,7 +6777,6 @@ MOTOR authorized workshop
 shall not be responsible for
 the following:
 2.7.1 Normal
-maintenance
 services other than 3 free
 limitation,
 polishing, minor adjustments,
@@ -7442,7 +6795,6 @@ quality standards.
 consequences of any fault (loss
 immobilization, etc.);
 2.7.4 Vehicle
-speci cation
 consequences
 (deterioration, premature wear
 and tear, alterations, etc.) of the
@@ -7464,10 +6816,8 @@ limited to steering wheel, gear
 knobs, gear bellows prone to
 normal wear tear will have a
 limited coverage :
-NEW VEHICLE WARRANTY
 2.8 Damage or failure resulting
 due to the following causes:
-2.8.1 Poor
 maintenance, in particular if the
 instructions for the treatment,
 the frequency of maintenance or
@@ -7520,10 +6870,8 @@ animal-based deposits such as
 2.9.5 Fitting accessories not
 approved by the manufacturer;
 2.9.6 Fitting
-accessories
 approved by the manufacturer,
 but installed without observing
-NEW VEHICLE WARRANTY
 the recommendations de ned
 by the manufacturer;
 2.9.7 Damage due to airborne
@@ -7538,7 +6886,6 @@ hydro-static lock.
 2.9.9 Paint scratches, dents or
 similar paint or body damage.
 consequential
-limitation,
 inconvenience, loss of use of
 vehicle or commercial loss.
 How does the JSW MG MOTOR
@@ -7555,26 +6902,20 @@ only such Workshop have the
 authorization for operations of
 completed Owner s Manual,
 as proof of entitlement to the
-maintenance
-recommended
-Manufacturer
 carried out;
 2.10.4 have the defect covered
 by the JSW MG MOTOR New
 Vehicle Warranty con rmed as
 soon as possible, by a JSW MG
-MOTOR authorized workshop
 in writing. If the vehicle is
 unroadworthy, the Customer
 must contact the nearest JSW
 workshop member or JSW MG
 MOTOR Assistance.
 2.11 The JSW MG MOTOR New
-Vehicle Warranty does not
 apply, and JSW MG MOTOR
 authorized dealer members
 are exempt from all liabilities,
-NEW VEHICLE WARRANTY
 2.11.1 The vehicle has been
 driven under conditions not in
 accordance with those stated
@@ -7602,7 +6943,6 @@ the new vehicle warranty
 2.14 Transferring ownership of the
 vehicle shall not alter the
 application conditions of the
-JSW MG MOTOR New Vehicle
 The JSW MG MOTOR Anti-
 corrosion Warranty:
 warranty will apply from the
@@ -7620,12 +6960,10 @@ MG MOTOR New Vehicle
 Anti-Corrosion
 eld of application
 3.3.1 In addition to the JSW
-MG MOTOR New Vehicle
 Warranty, JSW MG MOTOR
 guarantees the bodywork and
 sub frame of JSW MG MOTOR
 perforation from the interior,
-NEW VEHICLE WARRANTY
 due to steel panel corrosion
 caused by a manufacturing,
 material or protective product
@@ -7640,14 +6978,11 @@ defect, acknowledged by the
 Manufacturer.
 3.3.3 It is authorized JSW MG
 MOTOR workshop s discretion
-appropriate
 replace these components,
 and to inform the Customer.
-The JSW MG MOTOR Anti-
 Corrosion Warranty does not
 3.4.1 any damage which is not
 covered by the JSW MG
-MOTOR New Vehicle Warranty,
 as de ned at the start of this
 components which are not an
 integral part of the bodywork
@@ -7658,14 +6993,12 @@ have been carried out on the
 body of the JSW MG MOTOR
 Vehicle in a workshop outside
 authorized network.
-Anti-Corrosion
 conditions of application
 3.5.1 To obtain the Anti-
 Customer must contact any
 Workshop of the JSW MG
 MOTOR Authorized Workshop
 Network - only such Workshop
-authorization
 operations of this sort.
 3.5.2 The Customer shall show
 the duly completed (delivery
@@ -7681,10 +7014,7 @@ these tests are conducted at
 the mileage intervals stated in
 the Owner s Manual, and at
 least once every two years.
-maintenance
-NEW VEHICLE WARRANTY
 services in the JSW MG
-MOTOR authorized workshop
 network incorporate these
 3.5.4 If the Customer requests
 to have the anti-corrosion test
@@ -7732,15 +7062,12 @@ JSW MG MOTOR guarantees
 the bodywork paintwork and
 painted parts paintwork (door
 mirrors, bumpers etc.) for 3
-NEW VEHICLE WARRANTY
 years or Unlimited kilometers
 (for Personal Registration) 3
 years or 1,00,000 kms (for
 Registration)
 (whichever is earlier) from the
 Delivery Date of the new
-Geographical Coverage: The
-geographical coverage of the
 Paintwork Warranty is identical
 to that for the JSW MG MOTOR
 New Vehicle Warranty.
@@ -7756,7 +7083,6 @@ application
 acknowledged
 Manufacturer, with the JSW
 workshop carrying out the
-Customer informed.
 3.8.2 This repair shall take into
 account the general condition
 of the vehicle with regard to its
@@ -7764,8 +7090,6 @@ age, mileage and maintenance
 Paintwork Warranty does not
 3.9.1 any damage which is not
 covered by The JSW MG
-MOTOR New Vehicle Warranty,
-as de ned at the start of this
 3.9.2 damage due to force
 majeure events: lightning, re,
 oods, earthquakes, war, riots
@@ -7780,7 +7104,6 @@ dust or road debris) which
 results in stone chipping of
 paint or glass.
 3.10 Paintwork
-conditions of application
 3.10.1 To obtain the Paintwork
 Warranty, the Customer must
 contact any workshop of the
@@ -7788,7 +7111,6 @@ JSW MG MOTOR Authorized
 Workshop Network - only such
 Workshop have authorization
 for operations of this sort.
-NEW VEHICLE WARRANTY
 3.10.2 The Customer shall
 show the duly completed
 (delivery date) Owner s Manual
@@ -7799,12 +7121,8 @@ for the parts supplied by JSW
 replaced under this warranty
 legally become the property of
 JSW MG MOTOR.
-components tted under the
-guaranteed until the end of the
 term of the original Paintwork
 3.10.5 Transferring ownership
-of the vehicle does not alter
-the application conditions of
 the Paintwork Warranty.
 This warranty is the entire
 Warranty given by JSW MG
@@ -7842,7 +7160,6 @@ and all disputes arising out of
 this Warranty will be subject to
 the jurisdiction of Courts in
 Gurugram only.
-NEW VEHICLE WARRANTY
 application services content
 providers for developing the
 complete overall
@@ -7850,7 +7167,6 @@ features across all MGI models .
 committed to providing the best
 user experience and services and
 acts as an integrator for these
-application services content
 providers. For any customer
 feedback, JSW MG MOTOR India
 content service
@@ -7858,4 +7174,3 @@ provider for resolution. Model
 variants applicable with Internet
 features. For limited coverage
 details, please contact JSW MG
-authorised service center.
