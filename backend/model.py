@@ -1,125 +1,86 @@
-# backend/model.py — FINAL (Option B: safe 8 chunks)
-import os, faiss, pickle, requests, traceback
+import os, faiss, pickle, requests
 from sentence_transformers import SentenceTransformer
 
 model = index = chunks = None
 
 
-# --------------------- LOAD MODEL + INDEX ---------------------
 def _load():
     global model, index, chunks
     if model is None:
-        print("[INIT] Loading model…")
-        model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
+        print("[INIT] Loading MiniLM + FAISS...")
+        model = SentenceTransformer(
+            "sentence-transformers/all-MiniLM-L6-v2",
+            device="cpu"
+        )
         index = faiss.read_index("vector_store.faiss")
         with open("chunks.pkl", "rb") as f:
             chunks = pickle.load(f)
 
 
-# --------------------- SAFE HELPERS ---------------------
-def safe_truncate(text: str, max_chars=6000):
-    """Avoid sending over-large prompts to Groq."""
-    return text[:max_chars]
+def answer_query(question):
+    if not question or not question.strip():
+        return "Please ask a question."
 
-
-def call_groq(prompt: str):
-    """Groq call with retry, handles rate limits + timeouts."""
-    key = os.getenv("GROQ_API_KEY")
-    if not key:
-        return "• Missing GROQ_API_KEY"
-
-    for attempt in range(2):   # retry twice
-        try:
-            r = requests.post(
-                "https://api.groq.com/openai/v1/chat/completions",
-                json={
-                    "model": "llama3-70b-8192",
-                    "messages": [{"role": "user", "content": prompt}],
-                    "max_tokens": 350,
-                    "temperature": 0.0
-                },
-                headers={"Authorization": f"Bearer {key}"},
-                timeout=18
-            )
-
-            # Success
-            if r.status_code == 200:
-                return r.json()["choices"][0]["message"]["content"].strip()
-
-            # Retry on soft errors
-            if r.status_code in (408, 429, 500, 503):
-                continue
-
-            return f"• API Error {r.status_code}"
-
-        except Exception:
-            continue
-
-    return None  # fully failed
-
-
-# --------------------- MAIN ANSWER FUNCTION ---------------------
-def answer_query(question: str) -> str:
     try:
-        if not question.strip():
-            return "Please ask a question."
-
         _load()
 
-        # Encode question
         q_emb = model.encode(
-            [question.lower()],
-            normalize_embeddings=True,
+            [question],
             convert_to_numpy=True,
+            normalize_embeddings=True
         )
 
-        # Retrieve 8 chunks — OPTION B (best for stability)
-        _, I = index.search(q_emb.astype("float32"), 8)
+        _, I = index.search(q_emb.astype("float32"), 10)
 
-        retrieved = [chunks[i] for i in I[0] if i < len(chunks)]
-        raw_context = "\n".join(retrieved)
-        raw_context = safe_truncate(raw_context)
+        context = "\n".join(
+            chunks[i] for i in I[0] if i < len(chunks)
+        )
 
-        # Create controlled prompt
+        key = os.getenv("GROQ_API_KEY")
+        if not key:
+            return "Missing GROQ_API_KEY"
+
         prompt = f"""
-You are an expert in fixing broken OCR text from car manuals.
+You are an expert at cleaning and rewriting technical car manual text.
 
-Fix the following text:
+Context from manual:
+\"\"\"{context}\"\"\"
 
---- RAW OCR ---
-{raw_context}
----------------
+User question: {question}
 
-Question: {question}
+Rewrite the answer using ONLY information in the context.
+Do ALL of this:
+- Fix OCR errors automatically
+- Remove noise like dots, headers, random characters
+- Convert to clean bullet points
+- No hallucination
+- No invented details
+- If context is weak, say: "Not enough information in manual"
 
-Fix everything:
-- Join broken sentences
-- Fix OCR errors (u→you, off→of, gure→figure, etc.)
-- Remove backslashes
-- Fix hyphen breaks (self- contained → self-contained)
-- Remove headers, footers, page numbers
-- No garbage words like sp a c e d o u t text
-- Produce clean, professional bullet points ONLY.
-
-Return ONLY the corrected bullet points.
+Return only bullet points.
 """
 
-        answer = call_groq(prompt)
+        r = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            json={
+                "model": "llama3-70b-8192",
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.1,
+                "max_tokens": 350
+            },
+            headers={"Authorization": f"Bearer {key}"},
+            timeout=15
+        )
 
-        # Fallback if model fails or output weak
-        if not answer or len(answer) < 30 or "\\" in answer:
-            fb = raw_context.replace("\\", " ")
-            lines = [l.strip() for l in fb.split("\n") if len(l.strip()) > 40]
-            return "\n".join("• " + l.capitalize() for l in lines[:7])
+        if r.status_code == 200:
+            return r.json()["choices"][0]["message"]["content"].strip()
 
-        return answer
+        return "Service error."
 
     except Exception:
-        traceback.print_exc()
-        return "• Service failed, retry."
+        return "Service error — try again."
 
 
-# --------------------- HEALTH CHECK ---------------------
 def health_check():
     try:
         _load()

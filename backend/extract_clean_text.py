@@ -1,92 +1,106 @@
-import fitz  # PyMuPDF
+import fitz
 import re
 from pathlib import Path
-from bs4 import BeautifulSoup
 
-# -------------------------------
-# CLEANING UTILITIES
-# -------------------------------
-
-def strip_html(text: str) -> str:
-    """Remove HTML if any accidentally appears in a PDF."""
-    return BeautifulSoup(text, "html.parser").get_text(" ", strip=True)
-
-
-def normalize_text(text: str) -> str:
-    """Normalize spacing, remove noise, and unify formatting."""
-    # Remove non-alphanumeric except safe punctuation
-    text = re.sub(r'[^A-Za-z0-9\s\.\,\;\:\(\)\-\?]', ' ', text)
-
-    # Fix multiple spaces
-    text = re.sub(r'\s+', ' ', text)
-
-    return text.strip()
+HEADER_FOOTER_TRASH = [
+    r"electric vehicle information",
+    r"characteristics of ev",
+    r"warning",
+    r"cautions",
+    r"jsw mg",
+    r"maintenance",
+    r"table of contents",
+    r"general information",
+    r"page \d+",
+]
 
 
-def english_fixes(text: str) -> str:
-    """Optional lightweight grammar/typo normalization."""
-    replacements = {
+def is_trash(line):
+    l = line.lower()
+    return any(re.search(p, l) for p in HEADER_FOOTER_TRASH)
+
+
+def fix_broken_words(line):
+    # Common OCR fixes (generic, not manual-specific)
+    line = re.sub(r"(\w)-\s+(\w)", r"\1\2", line)  # self- contained → self-contained
+    line = re.sub(r"\b([A-Za-z])\s+([A-Za-z])\b", r"\1\2", line)  # spac ed → spaced
+    line = re.sub(r"\b([A-Za-z]{1,2})\s+([A-Za-z]{3,})", r"\1 \2", line)
+    line = line.replace(" gure", " figure")
+    line = line.replace(" a c ", " AC ")
+    return line
+
+
+def clean_line(line):
+    # Remove symbols
+    line = re.sub(r'[^A-Za-z0-9\s\.\,\;\:\(\)\-\?]', ' ', line)
+
+    # Collapse spaces
+    line = re.sub(r'\s+', ' ', line)
+
+    # OCR fixes
+    line = fix_broken_words(line)
+
+    # Normalize common errors (generic)
+    subs = {
         " off ": " of ",
         " u ": " you ",
-        " nd ": " and ",
-        " se ": " use ",
-        " cant ": " can't ",
-        " wont ": " won't ",
+        " hv ": " HV ",
+        " ev ": " EV ",
+        " ac ": " AC ",
     }
-    text = f" {text} "
-    for k, v in replacements.items():
-        text = text.replace(k, v)
-    return text.strip()
-
-
-def clean_line(line: str) -> str:
-    """Full cleaning pipeline for each extracted line."""
-    if not line or len(line.strip()) < 2:
-        return ""
-
-    line = strip_html(line)
-    line = normalize_text(line)
-    line = english_fixes(line)
+    for a, b in subs.items():
+        line = line.replace(a, b)
 
     return line.strip()
 
 
-# -------------------------------
-# PDF EXTRACTION + PROCESSING
-# -------------------------------
+def join_into_paragraphs(lines, max_len=350):
+    """Turns many small lines into clean paragraphs for embeddings."""
+    paragraphs = []
+    buf = ""
 
-output = []
+    for line in lines:
+        if not line:
+            continue
+
+        if len(buf) + len(line) + 1 < max_len:
+            buf += " " + line
+        else:
+            paragraphs.append(buf.strip())
+            buf = line
+
+    if buf:
+        paragraphs.append(buf.strip())
+
+    return paragraphs
+
+
+# ------------------------
+# MAIN
+# ------------------------
+output_lines = []
+
 for pdf_path in Path("docs").glob("*.pdf"):
-    print(f"Extracting clean text from {pdf_path.name}...")
+    print(f"Extracting from {pdf_path.name}...")
     doc = fitz.open(pdf_path)
 
     for page in doc:
         text = page.get_text("text")
-        raw_lines = text.split("\n")
 
-        # Clean + filter
-        for l in raw_lines:
-            cl = clean_line(l)
-            if len(cl) > 10:  # ignore tiny junk lines
-                output.append(cl)
+        for raw in text.split("\n"):
+            line = raw.strip()
+            if len(line) < 8:
+                continue
+            if is_trash(line):
+                continue
+            cleaned = clean_line(line)
+            if len(cleaned) > 10:
+                output_lines.append(cleaned)
 
-# -------------------------------
-# REMOVE DUPLICATES WHILE PRESERVING ORDER
-# -------------------------------
-seen = set()
-final_output = []
-for line in output:
-    if line not in seen:
-        seen.add(line)
-        final_output.append(line)
+paragraphs = join_into_paragraphs(output_lines)
 
-# -------------------------------
-# SAVE OUTPUT
-# -------------------------------
 with open("manual_clean.txt", "w", encoding="utf-8") as f:
-    f.write("\n".join(final_output))
+    f.write("\n".join(paragraphs))
 
-print(f"\nDONE! Clean manual saved: manual_clean.txt")
-print(f"Total original lines: {len(output)}")
-print(f"Total cleaned + unique lines: {len(final_output)}")
-print("Ready for embeddings!")
+print(f"DONE → {len(paragraphs)} clean paragraphs.")
+print("Now run create_embeddings.py")
