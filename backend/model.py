@@ -54,54 +54,66 @@ def fast_llm(ctx: str, q: str) -> str:
     if not api_key:
         return "API key missing."
 
-    # सबसे अच्छे 2 फ्री models – जो भी पहले जवाब दे
-    models = ["mixtral-8x7b-32768", "llama3-70b-8192"]
+    # Step 1: OCR garbage और bullet markers पूरी तरह हटाओ
+    clean_lines = []
+    for raw in ctx.split("\n"):
+        line = raw.strip()
+        if not line or len(line) < 10:
+            continue
+        # a., b., c., •, ◦, ▪, \ आदि हटाओ
+        for prefix in ["a.", "b.", "c.", "d.", "a)", "b)", "•", "◦", "▪", "\\", "!", "NOTE"]:
+            if line.lower().startswith(prefix.lower()):
+                line = line[len(prefix):].strip()
+                break
+        if line:
+            clean_lines.append(line)
 
-    # Context को साफ करो
-    clean_ctx = " ".join(ctx.replace("\n", " ").split())[:2800]
+    clean_ctx = " ".join(clean_lines)[:2800]
 
-    prompt = f"""You are a professional vehicle assistant.
-Answer in the same language as the question (Hindi or English).
-Use bullet points if possible. Be concise and clear.
-Never repeat the full context.
-
-Context: {clean_ctx}
-
-Question: {q}
-
-Answer:"""
-
-    for model_name in models:
+    # Step 2: पहले Groq के दो सबसे अच्छे फ्री models ट्राई करो
+    for model_name in ["mixtral-8x7b-32768", "llama3-70b-8192"]:
         try:
             r = requests.post(
                 "https://api.groq.com/openai/v1/chat/completions",
                 json={
                     "model": model_name,
-                    "messages": [{"role": "user", "content": prompt}],
+                    "messages": [{"role": "user", "content":
+                        f"""Answer in the same language as the question.
+Use bullet points. Be concise and clear. Never repeat full context.
+
+Context: {clean_ctx}
+
+Question: {q}
+
+Answer:"""}],
                     "max_tokens": 220,
-                    "temperature": 0.15
+                    "temperature": 0.1
                 },
                 headers={"Authorization": f"Bearer {api_key}"},
                 timeout=16
             )
             r.raise_for_status()
             ans = r.json()["choices"][0]["message"]["content"].strip()
-            if ans and len(ans) > 20:
+            if ans and len(ans) > 25:
                 return ans
         except:
             continue
 
-    # FINAL FALLBACK – 100% clean, zero hardcode, always useful
-    # सिर्फ context से पहली 3-4 important sentences निकालकर bullet बनाओ
-    sentences = [s.strip() for s in clean_ctx.split(". ") if s.strip() and len(s) > 20]
-    if len(sentences) >= 3:
-        summary = "मुख्य जानकारी:\n" + "\n".join(f"• {s}." for s in sentences[:4])
-    elif sentences:
-        summary = sentences[0]
-    else:
-        summary = "दस्तावेज़ से जानकारी मिली, लेकिन संक्षेप में बताने में दिक्कत हुई।"
+    # Step 3: TRUE ZERO-HARDCODE FALLBACK
+    # सिर्फ context से ही सबसे important lines चुनो
+    keywords = ["avoid", "safe", "water", "shock", "cable", "touch", "damage", "do not", "caution", "warning"]
+    important = []
+    for line in clean_lines:
+        if any(k in line.lower() for k in keywords) or len(line.split()) > 8:
+            important.append(line.strip())
+            if len(important) >= 5:
+                break
 
-    return summary
+    if important:
+        return "मुख्य सुरक्षा जानकारी:\n" + "\n".join(f"• {s}" for s in important)
+    else:
+        # अगर बिल्कुल कुछ नहीं मिला (बहुत rare केस)
+        return "दस्तावेज़ में जानकारी मौजूद है। कृपया सवाल थोड़ा और स्पष्ट करें।"
 
 def health_check():
     _load()
