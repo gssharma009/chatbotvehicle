@@ -19,24 +19,15 @@ def _load():
         if model is not None:
             return
 
-        print("[INIT] Loading embedding model...")
+    print("[INIT] Loading embedding model from HuggingFace...")
+    model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
+    print("Model loaded (22MB download complete)")
 
-        # पहले bundled model try करो (अगर repo में है तो)
-        try:
-            model = SentenceTransformer("./models/all-MiniLM-L6-v2", device="cpu")
-            print("Bundled model loaded from ./models/")
-        except Exception as e:
-            # नहीं मिला तो HuggingFace से download करो (22 MB only – पहली बार 10-15 सेकंड लगेंगे)
-            print("Bundled model not found → downloading from HuggingFace...")
-            model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
-            print("HuggingFace model downloaded & loaded")
+    index = faiss.read_index("vector_store.faiss")
+    with open("chunks.pkl", "rb") as f:
+        chunks = pickle.load(f)
 
-        # FAISS index और chunks load करो
-        index = faiss.read_index("vector_store.faiss")
-        with open("chunks.pkl", "rb") as f:
-            chunks = pickle.load(f)
-
-        print(f"[INIT] Ready! {len(chunks)} chunks loaded")
+    print(f"[INIT] Ready! {len(chunks)} chunks loaded")
 
 def answer_query(question: str):
     _load()
