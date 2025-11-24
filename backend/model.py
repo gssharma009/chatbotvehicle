@@ -12,15 +12,31 @@ _lock = Lock()
 
 def _load():
     global model, index, chunks
-    if model: return
+    if model is not None:
+        return
+
     with _lock:
-        if model: return
-        print("Loading model...")
-        model = SentenceTransformer(MODEL_PATH, device="cpu")
-        index = faiss.read_index(FAISS_PATH)
-        with open(CHUNKS_PATH, "rb") as f:
+        if model is not None:
+            return
+
+        print("[INIT] Loading embedding model...")
+
+        # पहले bundled model try करो (अगर repo में है तो)
+        try:
+            model = SentenceTransformer("./models/all-MiniLM-L6-v2", device="cpu")
+            print("Bundled model loaded from ./models/")
+        except Exception as e:
+            # नहीं मिला तो HuggingFace से download करो (22 MB only – पहली बार 10-15 सेकंड लगेंगे)
+            print("Bundled model not found → downloading from HuggingFace...")
+            model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
+            print("HuggingFace model downloaded & loaded")
+
+        # FAISS index और chunks load करो
+        index = faiss.read_index("vector_store.faiss")
+        with open("chunks.pkl", "rb") as f:
             chunks = pickle.load(f)
-        print(f"Loaded {len(chunks)} chunks")
+
+        print(f"[INIT] Ready! {len(chunks)} chunks loaded")
 
 def answer_query(question: str):
     _load()
