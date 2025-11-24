@@ -11,6 +11,7 @@ CHUNKS_PATH = "chunks.pkl"
 
 model = None; index = None; chunks = None
 _lock = Lock()
+MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 def _load():
     global model, index, chunks
@@ -21,7 +22,7 @@ def _load():
             return
 
         print("[INIT] Downloading all-MiniLM-L6-v2 from HuggingFace (22 MB)...")
-        model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
+        model = SentenceTransformer(MODEL_NAME, device="cpu")
         print("Model loaded successfully")
 
         index = faiss.read_index("vector_store.faiss")
