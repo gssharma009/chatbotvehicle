@@ -30,9 +30,9 @@ def _load():
 
 # ---------- STABLE MODELS (NO DEPRECATION) ----------
 GROQ_MODELS = [
-    "llama-3.2-11b-text",  # Primary (VERY FAST + HIGH QUALITY)
-    "mixtral-8x7b-32768",  # Backup (ULTRA STABLE)
-    "gemma2-9b-it"  # Backup 2 (SMALL + RELIABLE)
+    "llama3-groq-70b-tool-use-preview",   # High quality
+    "llama3-groq-8b-tool-use-preview",    # Mid quality, very fast
+    "llama3-groq-8b-text-preview"         # Text cleanup, fallback
 ]
 
 
@@ -56,6 +56,7 @@ def ask_groq(prompt, key):
                 timeout=18
             )
 
+            # SUCCESS
             if r.status_code == 200:
                 return r.json()["choices"][0]["message"]["content"].strip()
 
@@ -65,6 +66,7 @@ def ask_groq(prompt, key):
             print(f"[GROQ EXCEPTION] {model_name} crashed → {e}")
 
     return "Service temporarily unavailable. All Groq models failed."
+
 
 
 # ---------- MAIN ANSWER FUNCTION ----------
