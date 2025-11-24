@@ -40,7 +40,7 @@ def _query_groq(prompt: str) -> str:
         r = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
             json={
-                "model": "llama-3.2-90b-text-preview",
+                "model": "llama-3.3-70b-specdec",
                 "messages": [{"role": "user", "content": prompt}],
                 "max_tokens": 350,
                 "temperature": 0.0
