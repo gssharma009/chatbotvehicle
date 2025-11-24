@@ -57,30 +57,33 @@ def answer_query(question: str):
     no = "दस्तावेज़ों में नहीं मिला।" if "हिंदी" in q or "हindi" in q.lower() else "Not in my docs."
     return {"answer": f"{no}\n\nइंटरनेट से:\n{fast_llm('', q)}", "source": "internet"}
 
-
 def fast_llm(ctx: str, q: str) -> str:
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
-        return "API key missing."
+        return "Error: API key not found."
 
-    # STEP 1: OCR GARBAGE को बिल्कुल हटाओ (ये सबसे जरूरी है)
+    # Step 1: OCR GARBAGE को पूरी तरह साफ करो
     clean_lines = []
-    for line in ctx.split("\n"):
-        l = line.strip()
-        if len(l) < 15:
+    for raw in ctx.split("\n"):
+        line = raw.strip()
+        if len(line) < 20:
             continue
-        # OCR noise patterns हटाओ
-        l = re.sub(r"^[a-d]\.?\s*", "", l, flags=re.I)  # a. b. c. हटाओ
-        l = re.sub(r"^[-•◦▪!\\]+\s*", "", l)  # bullets हटाओ
-        l = re.sub(r"[^a-zA-Z0-9\s\.\,\;\:\(\)\-\?\%\/]", "", l)  # weird chars हटाओ
-        l = re.sub(r"([a-z])([A-Z])", r"\1 \2", l)  # camelCase अलग करो
-        l = re.sub(r"\s+", " ", l).strip()
-        if l and len(l) > 20:  # सिर्फ सही sentences रखो
-            clean_lines.append(l)
+
+        # Remove prefixes: a., b., 1., •, !, \, NOTE, WARNING etc.
+        line = re.sub(r"^[a-dA-D][\.\)\]\s]*", "", line, flags=re.I)
+        line = re.sub(r"^[\d\.\-\•◦▪!\\]+\s*", "", line)
+
+        # Remove OCR junk patterns
+        line = re.sub(r"\bo\b\s+", "off ", line, flags=re.I)
+        line = re.sub(r"[^a-zA-Z0-9\s\.\,\;\:\(\)\-\?\%\/]", " ", line)
+        line = re.sub(r"\s+", " ", line).strip()
+
+        if line and len(line) > 25:
+            clean_lines.append(line)
 
     clean_ctx = " ".join(clean_lines)[:3000]
 
-    # STEP 2: Groq के best models
+    # Step 2: Try Groq (best models)
     for model in ["mixtral-8x7b-32768", "llama3-70b-8192"]:
         try:
             r = requests.post(
@@ -88,9 +91,9 @@ def fast_llm(ctx: str, q: str) -> str:
                 json={
                     "model": model,
                     "messages": [{"role": "user", "content":
-                        f"""Answer in Hindi or English (same as question).
-Use clean bullet points. Short and accurate.
-Never repeat context.
+                        f"""Answer in the same language as the question.
+Use clean bullet points. Be short and professional.
+Never repeat the full context.
 
 Context: {clean_ctx}
 
@@ -110,15 +113,26 @@ Answer:"""}],
         except:
             continue
 
-    # STEP 3: 100% CLEAN & DYNAMIC FALLBACK
-    important = [l for l in clean_lines if any(k in l.lower() for k in
-                                               ["avoid", "safe", "water", "shock", "cable", "touch", "damage", "do not", "warning", "orange"])]
+    # Step 3: 100% DYNAMIC FALLBACK — कोई भी hardcode नहीं
+    # सिर्फ PDF से ही lines चुनो जो safety-related लगती हैं
+    relevant = []
+    keywords = ["avoid", "do not", "safe", "water", "shock", "cable", "touch", "orange", "modify", "disassemble", "warning", "risk", "damage", "do not touch"]
+    for line in clean_lines:
+        if any(word in line.lower() for word in keywords):
+            relevant.append(line)
+            if len(relevant) >= 6:
+                break
 
-    if important:
-        return "HV सिस्टम सुरक्षा:\n" + "\n".join(f"• {l}" for l in important[:6])
+    # अगर कुछ मिला तो bullet में दिखाओ
+    if relevant:
+        return "\n".join("• " + line for line in relevant)
 
-    # अगर कुछ नहीं मिला तो सबसे पहली साफ line दिखाओ
-    return clean_lines[0] if clean_lines else "जानकारी उपलब्ध है।"
+    # अगर बिल्कुल कुछ नहीं मिला → सिर्फ पहली 4 साफ lines दिखाओ (PDF से ही)
+    if clean_lines:
+        return "\n".join("• " + line for line in clean_lines[:5])
+
+    # Ultimate fallback (कोई PDF content ही नहीं था)
+    return "No relevant information found in document."
 
 def health_check():
     _load()
