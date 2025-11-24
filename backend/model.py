@@ -1,131 +1,141 @@
-# backend/model.py — FINAL STABLE VERSION FOR RAILWAY
+# backend/model.py — FINAL STABLE VERSION (NO DEPRECATION EVER)
 
-import os, pickle, faiss, requests
+import os
+import pickle
+import faiss
+import requests
 from sentence_transformers import SentenceTransformer
 
-# Lazy globals
+# ---------- GLOBAL LAZY OBJECTS ----------
 model = None
 index = None
 chunks = None
 
 
+# ---------- LOAD EVERYTHING LAZY ----------
 def _load():
-    """Load model, FAISS index, and chunks lazily (only once)."""
     global model, index, chunks
 
     if model is None:
-        print("[INIT] Loading MiniLM model…")
-        model = SentenceTransformer(
-            "sentence-transformers/all-MiniLM-L6-v2",
-            device="cpu"
-        )
+        print("[INIT] Loading MiniLM model + FAISS + chunks")
+        model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
 
-    if index is None:
-        print("[INIT] Loading FAISS index…")
         index = faiss.read_index("vector_store.faiss")
 
-    if chunks is None:
-        print("[INIT] Loading chunks.pkl…")
         with open("chunks.pkl", "rb") as f:
             chunks = pickle.load(f)
 
-
-def _query_groq(prompt: str) -> str:
-    """Send cleaned prompt to Groq with strong error handling."""
-    key = os.getenv("GROQ_API_KEY")
-    if not key:
-        return "Missing GROQ_API_KEY."
-
-    try:
-        r = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            json={
-                "model": "llama-3.3-70b-specdec",
-                "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 350,
-                "temperature": 0.0
-            },
-            headers={"Authorization": f"Bearer {key}"},
-            timeout=40   # ← increased timeout
-        )
-    except Exception as e:
-        return f"Groq request failed: {str(e)}"
-
-    if r.status_code != 200:
-        return f"Groq error {r.status_code}: {r.text}"
-
-    try:
-        return r.json()["choices"][0]["message"]["content"].strip()
-    except:
-        return "Groq returned invalid response."
+    return model, index, chunks
 
 
+# ---------- STABLE MODELS (NO DEPRECATION) ----------
+GROQ_MODELS = [
+    "llama-3.2-11b-text",  # Primary (VERY FAST + HIGH QUALITY)
+    "mixtral-8x7b-32768",  # Backup (ULTRA STABLE)
+    "gemma2-9b-it"  # Backup 2 (SMALL + RELIABLE)
+]
+
+
+# ---------- GROQ AUTO-FALLBACK CLIENT ----------
+def ask_groq(prompt, key):
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    headers = {"Authorization": f"Bearer {key}"}
+
+    for model_name in GROQ_MODELS:
+        try:
+            print(f"[GROQ] Trying: {model_name}")
+            r = requests.post(
+                url,
+                json={
+                    "model": model_name,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 450,
+                    "temperature": 0.0
+                },
+                headers=headers,
+                timeout=18
+            )
+
+            if r.status_code == 200:
+                return r.json()["choices"][0]["message"]["content"].strip()
+
+            print(f"[GROQ WARNING] {model_name} failed → {r.text}")
+
+        except Exception as e:
+            print(f"[GROQ EXCEPTION] {model_name} crashed → {e}")
+
+    return "Service temporarily unavailable. All Groq models failed."
+
+
+# ---------- MAIN ANSWER FUNCTION ----------
 def answer_query(question: str) -> str:
-    """Main answer function used by FastAPI."""
-    if not question.strip():
-        return "Please ask a real question."
+    if not question or not question.strip():
+        return "Please ask a valid question."
 
     try:
-        _load()
+        m, idx, data_chunks = _load()
 
-        # ① embed question
-        q_emb = model.encode(
+        # Embed question
+        q_emb = m.encode(
             [question.lower()],
             normalize_embeddings=True,
             convert_to_numpy=True
-        ).astype("float32")
+        )
 
-        # ② reduce retrieved chunks from 12 → **5 (optimal)**
-        _, I = index.search(q_emb, 5)
+        # Search FAISS top 15 results
+        _, I = idx.search(q_emb.astype("float32"), 15)
 
-        selected = []
-        for i in I[0]:
-            if 0 <= i < len(chunks):
-                selected.append(chunks[i])
+        # Build clean context
+        raw_context = "\n".join(data_chunks[i] for i in I[0] if i < len(data_chunks))
 
-        # ③ Compact context to avoid oversized prompt
-        context = "\n".join(selected)
-        context = context[:3000]  # hard safety max
+        # Groq API key
+        key = os.getenv("GROQ_API_KEY")
+        if not key:
+            return "Missing GROQ_API_KEY. Set it in Railway environment."
 
-        # ④ Build prompt
+        # Clean-up + OCR-Repair + Bullet points prompt
         prompt = f"""
-You clean and fix OCR text from car manuals.
+You are an expert in cleaning OCR text from vehicle manuals.
 
-Context extracted from manual:
-\"\"\"{context}\"\"\"
+RAW CONTEXT (broken OCR from manual):
+\"\"\"{raw_context}\"\"\"
 
-Question: {question}
+QUESTION:
+{question}
 
-Fix all of these:
-- broken OCR text
-- random spacing (h v → HV, o ff → off)
-- remove page headers/footers
-- fix line-break issues
-- remove garbage characters
-- give final answer in clean bullet points
+DO ALL OF THIS:
+- Fix spacing issues (like "Sa fe ty Sy st em s" → "Safety Systems")
+- Remove random page headers/footers/garbage
+- Fix spaced out characters ("h v" → "HV", "a c" → "AC")
+- Fix OCR errors (off→of, se→use, u→you)
+- Remove ANY backslashes
+- Produce clear, correct, professional bullet points
+- DO NOT include raw text
+- DO NOT include anything unclear
 
-Return ONLY corrected, readable, high-quality points.
+Return ONLY the cleaned bullet-point answer.
 """
 
-        # ⑤ Call Groq
-        answer = _query_groq(prompt)
+        answer = ask_groq(prompt, key)
 
-        # ⑥ Final guard — ensure answer is useful
-        if answer and len(answer) > 20 and "\\" not in answer:
+        # If Groq returned junk, fallback
+        if answer and len(answer) > 40 and "\\" not in answer:
             return answer
 
-        # Fallback (rare)
-        fallback = context.replace("\\", " ").replace("  ", " ")
-        lines = [l.strip() for l in fallback.split("\n") if len(l.strip()) > 30][:5]
-        return "\n".join("• " + l for l in lines)
+        # Minimal fallback if LLM fails
+        fallback = raw_context.replace("\\", " ").replace("  ", " ")
+        lines = [l.strip() for l in fallback.split("\n") if len(l.strip()) > 30][:7]
+        return "\n".join("• " + l.capitalize() for l in lines)
 
     except Exception as e:
-        return f"Internal error: {str(e)}"
+        print("[FATAL ERROR]", e)
+        return "Service error — please try again."
 
 
+# ---------- HEALTH ----------
 def health_check():
     try:
-        _load()
-        return {"status": "ok", "chunks": len(chunks)}
+        _, _, data_chunks = _load()
+        return {"status": "ok", "chunks": len(data_chunks)}
     except:
         return {"status": "loading"}
