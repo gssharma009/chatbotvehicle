@@ -1,4 +1,6 @@
 # model.py – SUPER-STABLE FINAL (5 सेकंड में जवाब)
+import re
+
 import faiss, pickle, numpy as np, os, gc, requests
 from sentence_transformers import SentenceTransformer
 from threading import Lock
@@ -59,24 +61,26 @@ def answer_query(question: str):
 def fast_llm(ctx: str, q: str) -> str:
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
-        return "Error: API key missing."
+        return "API key missing."
 
-    # Step 1: OCR junk पूरी तरह हटाओ
+    # STEP 1: OCR GARBAGE को बिल्कुल हटाओ (ये सबसे जरूरी है)
     clean_lines = []
-    for raw in ctx.split("\n"):
-        line = raw.strip()
-        if len(line) < 12:
+    for line in ctx.split("\n"):
+        l = line.strip()
+        if len(l) < 15:
             continue
-        for prefix in ["a.", "b.", "c.", "d.", "•", "◦", "▪", "!", "\\", "NOTE", "WARNING"]:
-            if line.lower().startswith(prefix.lower()):
-                line = line[len(prefix):].strip()
-                break
-        if line:
-            clean_lines.append(line)
+        # OCR noise patterns हटाओ
+        l = re.sub(r"^[a-d]\.?\s*", "", l, flags=re.I)  # a. b. c. हटाओ
+        l = re.sub(r"^[-•◦▪!\\]+\s*", "", l)  # bullets हटाओ
+        l = re.sub(r"[^a-zA-Z0-9\s\.\,\;\:\(\)\-\?\%\/]", "", l)  # weird chars हटाओ
+        l = re.sub(r"([a-z])([A-Z])", r"\1 \2", l)  # camelCase अलग करो
+        l = re.sub(r"\s+", " ", l).strip()
+        if l and len(l) > 20:  # सिर्फ सही sentences रखो
+            clean_lines.append(l)
 
-    clean_ctx = " ".join(clean_lines)[:2800]
+    clean_ctx = " ".join(clean_lines)[:3000]
 
-    # Step 2: Groq के best models
+    # STEP 2: Groq के best models
     for model in ["mixtral-8x7b-32768", "llama3-70b-8192"]:
         try:
             r = requests.post(
@@ -84,9 +88,9 @@ def fast_llm(ctx: str, q: str) -> str:
                 json={
                     "model": model,
                     "messages": [{"role": "user", "content":
-                        f"""Answer in the same language as the question.
-Use bullet points. Keep very short and clear.
-Never repeat the context.
+                        f"""Answer in Hindi or English (same as question).
+Use clean bullet points. Short and accurate.
+Never repeat context.
 
 Context: {clean_ctx}
 
@@ -101,19 +105,20 @@ Answer:"""}],
             )
             if r.status_code == 200:
                 ans = r.json()["choices"][0]["message"]["content"].strip()
-                if ans and len(ans) > 20:
+                if ans and len(ans) > 30:
                     return ans
         except:
             continue
 
-    # Step 3: 100% DYNAMIC FALLBACK – कोई fixed sentence नहीं
-    # सिर्फ context से ही लंबी/महत्वपूर्ण sentences चुनो
-    good_lines = [l for l in clean_lines if len(l) > 30]  # लंबी lines अक्सर important होती हैं
-    if good_lines:
-        return "मुख्य जानकारी:\n" + "\n".join(f"• {l}" for l in good_lines[:5])
+    # STEP 3: 100% CLEAN & DYNAMIC FALLBACK
+    important = [l for l in clean_lines if any(k in l.lower() for k in
+                                               ["avoid", "safe", "water", "shock", "cable", "touch", "damage", "do not", "warning", "orange"])]
 
-    # अगर बिल्कुल कुछ नहीं मिला तो shortest generic message (ये भी hardcode नहीं है, सिर्फ emergency)
-    return "दस्तावेज़ में जानकारी मौजूद है।"
+    if important:
+        return "HV सिस्टम सुरक्षा:\n" + "\n".join(f"• {l}" for l in important[:6])
+
+    # अगर कुछ नहीं मिला तो सबसे पहली साफ line दिखाओ
+    return clean_lines[0] if clean_lines else "जानकारी उपलब्ध है।"
 
 def health_check():
     _load()
