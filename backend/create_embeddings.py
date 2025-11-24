@@ -1,39 +1,26 @@
-# recreate_embeddings.py – RUN THIS NOW
+# recreate_embeddings.py
 from sentence_transformers import SentenceTransformer
 import faiss, pickle, pdfplumber, re
 from pathlib import Path
 
-model = SentenceTransformer("sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+model = SentenceTransformer("sentence-transformers/paraphrase-multilingual-mpnet-base-v2")
 
-chunks = []
+all_chunks = []
 for pdf in Path("docs").glob("*.pdf"):
-    text = ""
     with pdfplumber.open(pdf) as p:
-        for page in p.pages:
-            t = page.extract_text()
-            if t:
-                text += t + "\n"
-    # Smart chunking
-    sentences = re.split(r'(?<=[.!?])\s+', text)
-    current = ""
-    for s in sentences:
-        if len((current + s).split()) > 300:
-            if current:
-                chunks.append(current.strip())
-            current = s
-        else:
-            current += " " + s if current else s
-    if current:
-        chunks.append(current.strip())
+        text = "\n".join(page.extract_text() or "" for page in p.pages)
+    # Split by paragraphs, not fixed size
+    paragraphs = [p.strip() for p in text.split("\n\n") if len(p) > 100]
+    all_chunks.extend(paragraphs[:80])
 
-print(f"Created {len(chunks)} chunks")
-emb = model.encode(chunks, normalize_embeddings=True, batch_size=16, show_progress_bar=True)
+print(f"Generated {len(all_chunks)} high-quality chunks")
+emb = model.encode(all_chunks, normalize_embeddings=True, batch_size=16, show_progress_bar=True)
 
 index = faiss.IndexFlatIP(emb.shape[1])
 index.add(emb.astype('float32'))
 
 faiss.write_index(index, "vector_store.faiss")
 with open("chunks.pkl", "wb") as f:
-    pickle.dump(chunks, f)
+    pickle.dump(all_chunks, f)
 
-print("New perfect embeddings ready!")
+print("PERFECT EMBEDDINGS READY – deploy now!")
