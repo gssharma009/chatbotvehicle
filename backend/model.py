@@ -28,18 +28,16 @@ def _load():
     return model, index, chunks
 
 
-# ---------- STABLE MODELS (NO DEPRECATION) ----------
-GROQ_MODELS = [
-    "llama3-groq-70b-tool-use-preview",   # High quality
-    "llama3-groq-8b-tool-use-preview",    # Mid quality, very fast
-    "llama3-groq-8b-text-preview"         # Text cleanup, fallback
-]
-
-
 # ---------- GROQ AUTO-FALLBACK CLIENT ----------
 def ask_groq(prompt, key):
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {"Authorization": f"Bearer {key}"}
+
+    GROQ_MODELS = [
+        "llama-3.3-70b-versatile",
+        "llama-3.1-70b-versatile",
+        "llama-3.1-8b-instant",
+    ]
 
     for model_name in GROQ_MODELS:
         try:
@@ -56,7 +54,6 @@ def ask_groq(prompt, key):
                 timeout=18
             )
 
-            # SUCCESS
             if r.status_code == 200:
                 return r.json()["choices"][0]["message"]["content"].strip()
 
@@ -66,6 +63,7 @@ def ask_groq(prompt, key):
             print(f"[GROQ EXCEPTION] {model_name} crashed → {e}")
 
     return "Service temporarily unavailable. All Groq models failed."
+
 
 
 
