@@ -1,6 +1,9 @@
 // script.js - FINAL VERSION (Works with your Render backend)
-const API_URL = "https://chatbotvehicle-backend.onrender.com/ask";  // ← Your live URL
+// const API_URL = "https://chatbotvehicle-backend.onrender.com/ask";  // ← Your live URL
 
+
+// New
+const API_URL = 'https://chatbotvehicle-production.up.railway.app/ask';
 const chatContainer = document.getElementById("chat-container");
 const questionInput = document.getElementById("question");
 const langSelect = document.getElementById("lang");
