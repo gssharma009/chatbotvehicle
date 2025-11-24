@@ -3,7 +3,7 @@ import pickle, faiss, re
 
 print("[STEP] Loading clean text...")
 
-with open("manual_clean.txt", "r", encoding="utf-8") as f:
+with open("cleaned_manual_clean.txt", "r", encoding="utf-8") as f:
     paras = [p.strip() for p in f.readlines() if len(p.strip()) > 30]
 
 # Remove duplicate or near-duplicate paragraphs

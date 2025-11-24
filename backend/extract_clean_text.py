@@ -99,7 +99,7 @@ for pdf_path in Path("docs").glob("*.pdf"):
 
 paragraphs = join_into_paragraphs(output_lines)
 
-with open("manual_clean.txt", "w", encoding="utf-8") as f:
+with open("cleaned_manual_clean.txt", "w", encoding="utf-8") as f:
     f.write("\n".join(paragraphs))
 
 print(f"DONE → {len(paragraphs)} clean paragraphs.")
