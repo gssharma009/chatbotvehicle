@@ -3,4 +3,3 @@ uvicorn[standard]
 sentence-transformers
 faiss-cpu
 requests
-torch --index-url https://download.pytorch.org/whl/cpu

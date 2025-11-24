@@ -14,20 +14,20 @@ def _load():
     global model, index, chunks
     if model is not None:
         return
-
     with _lock:
         if model is not None:
             return
 
-    print("[INIT] Downloading slim model from HuggingFace...")
-    model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
-    print("Model loaded (22MB – first time only)")
+        print("[INIT] Downloading all-MiniLM-L6-v2 from HuggingFace (22 MB)...")
+        model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
+        print("Model loaded successfully")
 
-    index = faiss.read_index("vector_store.faiss")
-    with open("chunks.pkl", "rb") as f:
-        chunks = pickle.load(f)
+        index = faiss.read_index("vector_store.faiss")
+        with open("chunks40.pkl", "rb") as f:  # आपका actual chunks file name
+            chunks = pickle.load(f)
 
-    print(f"[INIT] Ready! {len(chunks)} chunks loaded")
+        print(f"[INIT] Ready! {len(chunks)} chunks loaded")
+
 
 def answer_query(question: str):
     _load()
