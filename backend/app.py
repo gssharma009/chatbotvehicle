@@ -17,6 +17,9 @@ app.add_middleware(
 
 class Query(BaseModel):
     question: str
+    lang: str = "en-US"  # ← Add this line
+
+# Then pass lang to your LLM prompt
 
 @app.get("/")
 def root():
