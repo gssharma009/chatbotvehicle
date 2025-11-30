@@ -1,4 +1,4 @@
-/* style.css - Beautiful & Mobile Perfect */
+/* style.css - FINAL WITH STOP BUTTON */
 * { box-sizing: border-box; margin:0; padding:0; }
 body {
     font-family: 'Segoe UI', system-ui, sans-serif;
@@ -71,6 +71,18 @@ h2 {
     cursor: pointer;
     margin-left: 10px;
     font-size: 20px;
+    font-weight: bold;
+}
+.stop-btn {
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #d32f2f;
+    display: none; /* Hidden by default */
+}
+.stop-btn.show {
+    display: inline !important;
 }
 .input-area {
     padding: 16px;
@@ -86,7 +98,7 @@ textarea {
     font-size: 16px;
 }
 .buttons {
-    margin-top: 12px 0 0;
+    margin-top: 12px;
     display: flex;
     gap: 12px;
 }

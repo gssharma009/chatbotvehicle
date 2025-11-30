@@ -1,4 +1,5 @@
-// script.js - FIXED: Buttons work perfectly, full Hindi + English support
+// script.js - FINAL: Stop Speaking Button + Perfect Auto-Speak
+
 const API_URL = 'https://chatbotvehicle-production.up.railway.app/ask';
 
 const chatContainer = document.getElementById("chat-container");
@@ -8,22 +9,12 @@ const ttsCheckbox = document.getElementById("tts-checkbox");
 const sendBtn = document.getElementById("send-btn");
 const micBtn = document.getElementById("mic-btn");
 
-// Dynamic UI translation
+let currentUtterance = null;
+
+// Translations
 const translations = {
-  "en-US": {
-    title: "Voice + Text Chatbot (Hindi & English)",
-    autoSpeak: "Auto Speak Reply",
-    placeholder: "Type your question or speak...",
-    send: "Send",
-    mic: "Speak"
-  },
-  "hi-IN": {
-    title: "वॉइस + टेक्स्ट चैटबॉट (हिंदी और अंग्रेजी)",
-    autoSpeak: "ऑटो बोलें जवाब",
-    placeholder: "अपना सवाल लिखें या बोलें...",
-    send: "भेजें",
-    mic: "बोलें"
-  }
+  "en-US": { title: "Voice + Text Chatbot (Hindi & English)", autoSpeak: "Auto Speak Reply", placeholder: "Type your question or speak...", send: "Send", mic: "Speak", play: "Play", stop: "Stop" },
+  "hi-IN": { title: "वॉइस + टेक्स्ट चैटबॉट (हिंदी और अंग्रेजी)", autoSpeak: "ऑटो बोलें जवाब", placeholder: "अपना सवाल लिखें या बोलें...", send: "भेजें", mic: "बोलें", play: "सुनें", stop: "रुकें" }
 };
 
 function updateUI() {
@@ -34,14 +25,13 @@ function updateUI() {
   document.querySelector(".send-btn").textContent = translations[lang].send;
   micBtn.textContent = translations[lang].mic;
 }
-
-// Run on load + language change
 langSelect.addEventListener("change", updateUI);
 window.addEventListener("load", updateUI);
 
 function addMessage(text, sender) {
   const div = document.createElement("div");
   div.className = `message ${sender}`;
+
   const p = document.createElement("p");
   p.innerHTML = text.replace(/\n/g, "<br>");
   div.appendChild(p);
@@ -52,11 +42,17 @@ function addMessage(text, sender) {
   div.appendChild(time);
 
   if (sender === "bot") {
-    const speaker = document.createElement("span");
-    speaker.className = "tts-btn";
-    speaker.textContent = "🔊";
-    speaker.onclick = () => speak(text);
-    div.appendChild(speaker);
+    const playBtn = document.createElement("span");
+    playBtn.className = "tts-btn";
+    playBtn.textContent = translations[langSelect.value].play;
+    playBtn.onclick = () => speak(text);
+    div.appendChild(playBtn);
+
+    const stopBtn = document.createElement("span");
+    stopBtn.className = "tts-btn stop-btn";
+    stopBtn.textContent = translations[langSelect.value].stop;
+    stopBtn.onclick = stopSpeaking;
+    div.appendChild(stopBtn);
   }
 
   chatContainer.appendChild(div);
@@ -78,16 +74,40 @@ function removeLoader() {
 }
 
 function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  stopSpeaking();
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = langSelect.value;
+  utter.rate = 0.9;
+  utter.pitch = 1;
+
+  utter.onstart = () => {
+    document.querySelectorAll(".message.bot").forEach(msg => {
+      const playBtn = msg.querySelector(".tts-btn:not(.stop-btn)");
+      const stopBtn = msg.querySelector(".stop-btn");
+      if (playBtn) playBtn.textContent = "Playing";
+      if (stopBtn) stopBtn.classList.add("show");
+    });
+  };
+
+  utter.onend = utter.onerror = () => {
+    currentUtterance = null;
+    document.querySelectorAll(".tts-btn:not(.stop-btn)").forEach(btn => btn.textContent = translations[langSelect.value].play);
+    document.querySelectorAll(".stop-btn").forEach(btn => btn.classList.remove("show"));
+  };
+
+  currentUtterance = utter;
+  speechSynthesis.speak(utter);
+}
+
+function stopSpeaking() {
   if ('speechSynthesis' in window) {
     speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = langSelect.value;
-    utter.rate = 0.9;
-    utter.pitch = 1;
-    speechSynthesis.speak(utter);
-  } else {
-    alert(translations[langSelect.value].mic + " not supported in this browser.");
+    currentUtterance = null;
   }
+  document.querySelectorAll(".tts-btn:not(.stop-btn)").forEach(btn => btn.textContent = translations[langSelect.value].play);
+  document.querySelectorAll(".stop-btn").forEach(btn => btn.classList.remove("show"));
 }
 
 async function askBot() {
@@ -102,58 +122,39 @@ async function askBot() {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        question,
-        lang: langSelect.value
-      })
+      body: JSON.stringify({ question, lang: langSelect.value })
     });
 
     removeLoader();
-
-    if (!res.ok) {
-      addMessage(translations[langSelect.value].mic + ": Server error.", "bot");
-      return;
-    }
+    if (!res.ok) throw new Error("Server error");
 
     const data = await res.json();
-    const answer = data?.results?.answer || data?.answer || "No response.";
+    const answer = data?.answer || "No response.";
     addMessage(answer, "bot");
 
-    if (ttsCheckbox.checked) {
-      speak(answer);
-    }
+    if (ttsCheckbox.checked) speak(answer);
   } catch (err) {
     removeLoader();
-    addMessage(translations[langSelect.value].mic + ": Network error.", "bot");
+    addMessage("Network error.", "bot");
   }
 }
 
-// Voice Input — Works on Android + iPhone
 function startListening() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    alert(translations[langSelect.value].mic + " not supported in this browser.");
-    return;
-  }
+  if (!SpeechRecognition) return alert("Voice not supported");
 
   const recognition = new SpeechRecognition();
   recognition.lang = langSelect.value;
-  recognition.continuous = false;
-  recognition.interimResults = false;
 
   micBtn.textContent = "...";
   micBtn.disabled = true;
 
-  recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    questionInput.value = transcript;
+  recognition.onresult = (e) => {
+    questionInput.value = e.results[0][0].transcript;
     askBot();
   };
 
-  recognition.onerror = (event) => {
-    alert(translations[langSelect.value].mic + " error: " + event.error);
-  };
-
+  recognition.onerror = () => alert("Voice error");
   recognition.onend = () => {
     micBtn.textContent = translations[langSelect.value].mic;
     micBtn.disabled = false;
@@ -162,12 +163,10 @@ function startListening() {
   recognition.start();
 }
 
-// Button event listeners
+// Listeners
 sendBtn.addEventListener("click", askBot);
 micBtn.addEventListener("click", startListening);
-
-// Enter to send
-questionInput.addEventListener("keypress", (e) => {
+questionInput.addEventListener("keypress", e => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
     askBot();
