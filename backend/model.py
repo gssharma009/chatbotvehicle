@@ -68,7 +68,7 @@ def ask_groq(prompt, key):
 
 
 # ---------- MAIN ANSWER FUNCTION ----------
-def answer_query(question: str) -> str:
+def answer_query(question: str, lang: str = "en-US") -> str:
     if not question or not question.strip():
         return "Please ask a valid question."
 
@@ -93,7 +93,10 @@ def answer_query(question: str) -> str:
         if not key:
             return "Missing GROQ_API_KEY. Set it in Railway environment."
 
-        # Clean-up + OCR-Repair + Bullet points prompt
+        # THIS IS THE ONLY NEW PART — Language detection
+        target_lang = "Hindi" if lang.startswith("hi") else "English"
+
+        # Clean-up + OCR-Repair + Bullet points prompt (now with language)
         prompt = f"""
 You are an expert in cleaning OCR text from vehicle manuals.
 
@@ -113,6 +116,7 @@ DO ALL OF THIS:
 - DO NOT include raw text
 - DO NOT include anything unclear
 
+Answer in {target_lang} only.
 Return ONLY the cleaned bullet-point answer.
 """
 

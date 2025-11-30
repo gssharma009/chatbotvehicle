@@ -1,10 +1,11 @@
-// script.js - FINAL: Full Hindi + English Support, Mobile Ready
+// script.js - FIXED: Buttons work perfectly, full Hindi + English support
 const API_URL = 'https://chatbotvehicle-production.up.railway.app/ask';
 
 const chatContainer = document.getElementById("chat-container");
 const questionInput = document.getElementById("question");
 const langSelect = document.getElementById("lang");
 const ttsCheckbox = document.getElementById("tts-checkbox");
+const sendBtn = document.getElementById("send-btn");
 const micBtn = document.getElementById("mic-btn");
 
 // Dynamic UI translation
@@ -15,7 +16,6 @@ const translations = {
     placeholder: "Type your question or speak...",
     send: "Send",
     mic: "Speak"
-  Speak"
   },
   "hi-IN": {
     title: "वॉइस + टेक्स्ट चैटबॉट (हिंदी और अंग्रेजी)",
@@ -42,7 +42,6 @@ window.addEventListener("load", updateUI);
 function addMessage(text, sender) {
   const div = document.createElement("div");
   div.className = `message ${sender}`;
-
   const p = document.createElement("p");
   p.innerHTML = text.replace(/\n/g, "<br>");
   div.appendChild(p);
@@ -55,7 +54,7 @@ function addMessage(text, sender) {
   if (sender === "bot") {
     const speaker = document.createElement("span");
     speaker.className = "tts-btn";
-    speaker.textContent = "Speak";
+    speaker.textContent = "🔊";
     speaker.onclick = () => speak(text);
     div.appendChild(speaker);
   }
@@ -86,6 +85,8 @@ function speak(text) {
     utter.rate = 0.9;
     utter.pitch = 1;
     speechSynthesis.speak(utter);
+  } else {
+    alert(translations[langSelect.value].mic + " not supported in this browser.");
   }
 }
 
@@ -103,20 +104,19 @@ async function askBot() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         question,
-        lang: langSelect.value  // ← This tells backend which language to reply in
+        lang: langSelect.value
       })
     });
 
     removeLoader();
 
     if (!res.ok) {
-      addMessage("Server error. Please try again.", "bot");
+      addMessage(translations[langSelect.value].mic + ": Server error.", "bot");
       return;
     }
 
     const data = await res.json();
     const answer = data?.results?.answer || data?.answer || "No response.";
-
     addMessage(answer, "bot");
 
     if (ttsCheckbox.checked) {
@@ -124,14 +124,13 @@ async function askBot() {
     }
   } catch (err) {
     removeLoader();
-    addMessage("Network error. Check internet.", "bot");
+    addMessage(translations[langSelect.value].mic + ": Network error.", "bot");
   }
 }
 
 // Voice Input — Works on Android + iPhone
 function startListening() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
   if (!SpeechRecognition) {
     alert(translations[langSelect.value].mic + " not supported in this browser.");
     return;
@@ -152,8 +151,7 @@ function startListening() {
   };
 
   recognition.onerror = (event) => {
-    console.error(event.error);
-    alert("Voice error: " + event.error);
+    alert(translations[langSelect.value].mic + " error: " + event.error);
   };
 
   recognition.onend = () => {
@@ -163,6 +161,10 @@ function startListening() {
 
   recognition.start();
 }
+
+// Button event listeners
+sendBtn.addEventListener("click", askBot);
+micBtn.addEventListener("click", startListening);
 
 // Enter to send
 questionInput.addEventListener("keypress", (e) => {
