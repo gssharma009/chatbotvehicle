@@ -1,4 +1,4 @@
-// script.js - FINAL: Stop Speaking Button + Perfect Auto-Speak
+// script.js - FINAL PERFECTION: Clean TTS, Hindi/English/Hinglish, Stop Button
 
 const API_URL = 'https://chatbotvehicle-production.up.railway.app/ask';
 
@@ -13,8 +13,28 @@ let currentUtterance = null;
 
 // Translations
 const translations = {
-  "en-US": { title: "Voice + Text Chatbot (Hindi & English)", autoSpeak: "Auto Speak Reply", placeholder: "Type your question or speak...", send: "Send", mic: "Speak", play: "Play", stop: "Stop" },
-  "hi-IN": { title: "वॉइस + टेक्स्ट चैटबॉट (हिंदी और अंग्रेजी)", autoSpeak: "ऑटो बोलें जवाब", placeholder: "अपना सवाल लिखें या बोलें...", send: "भेजें", mic: "बोलें", play: "सुनें", stop: "रुकें" }
+  "en-US": {
+    title: "Voice + Text Chatbot (Hindi & English)",
+    autoSpeak: "Auto Speak Reply",
+    placeholder: "Type your question or speak...",
+    send: "Send",
+    mic: "Speak",
+    play: "Play",
+    stop: "Stop",
+    playing: "Playing",
+    speaking: "Speaking"
+  },
+  "hi-IN": {
+    title: "वॉइस + टेक्स्ट चैटबॉट (हिंदी और अंग्रेजी)",
+    autoSpeak: "ऑटो बोलें जवाब",
+    placeholder: "अपना सवाल लिखें या बोलें...",
+    send: "भेजें",
+    mic: "बोलें",
+    play: "सुनें",
+    stop: "रुकें",
+    playing: "चल रहा है",
+    speaking: "बोल रहा है"
+  }
 };
 
 function updateUI() {
@@ -32,11 +52,11 @@ function addMessage(text, sender) {
   const div = document.createElement("div");
   div.className = `message ${sender}`;
 
-  // CLEAN TEXT FOR DISPLAY (keep bullets)
+  // Clean for display — keep nice bullets
   const displayText = text
-    .replace(/\\/g, "")                    // remove backslashes
-    .replace(/^\*\s*/gm, "• ")             // * → nice bullet for display
-    .replace(/^\d+\.\s*/gm, "• ")          // 1. 2. → bullet
+    .replace(/\\/g, "")
+    .replace(/^\*\s*/gm, "• ")
+    .replace(/^\d+\.\s*/gm, "• ")
     .trim();
 
   const p = document.createElement("p");
@@ -49,20 +69,10 @@ function addMessage(text, sender) {
   div.appendChild(time);
 
   if (sender === "bot") {
-    // CLEAN TEXT FOR TTS — REMOVE ALL SYMBOLS, NUMBERS, BULLETS
-    const cleanForTTS = text
-      .replace(/\\/g, " ")                     // backslashes
-      .replace(/[\*\•\-\d\.\)\]\}]/g, " ")     // remove * • - 1. 2) etc.
-      .replace(/^\s*[a-zA-Z0-9]+\s*[\.\)]\s*/gm, " ")  // a) b) १) २)
-      .replace(/\s+/g, " ")                    // multiple spaces
-      .trim()
-      .replace(/\s*,\s*/g, ", ")               // clean commas
-      .replace(/\s*\.\s*$/g, ".");             // final dot
-
     const playBtn = document.createElement("span");
     playBtn.className = "tts-btn";
     playBtn.textContent = translations[langSelect.value].play;
-    playBtn.onclick = () => speak(cleanForTTS);
+    playBtn.onclick = () => speak(text);
     div.appendChild(playBtn);
 
     const stopBtn = document.createElement("span");
@@ -75,15 +85,9 @@ function addMessage(text, sender) {
   chatContainer.appendChild(div);
   chatContainer.scrollTop = chatContainer.scrollHeight;
 
-  // Auto speak only clean text
+  // Auto speak if enabled
   if (sender === "bot" && ttsCheckbox.checked) {
-    const cleanForTTS = text
-      .replace(/\\/g, " ")
-      .replace(/[\*\•\-\d\.\)\]\}]/g, " ")
-      .replace(/^\s*[a-zA-Z0-9]+\s*[\.\)]\s*/gm, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-    speak(cleanForTTS);
+    speak(text);
   }
 }
 
@@ -101,57 +105,45 @@ function removeLoader() {
   if (loader) loader.remove();
 }
 
+// PERFECT CLEAN SPEECH — NO BULLETS, NO SYMBOLS, NATURAL FLOW
 function speak(rawText) {
-  if (!('speechSynthesis' in window) || !rawText) return;
+  if (!('speechSynthesis' in window) || !rawText?.trim()) return;
 
   stopSpeaking();
 
-  // SUPER CLEAN TEXT FOR TTS — ONLY WORDS + NATURAL PUNCTUATION
   let cleanText = rawText
-    // Remove backslashes
     .replace(/\\/g, " ")
-
-    // Remove all bullet symbols: *, •, -, –, —, 1., a), १), etc.
-    .replace(/^[\*\•\-\–\—\d]+\.?\s*/gm, " ")           // lines starting with * or 1. or •
-    .replace(/^[\u0966-\u096F]+\.?\s*/gm, " ")          // Hindi numbers १. २.
-    .replace(/^[a-zA-Z]\)\s*/gm, " ")                   // a) b) A) B)
-    .replace(/^[\(\[\{]\s*[\da-zA-Z\u0966-\u096F]+\s*[\)\]\}]\s*/gm, " ")  // (1) [a] {१}
-
-    // Remove any remaining special chars but keep Hindi/English letters and basic punctuation
+    .replace(/^[\*\•\-\–\—\d]+\.?\s*/gm, " ")           // * • - 1. २.
+    .replace(/^[\u0966-\u096F]+\.?\s*/gm, " ")          // Hindi digits १. २.
+    .replace(/^[a-zA-Z]\)\s*/gm, " ")                   // a) b)
+    .replace(/^[\(\[\{]\s*[\da-zA-Z\u0966-\u096F]+\s*[\)\]\}]\s*/gm, " ")
     .replace(/[^\u0900-\u097F\w\s\.\,\!\?\;\:\-\(\)]/g, " ")
-
-    // Clean up spacing
     .replace(/\s+/g, " ")
     .trim();
 
-  // Final safety: if empty after cleaning, don't speak
   if (!cleanText) return;
 
   const utter = new SpeechSynthesisUtterance(cleanText);
-  utter.lang = langSelect.value;   // hi-IN or en-US
+  utter.lang = langSelect.value;
   utter.rate = 0.9;
   utter.pitch = 1;
   utter.volume = 1;
 
-  // Visual feedback when speaking starts
   utter.onstart = () => {
     document.querySelectorAll(".message.bot").forEach(msg => {
       const playBtn = msg.querySelector(".tts-btn:not(.stop-btn)");
       const stopBtn = msg.querySelector(".stop-btn");
-      if (playBtn) playBtn.textContent = translations[langSelect.value].play === "Play" ? "Playing" : "चल रहा है";
+      if (playBtn) playBtn.textContent = translations[langSelect.value].playing || translations[langSelect.value].speaking;
       if (stopBtn) stopBtn.classList.add("show");
     });
   };
 
-  // When speech ends or errors
   utter.onend = utter.onerror = () => {
     currentUtterance = null;
     document.querySelectorAll(".tts-btn:not(.stop-btn)").forEach(btn => {
       btn.textContent = translations[langSelect.value].play;
     });
-    document.querySelectorAll(".stop-btn").forEach(btn => {
-      btn.classList.remove("show");
-    });
+    document.querySelectorAll(".stop-btn").forEach(btn => btn.classList.remove("show"));
   };
 
   currentUtterance = utter;
@@ -163,7 +155,9 @@ function stopSpeaking() {
     speechSynthesis.cancel();
     currentUtterance = null;
   }
-  document.querySelectorAll(".tts-btn:not(.stop-btn)").forEach(btn => btn.textContent = translations[langSelect.value].play);
+  document.querySelectorAll(".tts-btn:not(.stop-btn)").forEach(btn => {
+    btn.textContent = translations[langSelect.value].play;
+  });
   document.querySelectorAll(".stop-btn").forEach(btn => btn.classList.remove("show"));
 }
 
@@ -189,29 +183,39 @@ async function askBot() {
     const answer = data?.answer || "No response.";
     addMessage(answer, "bot");
 
-    if (ttsCheckbox.checked) speak(answer);
   } catch (err) {
     removeLoader();
-    addMessage("Network error.", "bot");
+    addMessage("Network error. Please try again.", "bot");
   }
 }
 
 function startListening() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) return alert("Voice not supported");
+  if (!SpeechRecognition) {
+    alert("Voice input not supported in this browser");
+    return;
+  }
 
   const recognition = new SpeechRecognition();
   recognition.lang = langSelect.value;
+  recognition.continuous = false;
+  recognition.interimResults = false;
 
   micBtn.textContent = "...";
   micBtn.disabled = true;
 
   recognition.onresult = (e) => {
-    questionInput.value = e.results[0][0].transcript;
+    const transcript = e.results[0][0].transcript;
+    questionInput.value = transcript;
     askBot();
   };
 
-  recognition.onerror = () => alert("Voice error");
+  recognition.onerror = () => {
+    alert("Voice recognition error");
+    micBtn.textContent = translations[langSelect.value].mic;
+    micBtn.disabled = false;
+  };
+
   recognition.onend = () => {
     micBtn.textContent = translations[langSelect.value].mic;
     micBtn.disabled = false;
@@ -220,7 +224,7 @@ function startListening() {
   recognition.start();
 }
 
-// Listeners
+// Event Listeners
 sendBtn.addEventListener("click", askBot);
 micBtn.addEventListener("click", startListening);
 questionInput.addEventListener("keypress", e => {
