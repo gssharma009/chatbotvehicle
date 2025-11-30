@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>हिंदी + English Voice Chatbot</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-en="Voice Chatbot" data-hi="वॉइस चैटबॉट">Voice Chatbot</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-<div class="container">
-    <h2>Voice + Text Chatbot (Hindi & English)</h2>
+  <div class="container">
+    <h2 data-en="Voice + Text Chatbot (Hindi & English)" data-hi="वॉइस + टेक्स्ट चैटबॉट (हिंदी और अंग्रेजी)">
+      Voice + Text Chatbot (Hindi & English)
+    </h2>
 
     <div class="controls">
-        <select id="lang">
-            <option value="hi-IN">हिंदी</option>
-            <option value="en-US" selected>English</option>
-        </select>
+      <select id="lang">
+        <option value="hi-IN">हिंदी</option>
+        <option value="en-US" selected>English</option>
+      </select>
 
-        <label class="tts-label">
-            <input type="checkbox" id="tts-checkbox" checked> Auto Speak Bot Reply
-        </label>
+      <label class="tts-label">
+        <input type="checkbox" id="tts-checkbox" checked />
+        <span data-en="Auto Speak Reply" data-hi="ऑटो बोलें जवाब">Auto Speak Reply</span>
+      </label>
     </div>
 
     <div id="chat-container"></div>
 
     <div class="input-area">
-        <textarea id="question" rows="2" placeholder="यहाँ अपना सवाल लिखें या बोलें..."></textarea>
-        <div class="buttons">
-            <button onclick="askBot()" class="send-btn">Send</button>
-            <button onclick="startListening()" class="mic-btn" id="mic-btn">Speak</button>
-        </div>
+      <textarea
+        id="question"
+        rows="2"
+        data-en-placeholder="Type your question or speak..."
+        data-hi-placeholder="अपना सवाल लिखें या बोलें..."
+        placeholder="Type your question or speak..."
+      ></textarea>
+      <div class="buttons">
+        <button onclick="askBot()" class="send-btn" data-en="Send" data-hi="भेजें">Send</button>
+        <button onclick="startListening()" class="mic-btn" id="mic-btn">
+          Speak
+        </button>
+      </div>
     </div>
-</div>
+  </div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
