@@ -68,72 +68,71 @@ def ask_groq(prompt, key):
 
 
 # ---------- MAIN ANSWER FUNCTION ----------
+# ---------- MAIN ANSWER FUNCTION (HINDI + ENGLISH + HINGLISH PERFECT) ----------
 def answer_query(question: str, lang: str = "en-US") -> str:
     if not question or not question.strip():
-        return "Please ask a valid question."
+        return "कृपया कोई सवाल पूछें।" if lang.startswith("hi") else "Please ask a question."
 
     try:
         m, idx, data_chunks = _load()
 
-        # Embed question
-        q_emb = m.encode(
-            [question.lower()],
-            normalize_embeddings=True,
-            convert_to_numpy=True
-        )
-
-        # Search FAISS top 15 results
+        q_emb = m.encode([question.lower()], normalize_embeddings=True, convert_to_numpy=True)
         _, I = idx.search(q_emb.astype("float32"), 15)
-
-        # Build clean context
         raw_context = "\n".join(data_chunks[i] for i in I[0] if i < len(data_chunks))
 
-        # Groq API key
         key = os.getenv("GROQ_API_KEY")
         if not key:
-            return "Missing GROQ_API_KEY. Set it in Railway environment."
+            return "GROQ_API_KEY missing"
 
-        # THIS IS THE ONLY NEW PART — Language detection
-        target_lang = "Hindi" if lang.startswith("hi") else "English"
+        # DETECT REAL LANGUAGE FROM QUESTION (for Hinglish support)
+        has_hindi = any("\u0900" <= c <= "\u097f" for c in question)
+        has_english = any(c.isalpha() and c < '\u0900' for c in question)
 
-        # Clean-up + OCR-Repair + Bullet points prompt (now with language)
+        if has_hindi and has_english:        # Hinglish
+            force_lang = "Hinglish (Hindi + English both allowed)"
+        elif has_hindi:                      # Pure Hindi
+            force_lang = "Hindi"
+        else:                                # Pure English or default
+            force_lang = "English"
+
+        # FORCE THE LLM VERY STRONGLY
         prompt = f"""
-You are an expert in cleaning OCR text from vehicle manuals.
+You are a professional car manual assistant.
 
-RAW CONTEXT (broken OCR from manual):
+Answer the question below IN {force_lang} ONLY.
+If the question is in Hindi → answer in Hindi.
+If the question is in Hinglish → answer in natural Hinglish.
+If the question is in English → answer in English.
+
+Question: {question}
+
+Manual content (fix all OCR errors):
 \"\"\"{raw_context}\"\"\"
 
-QUESTION:
-{question}
+Instructions:
+- Fix all OCR errors, backslashes, spacing
+- Remove page headers/footers
+- Answer ONLY in bullet points
+- DO NOT write any English if question is pure Hindi
+- DO NOT write any Hindi if question is pure English
+- Hinglish is allowed only when question is in Hinglish
 
-DO ALL OF THIS:
-- Fix spacing issues (like "Sa fe ty Sy st em s" → "Safety Systems")
-- Remove random page headers/footers/garbage
-- Fix spaced out characters ("h v" → "HV", "a c" → "AC")
-- Fix OCR errors (off→of, se→use, u→you)
-- Remove ANY backslashes
-- Produce clear, correct, professional bullet points
-- DO NOT include raw text
-- DO NOT include anything unclear
-
-Answer in {target_lang} only.
-Return ONLY the cleaned bullet-point answer.
+Answer in {force_lang}:
 """
 
         answer = ask_groq(prompt, key)
 
-        # If Groq returned junk, fallback
-        if answer and len(answer) > 40 and "\\" not in answer:
+        if answer and len(answer) > 30 and "\\" not in answer:
             return answer
 
-        # Minimal fallback if LLM fails
-        fallback = raw_context.replace("\\", " ").replace("  ", " ")
-        lines = [l.strip() for l in fallback.split("\n") if len(l.strip()) > 30][:7]
+        # Fallback
+        clean = raw_context.replace("\\", " ").replace("  ", " ")
+        lines = [l.strip() for l in clean.split("\n") if len(l.strip()) > 30][:7]
         return "\n".join("• " + l.capitalize() for l in lines)
 
     except Exception as e:
-        print("[FATAL ERROR]", e)
-        return "Service error — please try again."
+        print("[ERROR]", e)
+        return "सेवा में समस्या है।" if "hi" in lang else "Service error."
 
 
 # ---------- HEALTH ----------

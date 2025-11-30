@@ -34,9 +34,9 @@ def ask(query: Query):
     if not query.question or not query.question.strip():
         raise HTTPException(status_code=400, detail="Empty question")
 
-    answer = answer_query(query.question.strip())
+    # ← THIS LINE WAS WRONG BEFORE
+    answer = answer_query(query.question.strip(), query.lang)   # ← ADD query.lang HERE
 
-    # Never return empty string
     if not answer:
         answer = "No relevant information found in the manual."
 
