@@ -32,8 +32,15 @@ function addMessage(text, sender) {
   const div = document.createElement("div");
   div.className = `message ${sender}`;
 
+  // CLEAN TEXT FOR DISPLAY (keep bullets)
+  const displayText = text
+    .replace(/\\/g, "")                    // remove backslashes
+    .replace(/^\*\s*/gm, "• ")             // * → nice bullet for display
+    .replace(/^\d+\.\s*/gm, "• ")          // 1. 2. → bullet
+    .trim();
+
   const p = document.createElement("p");
-  p.innerHTML = text.replace(/\n/g, "<br>");
+  p.innerHTML = displayText.replace(/\n/g, "<br>");
   div.appendChild(p);
 
   const time = document.createElement("div");
@@ -42,10 +49,20 @@ function addMessage(text, sender) {
   div.appendChild(time);
 
   if (sender === "bot") {
+    // CLEAN TEXT FOR TTS — REMOVE ALL SYMBOLS, NUMBERS, BULLETS
+    const cleanForTTS = text
+      .replace(/\\/g, " ")                     // backslashes
+      .replace(/[\*\•\-\d\.\)\]\}]/g, " ")     // remove * • - 1. 2) etc.
+      .replace(/^\s*[a-zA-Z0-9]+\s*[\.\)]\s*/gm, " ")  // a) b) १) २)
+      .replace(/\s+/g, " ")                    // multiple spaces
+      .trim()
+      .replace(/\s*,\s*/g, ", ")               // clean commas
+      .replace(/\s*\.\s*$/g, ".");             // final dot
+
     const playBtn = document.createElement("span");
     playBtn.className = "tts-btn";
     playBtn.textContent = translations[langSelect.value].play;
-    playBtn.onclick = () => speak(text);
+    playBtn.onclick = () => speak(cleanForTTS);
     div.appendChild(playBtn);
 
     const stopBtn = document.createElement("span");
@@ -57,6 +74,17 @@ function addMessage(text, sender) {
 
   chatContainer.appendChild(div);
   chatContainer.scrollTop = chatContainer.scrollHeight;
+
+  // Auto speak only clean text
+  if (sender === "bot" && ttsCheckbox.checked) {
+    const cleanForTTS = text
+      .replace(/\\/g, " ")
+      .replace(/[\*\•\-\d\.\)\]\}]/g, " ")
+      .replace(/^\s*[a-zA-Z0-9]+\s*[\.\)]\s*/gm, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    speak(cleanForTTS);
+  }
 }
 
 function showLoader() {
@@ -73,28 +101,57 @@ function removeLoader() {
   if (loader) loader.remove();
 }
 
-function speak(text) {
-  if (!('speechSynthesis' in window)) return;
+function speak(rawText) {
+  if (!('speechSynthesis' in window) || !rawText) return;
+
   stopSpeaking();
 
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = langSelect.value;
+  // SUPER CLEAN TEXT FOR TTS — ONLY WORDS + NATURAL PUNCTUATION
+  let cleanText = rawText
+    // Remove backslashes
+    .replace(/\\/g, " ")
+
+    // Remove all bullet symbols: *, •, -, –, —, 1., a), १), etc.
+    .replace(/^[\*\•\-\–\—\d]+\.?\s*/gm, " ")           // lines starting with * or 1. or •
+    .replace(/^[\u0966-\u096F]+\.?\s*/gm, " ")          // Hindi numbers १. २.
+    .replace(/^[a-zA-Z]\)\s*/gm, " ")                   // a) b) A) B)
+    .replace(/^[\(\[\{]\s*[\da-zA-Z\u0966-\u096F]+\s*[\)\]\}]\s*/gm, " ")  // (1) [a] {१}
+
+    // Remove any remaining special chars but keep Hindi/English letters and basic punctuation
+    .replace(/[^\u0900-\u097F\w\s\.\,\!\?\;\:\-\(\)]/g, " ")
+
+    // Clean up spacing
+    .replace(/\s+/g, " ")
+    .trim();
+
+  // Final safety: if empty after cleaning, don't speak
+  if (!cleanText) return;
+
+  const utter = new SpeechSynthesisUtterance(cleanText);
+  utter.lang = langSelect.value;   // hi-IN or en-US
   utter.rate = 0.9;
   utter.pitch = 1;
+  utter.volume = 1;
 
+  // Visual feedback when speaking starts
   utter.onstart = () => {
     document.querySelectorAll(".message.bot").forEach(msg => {
       const playBtn = msg.querySelector(".tts-btn:not(.stop-btn)");
       const stopBtn = msg.querySelector(".stop-btn");
-      if (playBtn) playBtn.textContent = "Playing";
+      if (playBtn) playBtn.textContent = translations[langSelect.value].play === "Play" ? "Playing" : "चल रहा है";
       if (stopBtn) stopBtn.classList.add("show");
     });
   };
 
+  // When speech ends or errors
   utter.onend = utter.onerror = () => {
     currentUtterance = null;
-    document.querySelectorAll(".tts-btn:not(.stop-btn)").forEach(btn => btn.textContent = translations[langSelect.value].play);
-    document.querySelectorAll(".stop-btn").forEach(btn => btn.classList.remove("show"));
+    document.querySelectorAll(".tts-btn:not(.stop-btn)").forEach(btn => {
+      btn.textContent = translations[langSelect.value].play;
+    });
+    document.querySelectorAll(".stop-btn").forEach(btn => {
+      btn.classList.remove("show");
+    });
   };
 
   currentUtterance = utter;
